@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 
 const TOP_MOVIES_WIDGET = (props) => {
     let topMovies = props.topMovies.map(movie => (
-
         <div 
-            className="card topMoviesWidgetCard" 
+            className="topMoviesWidgetCard" 
             key={movie.id} 
         >
-            <img style={{width: '6rem'}}   className="card-img-top topMoviesWidgetCard-img" src={"http://image.tmdb.org/t/p/w185" + movie.poster_path} alt="Card image cap" />
-            <div className="card-body topMoviesWidgetCard-body">
-                <h5 className="card-title">{movie.original_title}</h5>
-                <p className="card-text">{movie.overview}</p>
-            </div>
+            <img 
+                    className="topMoviesWidgetCard-img" 
+                src={"http://image.tmdb.org/t/p/w185" + movie.poster_path}
+                alt={movie.original_title} 
+            />
+            <p className="topMoviesWidgetCard-title">{movie.original_title}</p>
         </div>
     ))
     return (
 
-        <div className='dashboardWidget'>
+        <div className='dashboardWidget' id='topMoviesWidget'>
         {topMovies}
         </div>
     )

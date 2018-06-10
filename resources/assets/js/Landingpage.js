@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';   
 import jsonp from 'jsonp';
-import { TMDB_KEY } from '../../../../config/js/config';
+import { TMDB_KEY } from '../../../config/js/config';
 
 export default class Landingpage extends Component {
     constructor(props) {
