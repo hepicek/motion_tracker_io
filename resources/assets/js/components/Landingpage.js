@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-// import getTopMovies from '../helpers/topMovies';
+import ReactDOM from 'react-dom';   
 import jsonp from 'jsonp';
 import { TMDB_KEY } from '../../../../config/js/config';
 
@@ -12,8 +11,6 @@ export default class Landingpage extends Component {
         }
     }
     componentWillMount() {
-        
-        console.log('loading');
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
             if (err) {
                 return undefined;
@@ -22,9 +19,8 @@ export default class Landingpage extends Component {
                 this.setState({
                     topMovies: data.results
                 });
-
             }
-        })
+        });
 
     }   
     render() {

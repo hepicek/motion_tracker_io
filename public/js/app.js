@@ -36339,6 +36339,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonp__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__config_js_config__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__landing_page_Top_Movies_Widget__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__landing_page_Lists_Widget__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__landing_page_Friends_Widget__ = __webpack_require__(72);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36350,42 +36357,61 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
+
+
+
 var Dashboard = function (_Component) {
     _inherits(Dashboard, _Component);
 
-    function Dashboard() {
+    function Dashboard(props) {
         _classCallCheck(this, Dashboard);
 
-        return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+
+        _this.state = {
+            topMovies: [],
+            userLists: [],
+            friends: []
+        };
+
+        return _this;
     }
 
     _createClass(Dashboard, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
+                if (err) {
+                    return undefined;
+                } else {
+                    console.log(data.results);
+                    _this2.setState({
+                        topMovies: data.results
+                    });
+                }
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 { className: 'container' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h2',
+                    null,
+                    'Dashboard'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
-                    { className: 'row justify-content-center' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'col-md-8' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'card' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'card-header' },
-                                'Dashboard Component'
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'div',
-                                { className: 'card-body' },
-                                'I am the dashboard!'
-                            )
-                        )
-                    )
+                    { className: 'dashboard' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__landing_page_Top_Movies_Widget__["a" /* default */], { topMovies: this.state.topMovies }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__landing_page_Lists_Widget__["a" /* default */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__landing_page_Friends_Widget__["a" /* default */], null)
                 )
             );
         }
@@ -55645,7 +55671,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-// import getTopMovies from '../helpers/topMovies';
 
 
 
@@ -55668,7 +55693,6 @@ var Landingpage = function (_Component) {
         value: function componentWillMount() {
             var _this2 = this;
 
-            console.log('loading');
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
@@ -56407,6 +56431,89 @@ var TMDB_KEY = '2737df4078e7e961dbae1994dd5ff332';
 module.exports = {
     TMDB_KEY: TMDB_KEY
 };
+
+/***/ }),
+/* 70 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var TOP_MOVIES_WIDGET = function TOP_MOVIES_WIDGET(props) {
+    var topMovies = props.topMovies.map(function (movie) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            {
+                className: 'card topMoviesWidgetCard',
+                key: movie.id
+            },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { style: { width: '6rem' }, className: 'card-img-top topMoviesWidgetCard-img', src: "http://image.tmdb.org/t/p/w185" + movie.poster_path, alt: 'Card image cap' }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'card-body topMoviesWidgetCard-body' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h5',
+                    { className: 'card-title' },
+                    movie.original_title
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'p',
+                    { className: 'card-text' },
+                    movie.overview
+                )
+            )
+        );
+    });
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'dashboardWidget' },
+        topMovies
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (TOP_MOVIES_WIDGET);
+
+/***/ }),
+/* 71 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+// import ReactDOM from 'react-dom';
+
+var LISTS_WIDGET = function LISTS_WIDGET(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: "dashboardWidget", id: "listsWidget" },
+        "I am the lists widget."
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (LISTS_WIDGET);
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+// import ReactDOM from 'react-dom';
+
+var FRIENDS_WIDGET = function FRIENDS_WIDGET(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'dashboardWidget' },
+        'I am the friends widget.'
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FRIENDS_WIDGET);
 
 /***/ })
 /******/ ]);

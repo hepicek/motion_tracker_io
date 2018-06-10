@@ -10,6 +10,7 @@
 
 .container {
   width: 100%;
+  padding: 0;
 }
 .navbar-laravel {
   background-color: #fff;
@@ -34,3 +35,55 @@
 // .topMovieContents {
 //   display: flex;
 // }
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.dashboardWidget {
+  height: 400px;
+  overflow-y: scroll;
+  width: 400px; 
+  border: 5px solid dodgerblue;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0 black;
+  padding: 10px;
+  margin: 20px;
+  flex-grow: 1;
+}
+
+.dashboardWidget::-webkit-scrollbar {
+  width: .3em;
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.dashboardWidget::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.dashboardWidget::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 20px;
+  z-index: -1;
+}
+
+#listsWidget {
+ 
+}
+.topMoviesWidgetCard {
+  padding: 10px;
+  width: 90%;
+  height: 10rem;
+  align-items: center;
+  flex-direction: row;
+  margin: 2px;
+  
+}
+.topMoviesWidgetCard-body {
+  height: 100%;
+  overflow: hidden;
+}
