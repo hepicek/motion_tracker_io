@@ -70,7 +70,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'user_status_id' => 1,
-            'last_login_date' =>  date('Y-m-d H:i:s'),
+            'last_login_date' => date('Y-m-d H:i:s'),
             'common_name' => $data['first_name'],   
         ]);
     }
