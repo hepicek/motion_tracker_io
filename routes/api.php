@@ -26,4 +26,4 @@ Route::post('movies','MoviesController@store');
 
 Route::put('movies/{movie}','MoviesController@update');
 
-Route::delete('movies/{movie}', 'MoviesController@delete');
+//Route::delete('movies/{movie}', 'MoviesController@delete');
