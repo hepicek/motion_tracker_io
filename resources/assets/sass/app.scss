@@ -169,3 +169,20 @@
   padding: 10px;
   border-radius: 10px;
 }
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  img {
+    height: 100px;
+  }
+}
+.listTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.expandedListItems {
+  padding-left: 15px;
+}

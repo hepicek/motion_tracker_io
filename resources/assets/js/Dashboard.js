@@ -14,21 +14,17 @@ export default class Dashboard extends Component {
             topMovies: [],
             userLists: [
                 {
+                    id: 1,
                     title: 'We love French action movies',
                     items: [{
+                        id: 1,
                         image: '',
                         title: 'Fifth Element',
                         director: 'Luc Besson',
                         year: 2012,
                     },
                     {
-                        image: '',
-                        title: 'Fifth Element',
-                        director: 'Luc Besson',
-                        year: 2012,
-
-                    },
-                    {
+                        id: 2,
                         image: '',
                         title: 'Fifth Element',
                         director: 'Luc Besson',
@@ -36,6 +32,15 @@ export default class Dashboard extends Component {
 
                     },
                     {
+                        id: 3,
+                        image: '',
+                        title: 'Fifth Element',
+                        director: 'Luc Besson',
+                        year: 2012,
+
+                    },
+                    {
+                        id: 4,
                         image: '',
                         title: 'Fifth Element',
                         director: 'Luc Besson',
@@ -43,6 +48,7 @@ export default class Dashboard extends Component {
 
                     },  
                     {
+                        id: 5,
                         image: '',
                         title: 'Fifth Element',
                         director: 'Luc Besson',
@@ -53,6 +59,7 @@ export default class Dashboard extends Component {
                     collapsed: false
                 },
                 {
+                    id: 2,
                     title: 'Date Movies',
                     items: [{
 
@@ -61,6 +68,7 @@ export default class Dashboard extends Component {
                     collapsed: true
                 },
                 {
+                    id: 3,
                     title: 'For Jen',
                     items: [{
 
@@ -69,6 +77,7 @@ export default class Dashboard extends Component {
                     collapsed: true
                 },
                 {
+                    id: 4,
                     title: 'Awesome Sci-fi',
                     items: [{
 
@@ -77,6 +86,7 @@ export default class Dashboard extends Component {
                     collapsed: true
                 },
                 {
+                    id: 5,
                     title: 'I love Patrick Stewart',
                     items: [{
 
@@ -87,7 +97,24 @@ export default class Dashboard extends Component {
             ],
             friends: []
         }
-       
+        this.handleListTitleClick = this.handleListTitleClick.bind(this);       
+    }
+
+    handleListTitleClick(e) {
+        e.stopPropagation();
+        let currentListId = e.target.id;
+
+        let userLists = this.state.userLists;
+        userLists.forEach(list => {
+            
+            if(list.id == currentListId) {
+                list.collapsed = list.collapsed ? false : true;
+            }
+        })
+
+        this.setState({
+            userLists
+        })
     }
     componentWillMount() {
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
@@ -103,15 +130,18 @@ export default class Dashboard extends Component {
     }
     render() {
         return (
-            <div className="container">
+           
                 <div className='dashboard'>
                     <div className='searchSection'>
                         <SEARCH_BAR />
                         <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>
                     </div>
-                    <LISTS_WIDGET lists={this.state.userLists}/>
+                    <LISTS_WIDGET 
+                        lists={this.state.userLists}
+                        handleListTitleClick={this.handleListTitleClick}    
+                    />
                     <FRIENDS_WIDGET />
-                </div>
+                
             </div>
         );
     }
