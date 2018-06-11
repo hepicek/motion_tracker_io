@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::get('/', 'LandingpageController@index');
+Route::group(['middleware' => ['auth']], function() {
+    
+    Route::get('/dashboard', 'DashboardController@index');
+
 });
+
+
+Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');

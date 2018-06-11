@@ -34,5 +34,10 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    'facebook' => [
+        'client_id' => env('FB_APP_ID'),         
+        'client_secret' => env('FB_APP_SECRET'),
+        'redirect' => 'https://motiontracker.test/login/facebook/callback',
+    ],
 
 ];

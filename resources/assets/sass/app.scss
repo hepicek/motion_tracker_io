@@ -1,6 +1,8 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import '../../../node_modules/font-awesome/scss/font-awesome.scss';
+
 
 // Variables
 @import "variables";
@@ -8,7 +10,179 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+.container {
+  width: 100%;
+  padding: 0;
+}
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+.topMovies {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.searchSection {
+  width: 70%;
+}
+.dashboardWidget {
+  padding: 10px;
+  margin: 10px;
+  flex-grow: 1;
+}
+
+.dashboardWidget::-webkit-scrollbar {
+  width: .3em;
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.dashboardWidget::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.dashboardWidget::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 20px;
+  z-index: -1;
+}
+.searchBar {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  >* {
+    margin: 0 10px;
+  }
+  p {
+    margin: 0;
+  }
+}
+#searchBar-input, #searchBar-mode {
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid slategray;
+  outline: none;
+}
+#searchBar-input {
+  width: 250px;
+  padding: 0 5px;
+  margin-right: 20px;
+}
+#searchBar-mode {
+  margin: 0 10px;
+  width: 150px;
+}
+#searchBar-submit {
+  border: 1px solid dodgerblue;
+  background-color: dodgerblue;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  padding: 5px 20px;
+  font-family: 'Raleway';
+  cursor: pointer;
+  outline: none;
+  transition: background-color .2s, color .2s;
+  &:hover {
+    color:dodgerblue;
+    background-color: white;
+  }
+}
+#topMoviesWidget {
+  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  // justify-items: center;
+  // justify-content: center;
+}
+.topMoviesWidgetCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px;
+  width: 23%;
+  cursor: pointer;
+  margin: 2px;
+  
+}
+.topMoviesWidgetCard-img {
+  width: 8rem;
+}
+.topMoviesWidgetCard-title {
+  text-align: center;
+}
+#listsWidget {
+ width: 28%;
+ background-color: white;
+ padding: 10px;
+ border-radius: 10px;
+ box-shadow: 5px 5px 10px 0 black;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ align-items: center;
+}
+#listsWidget-topButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+#listsWidget-topButtons p {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+#listsWidget-topButtons p:first-child i {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+#listsWidget-topButtons p:nth-child(2) i {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+#listsWidget-topButtons i {
+  color: slategray;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+#listsWidget-lists {
+  width: 100%;
+  flex-grow: 1;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.listItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  img {
+    height: 100px;
+  }
+}
+.listTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.expandedListItems {
+  padding-left: 15px;
 }
