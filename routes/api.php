@@ -17,3 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     var_dump($request->user());
     return $request->user();
 });
+
+Route::get('movies', 'MoviesController@index');
+
+Route::get('movies/{movie}', 'MoviesController@show');
+
+Route::post('movies','MoviesController@store');
+
+Route::put('movies/{movie}','MoviesController@update');
+
+Route::delete('movies/{movie}', 'MoviesController@delete');
