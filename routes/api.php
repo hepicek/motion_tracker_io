@@ -26,7 +26,7 @@ Route::post('movies','MoviesController@store');
 
 Route::put('movies/{movie}','MoviesController@update');
 
-Route::get('lists', 'ListController@index');
-Route::get('lists/{user_id}/{list_id}', 'ListsController@view');
+// Route::get('lists', 'ListController@index');
+// Route::get('lists/{user_id}/{list_id}', 'ListsController@view');
 
 //Route::delete('movies/{movie}', 'MoviesController@delete');

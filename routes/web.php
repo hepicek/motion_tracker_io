@@ -17,6 +17,8 @@ Route::get('/', 'LandingpageController@index');
 Route::group(['middleware' => ['auth']], function() {
     
     Route::get('/dashboard', 'DashboardController@index');
+    // Route::get('lists', 'ListController@index');
+    // Route::get('lists/{user_id}/{list_id}', 'ListsController@view');
 
 });
 
