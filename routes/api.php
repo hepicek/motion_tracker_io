@@ -26,6 +26,23 @@ Route::post('movies','MoviesController@store');
 
 Route::put('movies/{movie}','MoviesController@update');
 
+Route::post('userLogin', 'UserController@userLogin');
+Route::post('userRegister', 'UserController@userRegister');
+
+
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('userDetails', 'UserController@userDetails');
+    Route::get('userLists', 'ListController@getUserLists');
+});
+
+
+
+
+
+
+
+
 // Route::get('lists', 'ListController@index');
 // Route::get('lists/{user_id}/{list_id}', 'ListsController@view');
 
