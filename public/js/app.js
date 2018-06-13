@@ -36496,6 +36496,7 @@ var Dashboard = function (_Component) {
         };
         _this.handleListTitleClick = _this.handleListTitleClick.bind(_this);
         _this.handleListDeleteClick = _this.handleListDeleteClick.bind(_this);
+        _this.handleNewListBtnClick = _this.handleNewListBtnClick.bind(_this);
         return _this;
     }
 
@@ -36509,14 +36510,9 @@ var Dashboard = function (_Component) {
                     var userLists = Object.keys(response.data.response).map(function (k) {
                         return response.data.response[k];
                     });
-                    // userLists.forEach(list => {
-                    //     list.collapsed = true;
-                    // })
-                    // userLists[0].collapsed = false;
                     _this2.setState({
                         userLists: userLists
                     });
-                    // console.log(userLists);
                 }
             }).catch(function (err) {
                 console.log(err);
@@ -36525,46 +36521,65 @@ var Dashboard = function (_Component) {
     }, {
         key: 'handleListTitleClick',
         value: function handleListTitleClick(e) {
+            var _this3 = this;
+
             e.stopPropagation();
             var currentListId = e.target.id.split("-")[1];
             var userLists = this.state.userLists;
             userLists.forEach(function (list) {
                 if (list.id == currentListId) {
                     list.collapsed = list.collapsed === 0 ? 1 : 0;
+                    _this3.setState({
+                        userLists: userLists
+                    });
                     __WEBPACK_IMPORTED_MODULE_8_axios___default.a.put('userLists/' + currentListId, {
                         collapsed: list.collapsed
-                    }).then(function (result) {
-                        console.log(result);
-                    }).catch(function (err) {
+                    }).then(function (result) {}).catch(function (err) {
                         console.log(err);
                     });
                 }
-            });
-
-            this.setState({
-                userLists: userLists
             });
         }
     }, {
         key: 'handleListDeleteClick',
         value: function handleListDeleteClick(e) {
-            var _this3 = this;
+            var _this4 = this;
 
             __WEBPACK_IMPORTED_MODULE_8_axios___default.a.delete('userLists/' + e.target.id.split("-")[1]).then(function (response) {
-                _this3.getLists();
+                _this4.getLists();
                 console.log(response);
             });
         }
     }, {
+        key: 'handleNewListBtnClick',
+        value: function handleNewListBtnClick() {
+            console.log(this.state.userLists);
+            var newList = {
+                collapsed: 1,
+                items: [],
+                list_title: ""
+            };
+            var userLists = this.state.userLists;
+            userLists.unshift(newList);
+            console.log("afdsdf", userLists);
+            this.setState({
+                userLists: userLists
+            });
+            //create a new list object
+            //add the new list to this.state
+            //render it with an input and set focus to it and weight for 'enter key' or 'onBlur'
+            //store the object and send to post route
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this4 = this;
+            var _this5 = this;
 
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
                 } else {
-                    _this4.setState({
+                    _this5.setState({
                         topMovies: data.results
                     });
                 }
@@ -36586,7 +36601,8 @@ var Dashboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_landing_page_Lists_Widget__["a" /* default */], {
                     lists: this.state.userLists,
                     handleListTitleClick: this.handleListTitleClick,
-                    handleListDeleteClick: this.handleListDeleteClick
+                    handleListDeleteClick: this.handleListDeleteClick,
+                    handleNewListBtnClick: this.handleNewListBtnClick
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_landing_page_Friends_Widget__["a" /* default */], null)
             );
@@ -56514,7 +56530,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
                         'p',
                         {
                             className: 'listTitle',
-                            id: "title-" + list.id,
+                            id: "title-" + (list.id ? list.id : "new"),
                             onClick: props.handleListTitleClick
                         },
                         list.list_title
@@ -56523,7 +56539,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
                         'p',
                         {
                             className: 'listDeleteBtn',
-                            id: "delete-" + list.id,
+                            id: "delete-" + (list.id ? list.id : "new"),
                             onClick: props.handleListDeleteClick
                         },
                         'x'
@@ -56541,7 +56557,9 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
             { id: 'listsWidget-topButtons' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'p',
-                null,
+                {
+                    onClick: props.handleNewListBtnClick
+                },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-plus-square' }),
                 'Create a new list'
             ),

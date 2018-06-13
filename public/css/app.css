@@ -13740,3 +13740,7 @@ a.text-dark:focus {
   padding-left: 15px;
 }
 
+.listDeleteBtn {
+  cursor: pointer;
+}
+

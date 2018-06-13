@@ -16,12 +16,12 @@ const LISTS_WIDGET = (props) => {
                 <div className='listHeader'>
                     <p 
                         className="listTitle"
-                        id={"title-" + list.id} 
+                        id={"title-" + (list.id ? list.id : "new")} 
                         onClick={props.handleListTitleClick}
                     >{list.list_title}</p>
                     <p 
                         className='listDeleteBtn'
-                        id={"delete-" + list.id}
+                        id={"delete-" + (list.id ? list.id : "new")}
                         onClick={props.handleListDeleteClick}
                     >x</p>
                 </div>
@@ -32,7 +32,9 @@ const LISTS_WIDGET = (props) => {
     return (
         <div className="dashboardWidget" id="listsWidget">
             <div id="listsWidget-topButtons">
-                <p><i className="fa fa-plus-square"></i>Create a new list</p>
+                <p
+                    onClick={props.handleNewListBtnClick}
+                ><i className="fa fa-plus-square"></i>Create a new list</p>
                 <p>edit lists<i className="fa fa-cog"></i></p>
             </div>
             <div id="listsWidget-lists">

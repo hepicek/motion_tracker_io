@@ -18,27 +18,24 @@ export default class Dashboard extends Component {
             friends: []
         }
         this.handleListTitleClick = this.handleListTitleClick.bind(this);    
-        this.handleListDeleteClick = this.handleListDeleteClick.bind(this);   
+        this.handleListDeleteClick = this.handleListDeleteClick.bind(this); 
+        this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);  
     }
+
     getLists() {
         axios('/userLists')
         .then(response => {
           if(response.data.response) {
                 let userLists = Object.keys(response.data.response).map(function(k) { return response.data.response[k] });
-                // userLists.forEach(list => {
-                //     list.collapsed = true;
-                // })
-                // userLists[0].collapsed = false;
                 this.setState({
                     userLists
-                })
-                // console.log(userLists);
-            }
-            
+                });
+            }            
         }).catch(err => {
             console.log(err);
         });
     }
+
     handleListTitleClick(e) {
         e.stopPropagation();
         let currentListId = e.target.id.split("-")[1];
@@ -46,20 +43,19 @@ export default class Dashboard extends Component {
         userLists.forEach(list => {
             if(list.id == currentListId) {
                 list.collapsed = list.collapsed === 0 ? 1 : 0;
+                    this.setState({
+                        userLists
+                    });
                 axios.put('userLists/' + currentListId,{
                     collapsed: list.collapsed
                 }).then(result => {
-                    console.log(result);
+                    
                 })
                 .catch(err => {
                     console.log(err);
                 })
             }
-        })
-
-        this.setState({
-            userLists
-        })
+        });
     }
     handleListDeleteClick(e) {
         axios.delete('userLists/' + e.target.id.split("-")[1])
@@ -68,6 +64,24 @@ export default class Dashboard extends Component {
             console.log(response); 
         })
         
+    }
+    handleNewListBtnClick() {
+        console.log(this.state.userLists);
+        let newList = {
+            collapsed: 1,
+            items: [],
+            list_title: ""
+        }  
+        let userLists = this.state.userLists;
+        userLists.unshift(newList);
+        console.log("afdsdf", userLists); 
+        this.setState({
+            userLists
+        })
+        //create a new list object
+        //add the new list to this.state
+        //render it with an input and set focus to it and weight for 'enter key' or 'onBlur'
+        //store the object and send to post route
     }
     componentWillMount() {
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
@@ -92,7 +106,8 @@ export default class Dashboard extends Component {
                     <LISTS_WIDGET 
                         lists={this.state.userLists}
                         handleListTitleClick={this.handleListTitleClick} 
-                        handleListDeleteClick={this.handleListDeleteClick}   
+                        handleListDeleteClick={this.handleListDeleteClick}
+                        handleNewListBtnClick={this.handleNewListBtnClick} 
                     />
                     <FRIENDS_WIDGET />
             </div>
