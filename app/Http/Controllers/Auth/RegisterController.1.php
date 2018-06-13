@@ -73,20 +73,5 @@ class RegisterController extends Controller
             'last_login_date' => date('Y-m-d H:i:s'),
             'common_name' => $data['first_name'],   
         ]);
-        
-    }
-
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        $this->guard()->login($user);
-
-        
-
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
     }
 }

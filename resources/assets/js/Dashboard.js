@@ -6,6 +6,7 @@ import SEARCH_BAR from './components/Search_Bar';
 import TOP_MOVIES_WIDGET from './components/landing_page/Top_Movies_Widget';
 import LISTS_WIDGET from './components/landing_page/Lists_Widget';
 import FRIENDS_WIDGET from './components/landing_page/Friends_Widget';
+import HEADER from './components/Header';
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -130,8 +131,8 @@ export default class Dashboard extends Component {
     }
     render() {
         return (
-           
                 <div className='dashboard'>
+                    <HEADER />
                     <div className='searchSection'>
                         <SEARCH_BAR />
                         <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>
@@ -141,7 +142,6 @@ export default class Dashboard extends Component {
                         handleListTitleClick={this.handleListTitleClick}    
                     />
                     <FRIENDS_WIDGET />
-                
             </div>
         );
     }

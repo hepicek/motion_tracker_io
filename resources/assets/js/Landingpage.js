@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';   
 import jsonp from 'jsonp';
 import { TMDB_KEY } from '../../../config/js/config';
-// import axios from 'axios';
+import HEADER from './components/Header';
 
 export default class Landingpage extends Component {
     constructor(props) {
@@ -12,16 +12,10 @@ export default class Landingpage extends Component {
         }
     }
     componentWillMount() {
-        // axios(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-        // .then(res => {
-        //     console.log(res);
-        // });
-
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
             if (err) {
                 return undefined;
-            } else {
-                console.log(data.results);
+            } else {    
                 this.setState({
                     topMovies: data.results
                 });
@@ -42,6 +36,7 @@ export default class Landingpage extends Component {
         ))
         return (
             <div className="container">
+                <HEADER />
                 <div className='topMovies'>
                     {topMovies}
                 </div>

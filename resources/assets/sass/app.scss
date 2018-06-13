@@ -7,16 +7,56 @@
 // Variables
 @import "variables";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "./login/_login.scss";
 
+// Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Raleway;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.contentWrapper {
+  margin: 0;
+  padding: 0;
+  width: 80%;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  align-self: center;
+}
 .container {
   width: 100%;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+#navBar {
+  background-color: slategray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  color: white;
+  h1 {
+    margin: 5px;
+    font-style: italic;
+  }
+}
+#navMenuItems {
+  flex-basis: 15%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
 }
 .topMovies {
   display: flex;
@@ -105,8 +145,6 @@
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
-  // justify-items: center;
-  // justify-content: center;
 }
 .topMoviesWidgetCard {
   display: flex;
