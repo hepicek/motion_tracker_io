@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import LIST_ITEMS from './List_Items';
-// import '../../..s/../../node_modules/font-awesome/css/font-awesome.min.css';
-// import ReactDOM from 'react-dom';
+
 
 const LISTS_WIDGET = (props) => {
     let lists = undefined;
+
+    //HTML for new list when 'Create New List' is clicked
     let newList =  <input type="text"  placeholder="new list title" className="newListInput"/>
+
     if(props.lists.length > 0) {
         lists = props.lists.map((list, index) => (
             <div 

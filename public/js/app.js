@@ -36456,12 +36456,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonp__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__config_js_config__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_dashboard_Search_Bar__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_dashboard_Top_Movies_Widget__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_dashboard_Lists_Widget__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_landing_page_Friends_Widget__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_axios__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_dashboard_Search_Bar__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_dashboard_Top_Movies_Widget__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_dashboard_Lists_Widget__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_dashboard_Friends_Widget__ = __webpack_require__(84);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36472,9 +36472,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+ //used for API call to grab top movies
+ //file holding TMDB key (in .gitignore)
+ //For API calls
 
-
-
+//react components
 
 
 
@@ -36489,7 +36491,6 @@ var Dashboard = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
         _this.state = {
-            reRender: false,
             topMovies: [],
             userLists: [],
             friends: []
@@ -36501,16 +36502,34 @@ var Dashboard = function (_Component) {
     }
 
     _createClass(Dashboard, [{
-        key: 'getLists',
-        value: function getLists() {
+        key: 'saveNewList',
+        value: function saveNewList(e, newList) {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_8_axios___default()('/userLists').then(function (response) {
+            var newListInput = document.querySelector(".newListInput");
+            if (e.key == "Enter") {
+                __WEBPACK_IMPORTED_MODULE_4_axios___default.a.post("/userLists", {
+                    list_title: newListInput.value
+                }).then(function (res) {
+                    delete _this2.state.newList;
+                    _this2.getLists();
+                });
+            }
+        }
+
+        //Gets User's Lists
+
+    }, {
+        key: 'getLists',
+        value: function getLists() {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_4_axios___default()('/userLists').then(function (response) {
                 if (response.data.response) {
-                    var userLists = Object.keys(response.data.response).map(function (k) {
-                        return response.data.response[k];
+                    var userLists = Object.keys(response.data.response).map(function (key) {
+                        return response.data.response[key];
                     });
-                    _this2.setState({
+                    _this3.setState({
                         userLists: userLists
                     });
                 }
@@ -36518,21 +36537,26 @@ var Dashboard = function (_Component) {
                 console.log(err);
             });
         }
+
+        //collapses lists when title is clicked    
+
     }, {
         key: 'handleListTitleClick',
         value: function handleListTitleClick(e) {
-            var _this3 = this;
+            var _this4 = this;
 
-            e.stopPropagation();
-            var currentListId = e.target.id.split("-")[1];
+            e.stopPropagation(); //stops event bubbling
+            var currentListId = e.target.id.split("-")[1]; //Element id's end in -{list_id}
             var userLists = this.state.userLists;
+
+            //finds the clicked list in the array, toggles the 'collapsed' value and sets state 
             userLists.forEach(function (list) {
                 if (list.id == currentListId) {
                     list.collapsed = list.collapsed === 0 ? 1 : 0;
-                    _this3.setState({
+                    _this4.setState({
                         userLists: userLists
                     });
-                    __WEBPACK_IMPORTED_MODULE_8_axios___default.a.put('userLists/' + currentListId, {
+                    __WEBPACK_IMPORTED_MODULE_4_axios___default.a.put('userLists/' + currentListId, {
                         collapsed: list.collapsed
                     }).then(function (result) {}).catch(function (err) {
                         console.log(err);
@@ -36540,20 +36564,27 @@ var Dashboard = function (_Component) {
                 }
             });
         }
+
+        //send delete API call
+
     }, {
         key: 'handleListDeleteClick',
         value: function handleListDeleteClick(e) {
-            var _this4 = this;
+            var _this5 = this;
 
-            __WEBPACK_IMPORTED_MODULE_8_axios___default.a.delete('userLists/' + e.target.id.split("-")[1]).then(function (response) {
-                _this4.getLists();
+            __WEBPACK_IMPORTED_MODULE_4_axios___default.a.delete('userLists/' + e.target.id.split("-")[1]).then(function (response) {
+                _this5.getLists();
                 console.log(response);
             });
         }
+
+        //create a new list
+
     }, {
         key: 'handleNewListBtnClick',
         value: function handleNewListBtnClick() {
-            console.log(this.state.userLists);
+            var _this6 = this;
+
             var newList = {
                 collapsed: 1,
                 items: [],
@@ -36562,29 +36593,27 @@ var Dashboard = function (_Component) {
             this.setState({
                 newList: newList
             });
+            //setTimeout used because setState is async so this puts the
+            //code on the event queue behind the render function 
             setTimeout(function () {
                 var newListInput = document.querySelector(".newListInput");
                 newListInput.focus();
-                window.addEventListener("keyup", function () {
-                    console.log("KEYS!");
+                window.addEventListener("keyup", function (e) {
+                    _this6.saveNewList(e, newList);
                 });
             }, 0);
-
-            //create a new list object
-            //add the new list to this.state
-            //render it with an input and set focus to it and weight for 'enter key' or 'onBlur'
-            //store the object and send to post route
         }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this5 = this;
+            var _this7 = this;
 
+            //external API call for Top 20 movies
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
                 } else {
-                    _this5.setState({
+                    _this7.setState({
                         topMovies: data.results
                     });
                 }
@@ -36600,17 +36629,17 @@ var Dashboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'searchSection' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_dashboard_Search_Bar__["a" /* default */], null),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_dashboard_Top_Movies_Widget__["a" /* default */], { topMovies: this.state.topMovies })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_dashboard_Search_Bar__["a" /* default */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_dashboard_Top_Movies_Widget__["a" /* default */], { topMovies: this.state.topMovies })
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_dashboard_Lists_Widget__["a" /* default */], {
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_dashboard_Lists_Widget__["a" /* default */], {
                     lists: this.state.userLists,
                     newList: this.state.newList ? this.state.newList : null,
                     handleListTitleClick: this.handleListTitleClick,
                     handleListDeleteClick: this.handleListDeleteClick,
                     handleNewListBtnClick: this.handleNewListBtnClick
                 }),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_landing_page_Friends_Widget__["a" /* default */], null)
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_dashboard_Friends_Widget__["a" /* default */], null)
             );
         }
     }]);
@@ -56408,26 +56437,7 @@ function plural(ms, n, name) {
 /* 64 */,
 /* 65 */,
 /* 66 */,
-/* 67 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-
-// import ReactDOM from 'react-dom';
-
-var FRIENDS_WIDGET = function FRIENDS_WIDGET(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'dashboardWidget' },
-        'I am the friends widget.'
-    );
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (FRIENDS_WIDGET);
-
-/***/ }),
+/* 67 */,
 /* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -56656,12 +56666,13 @@ var TOP_MOVIES_WIDGET = function TOP_MOVIES_WIDGET(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List_Items__ = __webpack_require__(83);
 
 
-// import '../../..s/../../node_modules/font-awesome/css/font-awesome.min.css';
-// import ReactDOM from 'react-dom';
 
 var LISTS_WIDGET = function LISTS_WIDGET(props) {
     var lists = undefined;
+
+    //HTML for new list when 'Create New List' is clicked
     var newList = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'new list title', className: 'newListInput' });
+
     if (props.lists.length > 0) {
         lists = props.lists.map(function (list, index) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -56741,8 +56752,9 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
 
 var LIST_ITEMS = function LIST_ITEMS(props) {
 
-    var itemsArray = Object.keys(props.items).map(function (k) {
-        return props.items[k];
+    //convert to Array of Objects
+    var itemsArray = Object.keys(props.items).map(function (key) {
+        return props.items[key];
     });
 
     var items = itemsArray ? itemsArray.map(function (item) {
@@ -56766,6 +56778,26 @@ var LIST_ITEMS = function LIST_ITEMS(props) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (LIST_ITEMS);
+
+/***/ }),
+/* 84 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+// import ReactDOM from 'react-dom';
+
+var FRIENDS_WIDGET = function FRIENDS_WIDGET(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'dashboardWidget' },
+        'I am the friends widget.'
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FRIENDS_WIDGET);
 
 /***/ })
 /******/ ]);

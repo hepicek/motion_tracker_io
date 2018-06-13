@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 const LIST_ITEMS = (props) => {
 
-    let itemsArray = Object.keys(props.items).map(function(k) { return props.items[k] });
+    //convert to Array of Objects
+    let itemsArray = Object.keys(props.items).map(key => props.items[key]);
 
     let items = itemsArray ? itemsArray.map(item => (
         <div key={item.id}>

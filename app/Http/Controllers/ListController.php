@@ -46,9 +46,8 @@ class ListController extends Controller
         $input['list_title'] = $request['list_title'];
         $input['owner_id'] = $current_user_id;
         $input['visibility_status_id'] = 1;
-        $input['status_id'] = 1;
-        $input['status_date'] = date('Y-m-d H:i:s');
         $input['date_created'] = date('Y-m-d H:i:s');
+        $input['collapsed'] = 1;
 
         $new_list = User_List::create($input);
 
