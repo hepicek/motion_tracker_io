@@ -58,9 +58,9 @@ class ListController extends Controller
     }
     public function updateUserList(Request $request, $id)
     {
-        $user_lists = User_List::findOrFail($id)->update(['collapsed'=>$request->collapsed]);
+        $user_list = User_List::findOrFail($id)->update(['collapsed'=>$request->collapsed]);
 
-        return $user_lists;
+        return 200;
     }
 
     public function destroyUserList(Request $request, $id)

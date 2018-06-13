@@ -39,7 +39,7 @@ export default class Dashboard extends Component {
     handleListTitleClick(e) {
         e.stopPropagation();
         let currentListId = e.target.id.split("-")[1];
-                let userLists = this.state.userLists;
+        let userLists = this.state.userLists;
         userLists.forEach(list => {
             if(list.id == currentListId) {
                 list.collapsed = list.collapsed === 0 ? 1 : 0;
