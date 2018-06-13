@@ -49,4 +49,11 @@ class ListController extends Controller
         return response()->json(['response' => $user_lists], 200);
         // $user_lists, $list_items
     }
+
+    public function storeUserList(Request $request)
+    {
+        $current_user_id = Auth::id();
+
+        return List_Item::create($request->all());
+    }
 }

@@ -34,6 +34,7 @@ Route::post('userRegister', 'UserController@userRegister');
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('userDetails', 'UserController@userDetails');
     Route::get('userLists', 'ListController@getUserLists');
+    Route::post('userLists', 'ListController@storeUserList');
 });
 
 
