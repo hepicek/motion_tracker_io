@@ -3053,6 +3053,281 @@
   clip: auto;
 }
 
+.topMovies {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.searchBar {
+  position: relative;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.searchBar > * {
+  margin: 0 10px;
+}
+
+.searchBar p {
+  margin: 0;
+}
+
+#searchBar-input,
+#searchBar-mode {
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid slategray;
+  outline: none;
+}
+
+#searchBar-input {
+  width: 250px;
+  padding: 0 5px;
+  margin-right: 20px;
+}
+
+#searchBar-mode {
+  margin: 0 10px;
+  width: 150px;
+}
+
+#searchBar-submit {
+  border: 1px solid dodgerblue;
+  background-color: dodgerblue;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  padding: 5px 20px;
+  font-family: 'Raleway';
+  cursor: pointer;
+  outline: none;
+  -webkit-transition: background-color .2s, color .2s;
+  transition: background-color .2s, color .2s;
+}
+
+#searchBar-submit:hover {
+  color: dodgerblue;
+  background-color: white;
+}
+
+#listsWidget {
+  width: 28%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 5px 5px 10px 0 black;
+          box-shadow: 5px 5px 10px 0 black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#listsWidget-topButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#listsWidget-topButtons p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0;
+}
+
+#listsWidget-topButtons p:first-child i {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 5px;
+}
+
+#listsWidget-topButtons p:nth-child(2) i {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: 5px;
+}
+
+#listsWidget-topButtons i {
+  color: slategray;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+#listsWidget-lists {
+  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.listHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.listItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+.listItem img {
+  height: 100px;
+}
+
+.listTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.expandedListItems {
+  padding-left: 15px;
+}
+
+.listDeleteBtn {
+  cursor: pointer;
+}
+
+.newListInput {
+  outline: none;
+  border: 1px solid slategray;
+  border-radius: 10px;
+  padding: 5px;
+  width: 80%;
+}
+
+#topMoviesWidget {
+  height: 600px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  overflow-y: scroll;
+}
+
+.topMoviesWidgetCard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 2px;
+  width: 23%;
+  cursor: pointer;
+  margin: 2px;
+}
+
+.topMoviesWidgetCard-img {
+  width: 8rem;
+}
+
+.topMoviesWidgetCard-title {
+  text-align: center;
+}
+
+.dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+.searchSection {
+  width: 70%;
+}
+
+.dashboardWidget {
+  padding: 10px;
+  margin: 10px;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.dashboardWidget::-webkit-scrollbar {
+  width: .3em;
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.dashboardWidget::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.dashboardWidget::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 20px;
+  z-index: -1;
+}
+
 /*!
  * Bootstrap v4.1.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
@@ -13477,18 +13752,6 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.topMovies {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 100%;
-}
-
 .dashboard {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -13527,220 +13790,5 @@ a.text-dark:focus {
   outline: 1px solid slategrey;
   border-radius: 20px;
   z-index: -1;
-}
-
-.searchBar {
-  position: relative;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.searchBar > * {
-  margin: 0 10px;
-}
-
-.searchBar p {
-  margin: 0;
-}
-
-#searchBar-input,
-#searchBar-mode {
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid slategray;
-  outline: none;
-}
-
-#searchBar-input {
-  width: 250px;
-  padding: 0 5px;
-  margin-right: 20px;
-}
-
-#searchBar-mode {
-  margin: 0 10px;
-  width: 150px;
-}
-
-#searchBar-submit {
-  border: 1px solid dodgerblue;
-  background-color: dodgerblue;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  padding: 5px 20px;
-  font-family: 'Raleway';
-  cursor: pointer;
-  outline: none;
-  -webkit-transition: background-color .2s, color .2s;
-  transition: background-color .2s, color .2s;
-}
-
-#searchBar-submit:hover {
-  color: dodgerblue;
-  background-color: white;
-}
-
-#topMoviesWidget {
-  height: 600px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  overflow-y: scroll;
-}
-
-.topMoviesWidgetCard {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 2px;
-  width: 23%;
-  cursor: pointer;
-  margin: 2px;
-}
-
-.topMoviesWidgetCard-img {
-  width: 8rem;
-}
-
-.topMoviesWidgetCard-title {
-  text-align: center;
-}
-
-#listsWidget {
-  width: 28%;
-  background-color: white;
-  padding: 10px;
-  border-radius: 10px;
-  -webkit-box-shadow: 5px 5px 10px 0 black;
-          box-shadow: 5px 5px 10px 0 black;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-#listsWidget-topButtons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-#listsWidget-topButtons p {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 0;
-}
-
-#listsWidget-topButtons p:first-child i {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-right: 5px;
-}
-
-#listsWidget-topButtons p:nth-child(2) i {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-left: 5px;
-}
-
-#listsWidget-topButtons i {
-  color: slategray;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-#listsWidget-lists {
-  width: 100%;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-.listHeader {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.listItem {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 100%;
-}
-
-.listItem img {
-  height: 100px;
-}
-
-.listTitle {
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.expandedListItems {
-  padding-left: 15px;
-}
-
-.listDeleteBtn {
-  cursor: pointer;
 }
 

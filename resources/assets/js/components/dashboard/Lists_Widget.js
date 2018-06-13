@@ -5,20 +5,21 @@ import LIST_ITEMS from './List_Items';
 
 const LISTS_WIDGET = (props) => {
     let lists = undefined;
+    let newList =  <input type="text"  placeholder="new list title" className="newListInput"/>
     if(props.lists.length > 0) {
-        lists = props.lists.map(list => (
+        lists = props.lists.map((list, index) => (
             <div 
-                key={list.id} 
-                id={list.id} 
+                key={list.id ? list.id : "new-" + index} 
+                id={list.id ? list.id : "new-" + index} 
                 className='listItem'
                 onClick={props.handleListTitleClick}
             >
                 <div className='listHeader'>
-                    <p 
+                    {list.id && <p 
                         className="listTitle"
                         id={"title-" + (list.id ? list.id : "new")} 
                         onClick={props.handleListTitleClick}
-                    >{list.list_title}</p>
+                    >{list.list_title}</p>}
                     <p 
                         className='listDeleteBtn'
                         id={"delete-" + (list.id ? list.id : "new")}
@@ -38,6 +39,7 @@ const LISTS_WIDGET = (props) => {
                 <p>edit lists<i className="fa fa-cog"></i></p>
             </div>
             <div id="listsWidget-lists">
+                {props.newList && newList}
                 {lists && lists}
             </div>
         </div>

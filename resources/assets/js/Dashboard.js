@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import jsonp from 'jsonp';
 import { TMDB_KEY } from '../../../config/js/config';
-import SEARCH_BAR from './components/Search_Bar';
-import TOP_MOVIES_WIDGET from './components/landing_page/Top_Movies_Widget';
-import LISTS_WIDGET from './components/landing_page/Lists_Widget';
+import SEARCH_BAR from './components/dashboard/Search_Bar';
+import TOP_MOVIES_WIDGET from './components/dashboard/Top_Movies_Widget';
+import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/landing_page/Friends_Widget';
 import axios from 'axios';
 
@@ -72,12 +72,18 @@ export default class Dashboard extends Component {
             items: [],
             list_title: ""
         }  
-        let userLists = this.state.userLists;
-        userLists.unshift(newList);
-        console.log("afdsdf", userLists); 
         this.setState({
-            userLists
-        })
+            newList
+        });
+        setTimeout(() => {
+            let newListInput = document.querySelector(".newListInput")
+            newListInput.focus();
+            window.addEventListener("keyup", () => {
+                console.log("KEYS!");
+            })
+        }, 0);
+        
+
         //create a new list object
         //add the new list to this.state
         //render it with an input and set focus to it and weight for 'enter key' or 'onBlur'
@@ -105,6 +111,7 @@ export default class Dashboard extends Component {
                     </div>
                     <LISTS_WIDGET 
                         lists={this.state.userLists}
+                        newList={this.state.newList ? this.state.newList : null}
                         handleListTitleClick={this.handleListTitleClick} 
                         handleListDeleteClick={this.handleListDeleteClick}
                         handleNewListBtnClick={this.handleNewListBtnClick} 

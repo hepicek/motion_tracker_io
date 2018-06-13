@@ -1,0 +1,77 @@
+
+#listsWidget {
+    width: 28%;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 0 black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+   }
+  #listsWidget-topButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  #listsWidget-topButtons p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+  #listsWidget-topButtons p:first-child i {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+  }
+  #listsWidget-topButtons p:nth-child(2) i {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+  }
+  #listsWidget-topButtons i {
+    color: slategray;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  #listsWidget-lists {
+    width: 100%;
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .listHeader {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .listItem {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    img {
+      height: 100px;
+    }
+  }
+  .listTitle {
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .expandedListItems {
+    padding-left: 15px;
+  }
+  .listDeleteBtn {
+    cursor: pointer; 
+  }
+  .newListInput {
+    outline: none;
+    border: 1px solid slategray;
+    border-radius: 10px;
+    padding: 5px;
+    width: 80%;
+  }

@@ -36456,9 +36456,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonp__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__config_js_config__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Search_Bar__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_landing_page_Top_Movies_Widget__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_landing_page_Lists_Widget__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_dashboard_Search_Bar__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_dashboard_Top_Movies_Widget__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_dashboard_Lists_Widget__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_landing_page_Friends_Widget__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_axios__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_axios__);
@@ -36559,12 +36559,17 @@ var Dashboard = function (_Component) {
                 items: [],
                 list_title: ""
             };
-            var userLists = this.state.userLists;
-            userLists.unshift(newList);
-            console.log("afdsdf", userLists);
             this.setState({
-                userLists: userLists
+                newList: newList
             });
+            setTimeout(function () {
+                var newListInput = document.querySelector(".newListInput");
+                newListInput.focus();
+                window.addEventListener("keyup", function () {
+                    console.log("KEYS!");
+                });
+            }, 0);
+
             //create a new list object
             //add the new list to this.state
             //render it with an input and set focus to it and weight for 'enter key' or 'onBlur'
@@ -36595,11 +36600,12 @@ var Dashboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'searchSection' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_Search_Bar__["a" /* default */], null),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_landing_page_Top_Movies_Widget__["a" /* default */], { topMovies: this.state.topMovies })
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_dashboard_Search_Bar__["a" /* default */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_dashboard_Top_Movies_Widget__["a" /* default */], { topMovies: this.state.topMovies })
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_landing_page_Lists_Widget__["a" /* default */], {
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_dashboard_Lists_Widget__["a" /* default */], {
                     lists: this.state.userLists,
+                    newList: this.state.newList ? this.state.newList : null,
                     handleListTitleClick: this.handleListTitleClick,
                     handleListDeleteClick: this.handleListDeleteClick,
                     handleNewListBtnClick: this.handleNewListBtnClick
@@ -56398,7 +56404,149 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 63 */
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+// import ReactDOM from 'react-dom';
+
+var FRIENDS_WIDGET = function FRIENDS_WIDGET(props) {
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'dashboardWidget' },
+        'I am the friends widget.'
+    );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (FRIENDS_WIDGET);
+
+/***/ }),
+/* 68 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonp__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__config_js_config__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var Landingpage = function (_Component) {
+    _inherits(Landingpage, _Component);
+
+    function Landingpage(props) {
+        _classCallCheck(this, Landingpage);
+
+        var _this = _possibleConstructorReturn(this, (Landingpage.__proto__ || Object.getPrototypeOf(Landingpage)).call(this, props));
+
+        _this.state = {
+            topMovies: []
+        };
+        return _this;
+    }
+
+    _createClass(Landingpage, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
+                if (err) {
+                    return undefined;
+                } else {
+                    _this2.setState({
+                        topMovies: data.results
+                    });
+                }
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var topMovies = this.state.topMovies.map(function (movie) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card', key: movie.id, style: { padding: '10px', width: '48%', height: '20rem', alignItems: 'center', flexDirection: 'row', margin: '2px' } },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { style: { width: '13rem' }, className: 'card-img-top', src: "http://image.tmdb.org/t/p/w185" + movie.poster_path, alt: 'Card image cap' }),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'card-body', style: { height: '100%', overflow: 'auto' } },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h5',
+                            { className: 'card-title' },
+                            movie.original_title
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            { className: 'card-text' },
+                            movie.overview
+                        )
+                    )
+                );
+            });
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'topMovies' },
+                    topMovies
+                )
+            );
+        }
+    }]);
+
+    return Landingpage;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Landingpage);
+
+
+if (document.getElementById('landingPage')) {
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Landingpage, null), document.getElementById('landingPage'));
+}
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56461,7 +56609,7 @@ var SEARCH_BAR = function SEARCH_BAR(props) {
 /* harmony default export */ __webpack_exports__["a"] = (SEARCH_BAR);
 
 /***/ }),
-/* 64 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56499,13 +56647,13 @@ var TOP_MOVIES_WIDGET = function TOP_MOVIES_WIDGET(props) {
 /* harmony default export */ __webpack_exports__["a"] = (TOP_MOVIES_WIDGET);
 
 /***/ }),
-/* 65 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List_Items__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List_Items__ = __webpack_require__(83);
 
 
 // import '../../..s/../../node_modules/font-awesome/css/font-awesome.min.css';
@@ -56513,20 +56661,21 @@ var TOP_MOVIES_WIDGET = function TOP_MOVIES_WIDGET(props) {
 
 var LISTS_WIDGET = function LISTS_WIDGET(props) {
     var lists = undefined;
+    var newList = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'new list title', className: 'newListInput' });
     if (props.lists.length > 0) {
-        lists = props.lists.map(function (list) {
+        lists = props.lists.map(function (list, index) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 {
-                    key: list.id,
-                    id: list.id,
+                    key: list.id ? list.id : "new-" + index,
+                    id: list.id ? list.id : "new-" + index,
                     className: 'listItem',
                     onClick: props.handleListTitleClick
                 },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'listHeader' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    list.id && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'p',
                         {
                             className: 'listTitle',
@@ -56573,6 +56722,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { id: 'listsWidget-lists' },
+            props.newList && newList,
             lists && lists
         )
     );
@@ -56581,7 +56731,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
 /* harmony default export */ __webpack_exports__["a"] = (LISTS_WIDGET);
 
 /***/ }),
-/* 66 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56616,141 +56766,6 @@ var LIST_ITEMS = function LIST_ITEMS(props) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (LIST_ITEMS);
-
-/***/ }),
-/* 67 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-
-// import ReactDOM from 'react-dom';
-
-var FRIENDS_WIDGET = function FRIENDS_WIDGET(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'dashboardWidget' },
-        'I am the friends widget.'
-    );
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (FRIENDS_WIDGET);
-
-/***/ }),
-/* 68 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jsonp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jsonp__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config_js_config___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__config_js_config__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-// import axios from 'axios';
-
-var Landingpage = function (_Component) {
-    _inherits(Landingpage, _Component);
-
-    function Landingpage(props) {
-        _classCallCheck(this, Landingpage);
-
-        var _this = _possibleConstructorReturn(this, (Landingpage.__proto__ || Object.getPrototypeOf(Landingpage)).call(this, props));
-
-        _this.state = {
-            topMovies: []
-        };
-        return _this;
-    }
-
-    _createClass(Landingpage, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            var _this2 = this;
-
-            // axios(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-            // .then(res => {
-            //     console.log(res);
-            // });
-
-            __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
-                if (err) {
-                    return undefined;
-                } else {
-                    console.log(data.results);
-                    _this2.setState({
-                        topMovies: data.results
-                    });
-                }
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var topMovies = this.state.topMovies.map(function (movie) {
-                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'card', key: movie.id, style: { padding: '10px', width: '48%', height: '20rem', alignItems: 'center', flexDirection: 'row', margin: '2px' } },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { style: { width: '13rem' }, className: 'card-img-top', src: "http://image.tmdb.org/t/p/w185" + movie.poster_path, alt: 'Card image cap' }),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'card-body', style: { height: '100%', overflow: 'auto' } },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'h5',
-                            { className: 'card-title' },
-                            movie.original_title
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            { className: 'card-text' },
-                            movie.overview
-                        )
-                    )
-                );
-            });
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'container' },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    'div',
-                    { className: 'topMovies' },
-                    topMovies
-                )
-            );
-        }
-    }]);
-
-    return Landingpage;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (Landingpage);
-
-
-if (document.getElementById('landingPage')) {
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Landingpage, null), document.getElementById('landingPage'));
-}
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
