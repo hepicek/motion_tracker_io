@@ -36506,13 +36506,28 @@ var Dashboard = function (_Component) {
         value: function saveNewList(e, newList) {
             var _this2 = this;
 
-            var newListInput = document.querySelector(".newListInput");
+            console.log(e.key);
+            e.stopPropagation();
+            var newListInput = document.getElementById("newListInput");
+            // console.log(newListInput);
             if (e.key == "Enter") {
+                window.removeEventListener("keyup", function (e) {
+                    _this2.saveNewList(e, newList);
+                });
+
+                console.log("Enter");
                 __WEBPACK_IMPORTED_MODULE_4_axios___default.a.post("/userLists", {
                     list_title: newListInput.value
                 }).then(function (res) {
+                    console.log(res);
                     delete _this2.state.newList;
+                    window.removeEventListener("keyup", function (e) {
+                        _this2.saveNewList(e, newList);
+                    });
                     _this2.getLists();
+                }).catch(function (err) {
+                    console.log(err);
+                    return err;
                 });
             }
         }
@@ -36598,6 +36613,9 @@ var Dashboard = function (_Component) {
             setTimeout(function () {
                 var newListInput = document.querySelector(".newListInput");
                 newListInput.focus();
+                window.removeEventListener("keyup", function (e) {
+                    _this6.saveNewList(e, newList);
+                });
                 window.addEventListener("keyup", function (e) {
                     _this6.saveNewList(e, newList);
                 });
@@ -56671,7 +56689,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
     var lists = undefined;
 
     //HTML for new list when 'Create New List' is clicked
-    var newList = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'new list title', className: 'newListInput' });
+    var newList = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'new list title', className: 'newListInput', id: 'newListInput' });
 
     if (props.lists.length > 0) {
         lists = props.lists.map(function (list, index) {

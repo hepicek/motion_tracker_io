@@ -25,18 +25,29 @@ export default class Dashboard extends Component {
     }
 
     saveNewList(e, newList) {
-        const newListInput = document.querySelector(".newListInput");
+        console.log(e.key);
+        e.stopPropagation();
+        const newListInput = document.getElementById("newListInput");
+        // console.log(newListInput);
         if(e.key == "Enter") {
+            window.removeEventListener("keyup", (e) => {this.saveNewList(e, newList)});
+
+            console.log("Enter")
             axios.post("/userLists", {
                 list_title: newListInput.value
             })
             .then(res => {
+                console.log(res);
                 delete this.state.newList;
+                window.removeEventListener("keyup", (e) => {this.saveNewList(e, newList)});
                 this.getLists();
+            }).catch(err => {
+                console.log(err);
+                return err;
             })
         }        
     }
-
+    
     //Gets User's Lists
     getLists() {
         axios('/userLists')
@@ -102,6 +113,7 @@ export default class Dashboard extends Component {
         setTimeout(() => {
             let newListInput = document.querySelector(".newListInput");
             newListInput.focus();
+            window.removeEventListener("keyup", (e) => {this.saveNewList(e, newList)});
             window.addEventListener("keyup", (e) => {this.saveNewList(e, newList)});
         }, 0);
     }

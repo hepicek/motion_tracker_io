@@ -6,7 +6,7 @@ const LISTS_WIDGET = (props) => {
     let lists = undefined;
 
     //HTML for new list when 'Create New List' is clicked
-    let newList =  <input type="text"  placeholder="new list title" className="newListInput"/>
+    let newList =  <input type="text"  placeholder="new list title" className="newListInput" id="newListInput" />
 
     if(props.lists.length > 0) {
         lists = props.lists.map((list, index) => (
