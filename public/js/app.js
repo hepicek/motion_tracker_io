@@ -36489,84 +36489,55 @@ var Dashboard = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
         _this.state = {
+            reRender: false,
             topMovies: [],
-            userLists: [{
-                id: 1,
-                title: 'We love French action movies',
-                items: [{
-                    id: 1,
-                    image: '',
-                    title: 'Fifth Element',
-                    director: 'Luc Besson',
-                    year: 2012
-                }, {
-                    id: 2,
-                    image: '',
-                    title: 'Fifth Element',
-                    director: 'Luc Besson',
-                    year: 2012
-
-                }, {
-                    id: 3,
-                    image: '',
-                    title: 'Fifth Element',
-                    director: 'Luc Besson',
-                    year: 2012
-
-                }, {
-                    id: 4,
-                    image: '',
-                    title: 'Fifth Element',
-                    director: 'Luc Besson',
-                    year: 2012
-
-                }, {
-                    id: 5,
-                    image: '',
-                    title: 'Fifth Element',
-                    director: 'Luc Besson',
-                    year: 2012
-
-                }],
-                collapsed: false
-            }, {
-                id: 2,
-                title: 'Date Movies',
-                items: [{}],
-                collapsed: true
-            }, {
-                id: 3,
-                title: 'For Jen',
-                items: [{}],
-                collapsed: true
-            }, {
-                id: 4,
-                title: 'Awesome Sci-fi',
-                items: [{}],
-                collapsed: true
-            }, {
-                id: 5,
-                title: 'I love Patrick Stewart',
-                items: [{}],
-                collapsed: true
-            }],
+            userLists: [],
             friends: []
         };
         _this.handleListTitleClick = _this.handleListTitleClick.bind(_this);
+        _this.handleListDeleteClick = _this.handleListDeleteClick.bind(_this);
         return _this;
     }
 
     _createClass(Dashboard, [{
+        key: 'getLists',
+        value: function getLists() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_8_axios___default()('/userLists').then(function (response) {
+                if (response.data.response) {
+                    var userLists = Object.keys(response.data.response).map(function (k) {
+                        return response.data.response[k];
+                    });
+                    // userLists.forEach(list => {
+                    //     list.collapsed = true;
+                    // })
+                    // userLists[0].collapsed = false;
+                    _this2.setState({
+                        userLists: userLists
+                    });
+                    // console.log(userLists);
+                }
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
         key: 'handleListTitleClick',
         value: function handleListTitleClick(e) {
             e.stopPropagation();
-            var currentListId = e.target.id;
-
+            var currentListId = e.target.id.split("-")[1];
             var userLists = this.state.userLists;
             userLists.forEach(function (list) {
-
                 if (list.id == currentListId) {
-                    list.collapsed = list.collapsed ? false : true;
+                    list.collapsed = list.collapsed === 0 ? 1 : 0;
+                    __WEBPACK_IMPORTED_MODULE_8_axios___default.a.put('userLists/' + currentListId, {
+                        collapsed: list.collapsed
+                    }).then(function (result) {
+                        console.log(result);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
                 }
             });
 
@@ -36575,23 +36546,30 @@ var Dashboard = function (_Component) {
             });
         }
     }, {
+        key: 'handleListDeleteClick',
+        value: function handleListDeleteClick(e) {
+            var _this3 = this;
+
+            __WEBPACK_IMPORTED_MODULE_8_axios___default.a.delete('userLists/' + e.target.id.split("-")[1]).then(function (response) {
+                _this3.getLists();
+                console.log(response);
+            });
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this2 = this;
+            var _this4 = this;
 
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
                 } else {
-                    // console.log(data.results);
-                    _this2.setState({
+                    _this4.setState({
                         topMovies: data.results
                     });
                 }
             });
-            __WEBPACK_IMPORTED_MODULE_8_axios___default()('/userLists').then(function (response) {
-                console.log(response);
-            });
+            this.getLists();
         }
     }, {
         key: 'render',
@@ -36607,7 +36585,8 @@ var Dashboard = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_landing_page_Lists_Widget__["a" /* default */], {
                     lists: this.state.userLists,
-                    handleListTitleClick: this.handleListTitleClick
+                    handleListTitleClick: this.handleListTitleClick,
+                    handleListDeleteClick: this.handleListDeleteClick
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_landing_page_Friends_Widget__["a" /* default */], null)
             );
@@ -56517,27 +56496,43 @@ var TOP_MOVIES_WIDGET = function TOP_MOVIES_WIDGET(props) {
 // import ReactDOM from 'react-dom';
 
 var LISTS_WIDGET = function LISTS_WIDGET(props) {
-    var lists = props.lists.map(function (list) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            {
-                key: list.id,
-                id: list.id,
-                className: 'listItem',
-                onClick: props.handleListTitleClick
-            },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'p',
+    var lists = undefined;
+    if (props.lists.length > 0) {
+        lists = props.lists.map(function (list) {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
                 {
-                    className: 'listTitle',
+                    key: list.id,
                     id: list.id,
+                    className: 'listItem',
                     onClick: props.handleListTitleClick
                 },
-                list.title
-            ),
-            !list.collapsed && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__List_Items__["a" /* default */], { items: list.items })
-        );
-    });
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'listHeader' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        {
+                            className: 'listTitle',
+                            id: "title-" + list.id,
+                            onClick: props.handleListTitleClick
+                        },
+                        list.list_title
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'p',
+                        {
+                            className: 'listDeleteBtn',
+                            id: "delete-" + list.id,
+                            onClick: props.handleListDeleteClick
+                        },
+                        'x'
+                    )
+                ),
+                list.collapsed == 0 && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__List_Items__["a" /* default */], { items: list.items })
+            );
+        });
+    }
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         { className: 'dashboardWidget', id: 'listsWidget' },
@@ -56560,7 +56555,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { id: 'listsWidget-lists' },
-            lists
+            lists && lists
         )
     );
 };
@@ -56577,21 +56572,24 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
 
 
 var LIST_ITEMS = function LIST_ITEMS(props) {
-    var items = props.items.map(function (item) {
+
+    var itemsArray = Object.keys(props.items).map(function (k) {
+        return props.items[k];
+    });
+
+    var items = itemsArray ? itemsArray.map(function (item) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
             { key: item.id },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "p",
                 null,
-                item.title,
-                " - ",
-                item.director,
+                item.name,
                 " - ",
                 item.year
             )
         );
-    });
+    }) : undefined;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
         { className: "expandedListItems" },

@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 
 const LIST_ITEMS = (props) => {
-    let items = props.items.map(item => (
+
+    let itemsArray = Object.keys(props.items).map(function(k) { return props.items[k] });
+
+    let items = itemsArray ? itemsArray.map(item => (
         <div key={item.id}>
-            <p>{item.title} - {item.director} - {item.year}</p>
+            <p>{item.name} - {item.year}</p>
         </div>
-       ))
+       )) : undefined;
    return (
-       <div className="expandedListItems">
+    <div className="expandedListItems">
        {items}
-        </div>
+    </div>
     )
 };
 

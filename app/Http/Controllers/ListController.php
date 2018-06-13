@@ -21,7 +21,6 @@ class ListController extends Controller
     public function getUserLists(Request $request) {
         $current_user_id = Auth::id();
         $user_lists = User_List::where('owner_id', $current_user_id)->get()->getDictionary();
-
         // foreach($user_lists as $list) {
         //     $list['items'] = List_Item::where('list_id', $list['id'])->get();
         // }
@@ -34,7 +33,7 @@ class ListController extends Controller
             ->leftJoin('imdb_movie', 'show_id', '=', 'imdb_movie.imdb_id')
             ->whereIn('list_id', array_keys($user_lists))
             ->get()->getDictionary();
-        // var_dump($list_items);
+
         foreach($list_items as $key => $list_item) {
             $array = $user_lists[$list_item->list_id]->items;
 
@@ -66,6 +65,12 @@ class ListController extends Controller
         $success['list_title'] = $new_list->list_title;
 
         return response()->json(['success'=>$success], 200);
+    }
+    public function updateUserList(Request $request, $id)
+    {
+        $user_lists = User_List::findOrFail($id); //->update(['collapsed'=>$request->collapsed]);
+
+        return $user_lists;
     }
 
     public function destroyUserList(Request $request, $id)

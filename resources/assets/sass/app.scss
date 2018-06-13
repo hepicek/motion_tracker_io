@@ -169,7 +169,11 @@
   padding: 10px;
   border-radius: 10px;
 }
-
+.listHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
 .listItem {
   display: flex;
   flex-direction: column;

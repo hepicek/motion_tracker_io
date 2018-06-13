@@ -23,6 +23,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('userLists', 'ListController@getUserLists');
     Route::post('userLists', 'ListController@storeUserList');
     Route::delete('userLists/{id}', 'ListController@destroyUserList');
+    Route::put('userLists/{id}', 'ListController@updateUserList');
 
 });
 

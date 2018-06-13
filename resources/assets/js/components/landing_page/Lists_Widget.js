@@ -4,21 +4,31 @@ import LIST_ITEMS from './List_Items';
 // import ReactDOM from 'react-dom';
 
 const LISTS_WIDGET = (props) => {
-    const lists = props.lists.map(list => (
-        <div 
-            key={list.id} 
-            id={list.id} 
-            className='listItem'
-            onClick={props.handleListTitleClick}
-        >
-            <p 
-                className="listTitle"
+    let lists = undefined;
+    if(props.lists.length > 0) {
+        lists = props.lists.map(list => (
+            <div 
+                key={list.id} 
                 id={list.id} 
+                className='listItem'
                 onClick={props.handleListTitleClick}
-            >{list.title}</p>
-            {!list.collapsed && <LIST_ITEMS items={list.items}/>}
-        </div>
-    ));
+            >
+                <div className='listHeader'>
+                    <p 
+                        className="listTitle"
+                        id={"title-" + list.id} 
+                        onClick={props.handleListTitleClick}
+                    >{list.list_title}</p>
+                    <p 
+                        className='listDeleteBtn'
+                        id={"delete-" + list.id}
+                        onClick={props.handleListDeleteClick}
+                    >x</p>
+                </div>
+                {list.collapsed == 0 && <LIST_ITEMS items={list.items}/>}
+            </div>
+        ));
+    }
     return (
         <div className="dashboardWidget" id="listsWidget">
             <div id="listsWidget-topButtons">
@@ -26,7 +36,7 @@ const LISTS_WIDGET = (props) => {
                 <p>edit lists<i className="fa fa-cog"></i></p>
             </div>
             <div id="listsWidget-lists">
-                {lists}
+                {lists && lists}
             </div>
         </div>
     )

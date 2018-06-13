@@ -12,104 +12,48 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            reRender: false,
             topMovies: [],
-            userLists: [
-                {
-                    id: 1,
-                    title: 'We love French action movies',
-                    items: [{
-                        id: 1,
-                        image: '',
-                        title: 'Fifth Element',
-                        director: 'Luc Besson',
-                        year: 2012,
-                    },
-                    {
-                        id: 2,
-                        image: '',
-                        title: 'Fifth Element',
-                        director: 'Luc Besson',
-                        year: 2012,
-
-                    },
-                    {
-                        id: 3,
-                        image: '',
-                        title: 'Fifth Element',
-                        director: 'Luc Besson',
-                        year: 2012,
-
-                    },
-                    {
-                        id: 4,
-                        image: '',
-                        title: 'Fifth Element',
-                        director: 'Luc Besson',
-                        year: 2012,
-
-                    },  
-                    {
-                        id: 5,
-                        image: '',
-                        title: 'Fifth Element',
-                        director: 'Luc Besson',
-                        year: 2012,
-
-                    },
-                    ],
-                    collapsed: false
-                },
-                {
-                    id: 2,
-                    title: 'Date Movies',
-                    items: [{
-
-                        },
-                    ],
-                    collapsed: true
-                },
-                {
-                    id: 3,
-                    title: 'For Jen',
-                    items: [{
-
-                        },
-                    ],
-                    collapsed: true
-                },
-                {
-                    id: 4,
-                    title: 'Awesome Sci-fi',
-                    items: [{
-
-                        },
-                    ],
-                    collapsed: true
-                },
-                {
-                    id: 5,
-                    title: 'I love Patrick Stewart',
-                    items: [{
-
-                        },
-                    ],
-                    collapsed: true
-                }
-            ],
+            userLists: [],
             friends: []
         }
-        this.handleListTitleClick = this.handleListTitleClick.bind(this);       
+        this.handleListTitleClick = this.handleListTitleClick.bind(this);    
+        this.handleListDeleteClick = this.handleListDeleteClick.bind(this);   
     }
-
+    getLists() {
+        axios('/userLists')
+        .then(response => {
+          if(response.data.response) {
+                let userLists = Object.keys(response.data.response).map(function(k) { return response.data.response[k] });
+                // userLists.forEach(list => {
+                //     list.collapsed = true;
+                // })
+                // userLists[0].collapsed = false;
+                this.setState({
+                    userLists
+                })
+                // console.log(userLists);
+            }
+            
+        }).catch(err => {
+            console.log(err);
+        });
+    }
     handleListTitleClick(e) {
         e.stopPropagation();
-        let currentListId = e.target.id;
-
-        let userLists = this.state.userLists;
+        let currentListId = e.target.id.split("-")[1];
+                let userLists = this.state.userLists;
         userLists.forEach(list => {
-            
             if(list.id == currentListId) {
-                list.collapsed = list.collapsed ? false : true;
+                list.collapsed = list.collapsed === 0 ? 1 : 0;
+                axios.put('userLists/' + currentListId,{
+                    collapsed: list.collapsed
+                }).then(result => {
+                    console.log(result);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             }
         })
 
@@ -117,21 +61,25 @@ export default class Dashboard extends Component {
             userLists
         })
     }
+    handleListDeleteClick(e) {
+        axios.delete('userLists/' + e.target.id.split("-")[1])
+        .then(response => {
+            this.getLists();  
+            console.log(response); 
+        })
+        
+    }
     componentWillMount() {
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
             if (err) {
                 return undefined;
             } else {
-                // console.log(data.results);
                 this.setState({
                     topMovies: data.results
                 });
             }
         });
-        axios('/userLists')
-        .then(response => {
-            console.log(response)
-        })
+        this.getLists();
     }
     render() {
         return (
@@ -143,10 +91,10 @@ export default class Dashboard extends Component {
                     </div>
                     <LISTS_WIDGET 
                         lists={this.state.userLists}
-                        handleListTitleClick={this.handleListTitleClick}    
+                        handleListTitleClick={this.handleListTitleClick} 
+                        handleListDeleteClick={this.handleListDeleteClick}   
                     />
                     <FRIENDS_WIDGET />
-                
             </div>
         );
     }
