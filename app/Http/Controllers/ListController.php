@@ -53,7 +53,26 @@ class ListController extends Controller
     public function storeUserList(Request $request)
     {
         $current_user_id = Auth::id();
+        $input = $request->all();
+        $input['list_title'] = $request['list_title'];
+        $input['owner_id'] = $current_user_id;
+        $input['visibility_status_id'] = 1;
+        $input['status_id'] = 1;
+        $input['status_date'] = date('Y-m-d H:i:s');
+        $input['date_created'] = date('Y-m-d H:i:s');
 
-        return List_Item::create($request->all());
+        $new_list = User_List::create($input);
+
+        $success['list_title'] = $new_list->list_title;
+
+        return response()->json(['success'=>$success], 200);
+    }
+
+    public function destroyUserList(Request $request, $id)
+    {
+        $user_list = User_List::findOrFail($id);
+        $user_list->delete();
+
+        return 204;
     }
 }
