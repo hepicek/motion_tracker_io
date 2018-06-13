@@ -6,6 +6,7 @@ import SEARCH_BAR from './components/Search_Bar';
 import TOP_MOVIES_WIDGET from './components/landing_page/Top_Movies_Widget';
 import LISTS_WIDGET from './components/landing_page/Lists_Widget';
 import FRIENDS_WIDGET from './components/landing_page/Friends_Widget';
+import axios from 'axios';
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -127,6 +128,10 @@ export default class Dashboard extends Component {
                 });
             }
         });
+        axios('/userLists')
+        .then(response => {
+            console.log(response)
+        })
     }
     render() {
         return (

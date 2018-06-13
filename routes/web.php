@@ -19,6 +19,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/dashboard', 'DashboardController@index');
     // Route::get('lists', 'ListController@index');
     // Route::get('lists/{user_id}/{list_id}', 'ListsController@view');
+    Route::get('userDetails', 'UserController@userDetails');
+    Route::get('userLists', 'ListController@getUserLists');
+    Route::post('userLists', 'ListController@storeUserList');
+    Route::delete('userLists/{id}', 'ListController@destroyUserList');
 
 });
 
