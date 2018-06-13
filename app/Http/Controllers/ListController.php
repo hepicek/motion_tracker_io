@@ -13,17 +13,12 @@ class ListController extends Controller
 {
     use AuthenticatesUsers;
     public function index(Request $request) {
-        dd(Auth::id());
-        // dd($request);
-        // dd(Sentry::getUser()->id);
         return Auth::id();
     }
     public function getUserLists(Request $request) {
         $current_user_id = Auth::id();
         $user_lists = User_List::where('owner_id', $current_user_id)->get()->getDictionary();
-        // foreach($user_lists as $list) {
-        //     $list['items'] = List_Item::where('list_id', $list['id'])->get();
-        // }
+
 
         foreach($user_lists as $list) {
             $list->items = [];
@@ -39,14 +34,9 @@ class ListController extends Controller
 
             $array[$key] = $list_item;
             $user_lists[$list_item->list_id]->items = $array;
-
-
-            
-            
         }
 
         return response()->json(['response' => $user_lists], 200);
-        // $user_lists, $list_items
     }
 
     public function storeUserList(Request $request)
