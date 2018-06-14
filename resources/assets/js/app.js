@@ -15,3 +15,4 @@ require('./bootstrap');
 
 require('./Dashboard');
 require('./Landingpage');
+require('./User_Profile');

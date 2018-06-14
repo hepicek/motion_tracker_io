@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import LIST_ITEMS from './List_Items';
-
+import New_List from './New_List';
 
 const LISTS_WIDGET = (props) => {
     let lists = undefined;
-
-    //HTML for new list when 'Create New List' is clicked
-    let newList =  <input type="text"  placeholder="new list title" className="newListInput" id="newListInput" />
 
     if(props.lists.length > 0) {
         lists = props.lists.map((list, index) => (
@@ -41,7 +38,7 @@ const LISTS_WIDGET = (props) => {
                 <p>edit lists<i className="fa fa-cog"></i></p>
             </div>
             <div id="listsWidget-lists">
-                {props.newList && newList}
+                {props.newList && <New_List saveNewList={props.saveNewList}/>}
                 {lists && lists}
             </div>
         </div>

@@ -65,7 +65,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <a class="dropdown-item" href="/dashboard">
+                                    <a class="dropdown-item" href="/userprofile">
                                         {{ __('My Profile') }}
                                     </a>
 

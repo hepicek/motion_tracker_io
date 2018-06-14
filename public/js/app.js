@@ -14424,6 +14424,7 @@ __webpack_require__(24);
 
 __webpack_require__(46);
 __webpack_require__(68);
+__webpack_require__(86);
 
 /***/ }),
 /* 24 */
@@ -36493,36 +36494,27 @@ var Dashboard = function (_Component) {
         _this.state = {
             topMovies: [],
             userLists: [],
-            friends: []
+            friends: [],
+            newList: false
         };
         _this.handleListTitleClick = _this.handleListTitleClick.bind(_this);
         _this.handleListDeleteClick = _this.handleListDeleteClick.bind(_this);
         _this.handleNewListBtnClick = _this.handleNewListBtnClick.bind(_this);
+        _this.saveNewList = _this.saveNewList.bind(_this);
         return _this;
     }
 
     _createClass(Dashboard, [{
         key: 'saveNewList',
-        value: function saveNewList(e, newList) {
+        value: function saveNewList(e) {
             var _this2 = this;
 
-            console.log(e.key);
-            e.stopPropagation();
-            var newListInput = document.getElementById("newListInput");
-            // console.log(newListInput);
             if (e.key == "Enter") {
-                window.removeEventListener("keyup", function (e) {
-                    _this2.saveNewList(e, newList);
-                });
-
-                console.log("Enter");
                 __WEBPACK_IMPORTED_MODULE_4_axios___default.a.post("/userLists", {
                     list_title: newListInput.value
                 }).then(function (res) {
-                    console.log(res);
-                    delete _this2.state.newList;
-                    window.removeEventListener("keyup", function (e) {
-                        _this2.saveNewList(e, newList);
+                    _this2.setState({
+                        newList: false
                     });
                     _this2.getLists();
                 }).catch(function (err) {
@@ -36589,7 +36581,6 @@ var Dashboard = function (_Component) {
 
             __WEBPACK_IMPORTED_MODULE_4_axios___default.a.delete('userLists/' + e.target.id.split("-")[1]).then(function (response) {
                 _this5.getLists();
-                console.log(response);
             });
         }
 
@@ -36598,40 +36589,21 @@ var Dashboard = function (_Component) {
     }, {
         key: 'handleNewListBtnClick',
         value: function handleNewListBtnClick() {
-            var _this6 = this;
-
-            var newList = {
-                collapsed: 1,
-                items: [],
-                list_title: ""
-            };
             this.setState({
-                newList: newList
+                newList: true
             });
-            //setTimeout used because setState is async so this puts the
-            //code on the event queue behind the render function 
-            setTimeout(function () {
-                var newListInput = document.querySelector(".newListInput");
-                newListInput.focus();
-                window.removeEventListener("keyup", function (e) {
-                    _this6.saveNewList(e, newList);
-                });
-                window.addEventListener("keyup", function (e) {
-                    _this6.saveNewList(e, newList);
-                });
-            }, 0);
         }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this7 = this;
+            var _this6 = this;
 
             //external API call for Top 20 movies
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
                 } else {
-                    _this7.setState({
+                    _this6.setState({
                         topMovies: data.results
                     });
                 }
@@ -36655,7 +36627,8 @@ var Dashboard = function (_Component) {
                     newList: this.state.newList ? this.state.newList : null,
                     handleListTitleClick: this.handleListTitleClick,
                     handleListDeleteClick: this.handleListDeleteClick,
-                    handleNewListBtnClick: this.handleNewListBtnClick
+                    handleNewListBtnClick: this.handleNewListBtnClick,
+                    saveNewList: this.saveNewList
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_dashboard_Friends_Widget__["a" /* default */], null)
             );
@@ -56682,14 +56655,13 @@ var TOP_MOVIES_WIDGET = function TOP_MOVIES_WIDGET(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__List_Items__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__New_List__ = __webpack_require__(85);
+
 
 
 
 var LISTS_WIDGET = function LISTS_WIDGET(props) {
     var lists = undefined;
-
-    //HTML for new list when 'Create New List' is clicked
-    var newList = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', placeholder: 'new list title', className: 'newListInput', id: 'newListInput' });
 
     if (props.lists.length > 0) {
         lists = props.lists.map(function (list, index) {
@@ -56751,7 +56723,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { id: 'listsWidget-lists' },
-            props.newList && newList,
+            props.newList && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__New_List__["a" /* default */], { saveNewList: props.saveNewList }),
             lists && lists
         )
     );
@@ -56816,6 +56788,165 @@ var FRIENDS_WIDGET = function FRIENDS_WIDGET(props) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (FRIENDS_WIDGET);
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var New_List = function (_Component) {
+    _inherits(New_List, _Component);
+
+    function New_List(props) {
+        _classCallCheck(this, New_List);
+
+        var _this = _possibleConstructorReturn(this, (New_List.__proto__ || Object.getPrototypeOf(New_List)).call(this, props));
+
+        _this.newListInput = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createRef();
+
+        return _this;
+    }
+
+    _createClass(New_List, [{
+        key: 'componenentDidMount',
+        value: function componenentDidMount() {
+            console.log("WTF!");
+            this.newListInput.current.focus();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                type: 'text',
+                placeholder: 'new list title',
+                className: 'newListInput',
+                id: 'newListInput',
+                ref: this.newListInput,
+                onKeyUp: this.props.saveNewList
+            });
+        }
+    }]);
+
+    return New_List;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (New_List);
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+ //For API calls
+
+var User_Profile = function (_Component) {
+    _inherits(User_Profile, _Component);
+
+    function User_Profile(props) {
+        _classCallCheck(this, User_Profile);
+
+        var _this = _possibleConstructorReturn(this, (User_Profile.__proto__ || Object.getPrototypeOf(User_Profile)).call(this, props));
+
+        _this.state = {
+            userDetails: []
+        };
+
+        return _this;
+    }
+
+    _createClass(User_Profile, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            __WEBPACK_IMPORTED_MODULE_2_axios___default()("/userDetails").then(function (res) {
+                var userDetails = Object.keys(res.data).map(function (key) {
+                    return res.data[key];
+                })[0];
+                _this2.setState({
+                    userDetails: {
+                        first_name: userDetails.first_name,
+                        last_name: userDetails.last_name,
+                        email: userDetails.email,
+                        dob: userDetails.dob,
+                        common_name: userDetails.common_name
+                    }
+                });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var userDetails = this.state.userDetails;
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'userProfileMain' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'h1',
+                    null,
+                    userDetails.common_name,
+                    '\'s Profile'
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'userProfileDetails' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'form',
+                        { className: 'userProfileForm', name: 'userProfileForm', method: 'post' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'first_name', value: userDetails.first_name }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'last_name', value: userDetails.last_name }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'common_name', value: userDetails.common_name }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'email', value: userDetails.email }),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'dob', value: userDetails.dob })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return User_Profile;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (User_Profile);
+
+
+if (document.getElementById('userprofile')) {
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(User_Profile, null), document.getElementById('userprofile'));
+}
 
 /***/ })
 /******/ ]);

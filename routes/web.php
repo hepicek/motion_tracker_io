@@ -18,9 +18,11 @@ Auth::routes();
 Route::get('/', 'LandingpageController@index');
 Route::group(['middleware' => ['auth']], function() {
     
+    //Page View Routes
     Route::get('/dashboard', 'DashboardController@index');
-    // Route::get('lists', 'ListController@index');
-    // Route::get('lists/{user_id}/{list_id}', 'ListsController@view');
+    Route::get('/userprofile', 'UserprofileController@index');
+
+    //Data Routes
     Route::get('userDetails', 'UserController@userDetails');
     Route::get('userLists', 'ListController@getUserLists');
     Route::post('userLists', 'ListController@storeUserList');

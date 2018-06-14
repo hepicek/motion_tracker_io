@@ -17,29 +17,24 @@ export default class Dashboard extends Component {
         this.state = {
             topMovies: [],
             userLists: [],
-            friends: []
+            friends: [],
+            newList: false
         }
         this.handleListTitleClick = this.handleListTitleClick.bind(this);    
         this.handleListDeleteClick = this.handleListDeleteClick.bind(this); 
         this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);  
+        this.saveNewList = this.saveNewList.bind(this);
     }
 
-    saveNewList(e, newList) {
-        console.log(e.key);
-        e.stopPropagation();
-        const newListInput = document.getElementById("newListInput");
-        // console.log(newListInput);
+    saveNewList(e) {
         if(e.key == "Enter") {
-            window.removeEventListener("keyup", (e) => {this.saveNewList(e, newList)});
-
-            console.log("Enter")
             axios.post("/userLists", {
                 list_title: newListInput.value
             })
             .then(res => {
-                console.log(res);
-                delete this.state.newList;
-                window.removeEventListener("keyup", (e) => {this.saveNewList(e, newList)});
+                this.setState({
+                    newList: false
+                })
                 this.getLists();
             }).catch(err => {
                 console.log(err);
@@ -93,29 +88,14 @@ export default class Dashboard extends Component {
         axios.delete('userLists/' + e.target.id.split("-")[1])
         .then(response => {
             this.getLists();  
-            console.log(response); 
-        })
-        
+        });        
     }
 
     //create a new list
     handleNewListBtnClick() {
-        let newList = {
-            collapsed: 1,
-            items: [],
-            list_title: ""
-        }  
         this.setState({
-            newList
+            newList: true
         });
-        //setTimeout used because setState is async so this puts the
-        //code on the event queue behind the render function 
-        setTimeout(() => {
-            let newListInput = document.querySelector(".newListInput");
-            newListInput.focus();
-            window.removeEventListener("keyup", (e) => {this.saveNewList(e, newList)});
-            window.addEventListener("keyup", (e) => {this.saveNewList(e, newList)});
-        }, 0);
     }
 
     componentWillMount() {
@@ -145,6 +125,7 @@ export default class Dashboard extends Component {
                         handleListTitleClick={this.handleListTitleClick} 
                         handleListDeleteClick={this.handleListDeleteClick}
                         handleNewListBtnClick={this.handleNewListBtnClick} 
+                        saveNewList={this.saveNewList}
                     />
                     <FRIENDS_WIDGET />
             </div>
