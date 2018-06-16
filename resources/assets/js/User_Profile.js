@@ -52,10 +52,11 @@ class User_Profile extends Component {
         FD.append('image', this.state.file, this.state.file.name);
         axios.post(`/userDetails/${this.state.id}`,FD)
         .then(res => {
-            this.setState({
-                file: "",
-                img_url: "img/" + this.state.file.name
-            });
+            // this.setState({
+            //     file: "",
+            //     img_url: "img/user_profile_img/" + this.state.file.name
+            // });
+            location.reload();
         }).catch(err => {
             console.log(err);
         })

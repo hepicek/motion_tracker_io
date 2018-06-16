@@ -62,11 +62,11 @@ class UserController extends Controller
                 
             $file_name = $request->image->getClientOriginalName();
             $file_size = $request->image->getClientSize();
-            $request->image->storeAs('public/img', $file_name);
+            $request->image->storeAs('public/img/user_profile_img', $file_name);
             $user = User::find($id);
 
             $user->fill([
-                'img_url' => 'img/' . $file_name
+                'img_url' => 'img/user_profile_img/' . $file_name
             ]);
             $user->save();
             
@@ -90,6 +90,7 @@ class UserController extends Controller
                 'email' => $request->input('email'),
                 'dob' => $request->input('dob'),
                 'common_name' => $request->input('common_name'),
+                'img_url' => 'img/user_profile_img/placeholder.png'
             ]);
             $user->save();
     

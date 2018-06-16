@@ -6,14 +6,12 @@ const USER_PHOTO = (props) => {
         <div className="userPhotoSection">
                 <img className="userPhoto" src={"/storage/" + props.img_url} />  
                 <p>Upload Profile Photo:</p>
-                <span>
                     <input 
                         className="userProfileForm-input" 
                         name="user_photo" 
                         type="file"
                         onChange={props.handleFileSelected}
                     />
-                </span>
                 <div 
                     className="uploadPhotoBtn" 
                     onClick={props.handleFileSubmit}

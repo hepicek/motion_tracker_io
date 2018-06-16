@@ -72,6 +72,7 @@ class RegisterController extends Controller
             'user_status_id' => 1,
             'last_login_date' => date('Y-m-d H:i:s'),
             'common_name' => $data['first_name'],   
+            'img_url' => 'img/user_profile_img/placeholder.png'
         ]);
     }
 }

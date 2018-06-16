@@ -56831,15 +56831,14 @@ var User_Profile = function (_Component) {
     }, {
         key: 'handleFileSubmit',
         value: function handleFileSubmit(e) {
-            var _this3 = this;
-
             var FD = new FormData();
             FD.append('image', this.state.file, this.state.file.name);
             __WEBPACK_IMPORTED_MODULE_2_axios___default.a.post('/userDetails/' + this.state.id, FD).then(function (res) {
-                _this3.setState({
-                    file: "",
-                    img_url: "img/" + _this3.state.file.name
-                });
+                // this.setState({
+                //     file: "",
+                //     img_url: "img/user_profile_img/" + this.state.file.name
+                // });
+                location.reload();
             }).catch(function (err) {
                 console.log(err);
             });
@@ -57196,16 +57195,12 @@ var USER_PHOTO = function USER_PHOTO(props) {
             null,
             "Upload Profile Photo:"
         ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "span",
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                className: "userProfileForm-input",
-                name: "user_photo",
-                type: "file",
-                onChange: props.handleFileSelected
-            })
-        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+            className: "userProfileForm-input",
+            name: "user_photo",
+            type: "file",
+            onChange: props.handleFileSelected
+        }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
             {
