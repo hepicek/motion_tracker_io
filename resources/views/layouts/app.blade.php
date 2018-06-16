@@ -54,7 +54,17 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            <img src="storage\{{Auth::user()->img_url}}" style="height: 40px; border-radius: 50%"/>
+                            <div 
+                                style="
+                                    height: 40px; 
+                                    width: 40px;
+                                    border-radius: 50%;
+                                    background-image: url('storage/{{Auth::user()->img_url}}');
+                                    background-size: cover;
+                                    background-postion: center;
+                                "
+                            >
+                            </div>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->first_name . ' ' . Auth::user()->last_name}} <span class="caret"></span>

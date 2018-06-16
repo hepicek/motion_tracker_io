@@ -56783,7 +56783,18 @@ var User_Profile = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (User_Profile.__proto__ || Object.getPrototypeOf(User_Profile)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            id: "",
+            first_name: "",
+            last_name: "",
+            email: "",
+            dob: "",
+            common_name: "",
+            img_url: "",
+            file: {
+                name: ""
+            }
+        };
         _this.handleChange = _this.handleChange.bind(_this);
         _this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleFileSelected = _this.handleFileSelected.bind(_this);
@@ -56809,7 +56820,9 @@ var User_Profile = function (_Component) {
                     dob: userDetails.dob ? userDetails.dob : "",
                     common_name: userDetails.common_name,
                     img_url: userDetails.img_url,
-                    file: ""
+                    file: {
+                        name: ""
+                    }
 
                 });
             }).catch(function (err) {
@@ -56827,6 +56840,7 @@ var User_Profile = function (_Component) {
             this.setState({
                 file: e.target.files[0]
             });
+            console.log(e.target.files[0]);
         }
     }, {
         key: 'handleFileSubmit',
@@ -56878,7 +56892,8 @@ var User_Profile = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__components_user_profile_user_photo__["a" /* default */], {
                         handleFileSelected: this.handleFileSelected,
                         handleFileSubmit: this.handleFileSubmit,
-                        img_url: userDetails.img_url
+                        img_url: userDetails.img_url,
+                        file: this.state.file
                     }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_user_profile_user_details_form__["a" /* default */], {
                         userDetails: userDetails,
@@ -57182,25 +57197,46 @@ var USER_DETAILS_FORM = function USER_DETAILS_FORM(props) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _this = this;
+
 
 
 var USER_PHOTO = function USER_PHOTO(props) {
-
+    if (props.file.name == "") {
+        var file = false;
+    } else {
+        var file = true;
+    }
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
         { className: "userPhotoSection" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: "userPhoto", src: "/storage/" + props.img_url }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            "Upload Profile Photo:"
-        ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
             className: "userProfileForm-input",
             name: "user_photo",
             type: "file",
-            onChange: props.handleFileSelected
+            onChange: props.handleFileSelected,
+            ref: function ref(fileInput) {
+                return _this.fileInput = fileInput;
+            },
+            hidden: true
         }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            {
+                className: "uploadPhotoBtn",
+                onClick: function onClick() {
+                    return _this.fileInput.click();
+                }
+            },
+            "Choose file"
+        ),
+        file && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "p",
+            null,
+            props.file.name,
+            " - "
+        ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
             {

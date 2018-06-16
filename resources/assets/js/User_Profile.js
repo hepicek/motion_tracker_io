@@ -9,7 +9,16 @@ class User_Profile extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-
+            id: "",
+            first_name: "",
+            last_name: "",
+            email: "",
+            dob: "",
+            common_name: "",
+            img_url: "",
+            file: {
+                name: ""
+            }
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,7 +38,9 @@ class User_Profile extends Component {
                     dob: userDetails.dob ? userDetails.dob : "",
                     common_name: userDetails.common_name,
                     img_url: userDetails.img_url,
-                    file: ""
+                    file: {
+                        name: ""
+                    }
 
             });
         })
@@ -46,6 +57,7 @@ class User_Profile extends Component {
         this.setState({
             file: e.target.files[0]
         });        
+        console.log(e.target.files[0]);
     }
     handleFileSubmit(e) {
         const FD = new FormData();
@@ -87,12 +99,13 @@ class User_Profile extends Component {
                         handleFileSelected={this.handleFileSelected} 
                         handleFileSubmit={this.handleFileSubmit}
                         img_url={userDetails.img_url}
+                        file={this.state.file}
                     />
                     <USER_DETAILS_FORM 
                         userDetails={userDetails}
                         handleChange={this.handleChange}
                         handleSubmit={this.handleSubmit}  
-                        handleFileSelected={this.handleFileSelected}  
+                        handleFileSelected={this.handleFileSelected}
                     />  
                 </div>
             </div>
