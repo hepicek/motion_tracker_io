@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import LIST_ITEMS from './List_Items';
-import New_List from './New_List';
+import LIST_ITEMS from './lists_widget_components/List_Items';
+import LISTS_HEADER from './lists_widget_components/Lists_Widget_Header';
+import New_List from './lists_widget_components/New_List';
 
 const LISTS_WIDGET = (props) => {
     let lists = undefined;
@@ -31,12 +32,7 @@ const LISTS_WIDGET = (props) => {
     }
     return (
         <div className="dashboardWidget" id="listsWidget">
-            <div id="listsWidget-topButtons">
-                <p
-                    onClick={props.handleNewListBtnClick}
-                ><i className="fa fa-plus-square"></i>Create a new list</p>
-                <p>edit lists<i className="fa fa-cog"></i></p>
-            </div>
+            <LISTS_HEADER handleNewListBtnClick={props.handleNewListBtnClick}/>
             <div id="listsWidget-lists">
                 {props.newList && <New_List saveNewList={props.saveNewList}/>}
                 {lists && lists}

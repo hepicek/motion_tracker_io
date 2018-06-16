@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios'; //For API calls
 
-export default class User_Profile extends Component {
+import USER_DETAILS_FORM from './components/user_profile/user_details_form';
+import USER_PHOTO from './components/user_profile/user_photo';
+
+class User_Profile extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-            
+
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleFileSelected = this.handleFileSelected.bind(this);
+        this.handleFileSubmit = this.handleFileSubmit.bind(this);
     }
     componentWillMount() {
         axios("/userDetails")
@@ -23,6 +28,8 @@ export default class User_Profile extends Component {
                     email: userDetails.email,
                     dob: userDetails.dob ? userDetails.dob : "",
                     common_name: userDetails.common_name,
+                    img_url: userDetails.img_url,
+                    file: ""
 
             });
         })
@@ -35,19 +42,36 @@ export default class User_Profile extends Component {
             [e.target.name]: e.target.value
         })
     }
+    handleFileSelected(e) { 
+        this.setState({
+            file: e.target.files[0]
+        });        
+    }
+    handleFileSubmit(e) {
+        const FD = new FormData();
+        FD.append('image', this.state.file, this.state.file.name);
+        axios.post(`/userDetails/${this.state.id}`,FD)
+        .then(res => {
+            this.setState({
+                file: "",
+                img_url: "img/" + this.state.file.name
+            });
+        }).catch(err => {
+            console.log(err);
+        })
+    }
     handleSubmit(e) {
         e.preventDefault();
-        console.log(this.state);
         axios.post(`/userDetails/${this.state.id}`,{
             id: this.state.id,
             first_name: this.state.first_name,
             last_name: this.state.last_name,
             email: this.state.email,
             dob: this.state.dob,
-            common_name: this.state.common_name
+            common_name: this.state.common_name,
+            file: this.state.file
         })
         .then(res => {
-            console.log(res);
         }).catch(err => {
             console.log(err);
         })
@@ -58,74 +82,17 @@ export default class User_Profile extends Component {
             <div className="userProfileMain">
                 <h1>{userDetails.common_name}'s Profile</h1>
                 <div className="userProfileDetails">
-                    <form className="userProfileForm" name="userProfileForm" method="post" action={"/userDetails/" + userDetails.id}>
-                        <div className="userProfile_formRow" >
-                            <p>First Name:</p>
-                            <span>
-                                <input 
-                                    className="userProfileForm-input" 
-                                    name="first_name"
-                                    value={userDetails.first_name} 
-                                    onChange={this.handleChange}
-                                />
-                                <i className="fa fa-edit"></i>
-                            </span>
-                        </div>
-                        <div className="userProfile_formRow" >
-                            <p>Last Name:</p>
-                            <span>
-                                <input 
-                                    className="userProfileForm-input" 
-                                    name="last_name" 
-                                    value={userDetails.last_name} 
-                                    onChange={this.handleChange}
-                                />
-                                <i className="fa fa-edit"></i>
-                            </span>
-                        </div>
-                        <div className="userProfile_formRow" >
-                            <p>Common Name:</p>
-                            <span>
-                                <input 
-                                    className="userProfileForm-input" 
-                                    name="common_name" 
-                                    value={userDetails.common_name} 
-                                    onChange={this.handleChange}
-                                />
-                                <i className="fa fa-edit"></i>
-                            </span>
-                        </div>
-                        <div className="userProfile_formRow" >
-                            <p>Email:</p>
-                            <span>
-                                <input 
-                                    className="userProfileForm-input" 
-                                    name="email" 
-                                    value={userDetails.email} 
-                                    onChange={this.handleChange}
-                                />
-                                <i className="fa fa-edit"></i>
-                            </span>
-                        </div>
-                        <div className="userProfile_formRow" >
-                            <p>Date of Birth:</p>
-                            <span>
-                                <input 
-                                    className="userProfileForm-input" 
-                                    name="dob" 
-                                    type="date"
-                                    value={userDetails.dob} 
-                                    onChange={this.handleChange}
-                                />
-                                <i className="fa fa-edit"></i>
-                            </span>
-                        </div>
-                        <input 
-                            type="submit" 
-                            value="Save Changes" 
-                            onClick={this.handleSubmit}
-                        />
-                    </form>
+                    <USER_PHOTO 
+                        handleFileSelected={this.handleFileSelected} 
+                        handleFileSubmit={this.handleFileSubmit}
+                        img_url={userDetails.img_url}
+                    />
+                    <USER_DETAILS_FORM 
+                        userDetails={userDetails}
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleSubmit}  
+                        handleFileSelected={this.handleFileSelected}  
+                    />  
                 </div>
             </div>
         )

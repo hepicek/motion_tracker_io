@@ -3332,13 +3332,13 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .userProfileForm {
@@ -3385,6 +3385,61 @@
 .userProfile_formRow .fa {
   margin: 0 5px;
   cursor: pointer;
+}
+
+.userPhotoSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid slategray;
+  padding: 10px;
+  border-radius: 10px;
+  width: 500px;
+  -webkit-box-shadow: 5px 5px 10px 0 slategray;
+          box-shadow: 5px 5px 10px 0 slategray;
+}
+
+.userPhotoSection input {
+  margin: 5px;
+  padding: 10px;
+}
+
+.uploadPhotoBtn {
+  padding: 5px 30px;
+  border: 1px solid slategray;
+  background-color: slategray;
+  color: white;
+  border-radius: 10px;
+  margin: 10px;
+  -webkit-box-shadow: 3px 3px 8px 0 black;
+          box-shadow: 3px 3px 8px 0 black;
+  -webkit-transition: -webkit-transform .2s;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.uploadPhotoBtn:active {
+  -webkit-box-shadow: 1px 1px 8px 0 black;
+          box-shadow: 1px 1px 8px 0 black;
+  -webkit-transform: translate(2px, 2px);
+          transform: translate(2px, 2px);
+}
+
+.userPhoto {
+  height: 300px;
 }
 
 /*!

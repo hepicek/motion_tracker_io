@@ -1,7 +1,9 @@
 .userProfileDetails {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     align-items: center;
+    width: 100%;
+    justify-content: space-between;
 }
 .userProfileForm {
     display: flex;
@@ -31,4 +33,37 @@
         margin: 0 5px;
         cursor: pointer;
     }
+}
+.userPhotoSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid slategray;
+    padding: 10px;
+    border-radius: 10px;
+    width: 500px;
+    box-shadow: 5px 5px 10px 0 slategray;
+    input {
+        margin: 5px;
+        padding: 10px;
+    }
+}
+.uploadPhotoBtn {
+    padding: 5px 30px;
+    border: 1px solid slategray;
+    background-color: slategray;
+    color: white;
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 3px 3px 8px 0 black;
+    transition: transform .2s;
+    cursor: pointer;
+    user-select: none;
+    &:active {
+        box-shadow: 1px 1px 8px 0 black;
+        transform: translate(2px, 2px);
+    }
+}
+.userPhoto {
+    height: 300px;
 }

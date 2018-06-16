@@ -11,7 +11,7 @@ import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
 
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
