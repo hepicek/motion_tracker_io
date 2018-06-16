@@ -6,4 +6,29 @@
 .userProfileForm {
     display: flex;
     flex-direction: column;
+    border: 2px solid slategray;
+    padding: 10px;
+    border-radius: 10px;
+    width: 500px;
+    box-shadow: 5px 5px 10px 0 slategray;
+}
+.userProfileForm-input {
+    width: 300px;
+    padding: 2px 10px;
+    border-radius: 5px;
+    border: 1px solid slategray;
+    outline: none;
+}
+.userProfile_formRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    p {
+        margin: 0;
+    }
+    .fa {
+        margin: 0 5px;
+        cursor: pointer;
+    }
 }

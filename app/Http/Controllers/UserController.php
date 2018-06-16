@@ -56,7 +56,31 @@ class UserController extends Controller
         return response()->json(['success'=>$success], 200);
     }
 
+    public function updateUserDetails(request $request, $id){
+        
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'dob' => 'date'
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 401);            
+        }
+        $user = User::find($id);
+
+        $user->fill([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'dob' => $request->input('dob'),
+            'common_name' => $request->input('common_name'),
+        ]);
+        $user->save();
+
+        return 200;
+    }
     public function userDetails()
     {
         $current_user = User::find(Auth::id());
