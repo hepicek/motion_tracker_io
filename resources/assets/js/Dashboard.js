@@ -24,6 +24,8 @@ class Dashboard extends Component {
         this.handleListDeleteClick = this.handleListDeleteClick.bind(this); 
         this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);  
         this.saveNewList = this.saveNewList.bind(this);
+        // this.handleListMenuBtnClick = this.handleListMenuBtnClick.bind(this);
+        this.handleRenameListClick = this.handleRenameListClick.bind(this);
     }
 
     saveNewList(e) {
@@ -85,10 +87,16 @@ class Dashboard extends Component {
 
     //send delete API call
     handleListDeleteClick(e) {
-        axios.delete('userLists/' + e.target.id.split("-")[1])
+        axios.delete('userLists/' + e.target.parentNode.id.split("-")[1])
         .then(response => {
             this.getLists();  
         });        
+    }
+    // handleListMenuBtnClick(e) {
+    //     console.log("MenuBtn");
+    // }
+    handleRenameListClick(e) {
+        console.log("Rename");
     }
 
     //create a new list
@@ -125,6 +133,7 @@ class Dashboard extends Component {
                         handleListTitleClick={this.handleListTitleClick} 
                         handleListDeleteClick={this.handleListDeleteClick}
                         handleNewListBtnClick={this.handleNewListBtnClick} 
+                        handleRenameListClick={this.handleRenameListClick}
                         saveNewList={this.saveNewList}
                     />
                     <FRIENDS_WIDGET />

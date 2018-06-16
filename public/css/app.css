@@ -3239,6 +3239,7 @@
 
 .expandedListItems {
   padding-left: 15px;
+  overflow: hidden;
 }
 
 .listDeleteBtn {
@@ -3251,6 +3252,71 @@
   border-radius: 10px;
   padding: 5px;
   width: 80%;
+}
+
+.listMenuBtn {
+  position: relative;
+  cursor: pointer;
+}
+
+.listMenuBtn p {
+  font-size: .8rem;
+  margin: 0;
+  padding: 2px 5px;
+}
+
+.listMenuBtn_listOptions {
+  position: absolute;
+  right: 0;
+  background-color: slategray;
+  -webkit-box-shadow: 3px 3px 8px 0 black;
+          box-shadow: 3px 3px 8px 0 black;
+  border-radius: 5px;
+  color: white;
+  width: 85px;
+  z-index: 1;
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  overflow: hidden;
+  -webkit-animation: list_menu_open .15s linear forwards;
+          animation: list_menu_open .15s linear forwards;
+}
+
+.listMenutBtn_listOptions_option {
+  height: 50%;
+}
+
+.listMenutBtn_listOptions_option:hover {
+  background-color: white;
+  color: slategray;
+}
+
+@-webkit-keyframes list_menu_open {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+
+  to {
+    height: 50px;
+    opacity: 1;
+  }
+}
+
+@keyframes list_menu_open {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+
+  to {
+    height: 50px;
+    opacity: 1;
+  }
 }
 
 #topMoviesWidget {

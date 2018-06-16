@@ -11,7 +11,7 @@ const LIST_ITEMS = (props) => {
         </div>
        )) : undefined;
    return (
-    <div className="expandedListItems">
+    <div className="expandedListItems" >
        {items}
     </div>
     )

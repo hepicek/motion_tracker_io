@@ -90,7 +90,6 @@ class UserController extends Controller
                 'email' => $request->input('email'),
                 'dob' => $request->input('dob'),
                 'common_name' => $request->input('common_name'),
-                'img_url' => 'img/user_profile_img/placeholder.png'
             ]);
             $user->save();
     

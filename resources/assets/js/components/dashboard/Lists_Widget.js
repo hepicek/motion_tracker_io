@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LIST_ITEMS from './lists_widget_components/List_Items';
 import LISTS_HEADER from './lists_widget_components/Lists_Widget_Header';
 import New_List from './lists_widget_components/New_List';
+import LIST_MENU_BTN from './lists_widget_components/List_Menu_Btn';
 
 const LISTS_WIDGET = (props) => {
     let lists = undefined;
@@ -20,11 +21,12 @@ const LISTS_WIDGET = (props) => {
                         id={"title-" + (list.id ? list.id : "new")} 
                         onClick={props.handleListTitleClick}
                     >{list.list_title}</p>}
-                    <p 
-                        className='listDeleteBtn'
-                        id={"delete-" + (list.id ? list.id : "new")}
-                        onClick={props.handleListDeleteClick}
-                    >x</p>
+                    <LIST_MENU_BTN 
+                        listId = {list.id}
+                        handleListDeleteClick = {props.handleListDeleteClick}
+                        handleListMenuBtnClick = {props.handleListMenuBtnClick}
+                        handleRenameListClick = {props.handleRenameListClick}
+                    />
                 </div>
                 {list.collapsed == 0 && <LIST_ITEMS items={list.items}/>}
             </div>
@@ -42,3 +44,9 @@ const LISTS_WIDGET = (props) => {
 }
 
 export default LISTS_WIDGET;
+
+// <p 
+//                         className='listDeleteBtn'
+//                         id={"delete-" + (list.id ? list.id : "new")}
+//                         onClick={props.handleListDeleteClick}
+//                     >x</p>
