@@ -16,17 +16,31 @@ const LISTS_WIDGET = (props) => {
                 onClick={props.handleListTitleClick}
             >
                 <div className='listHeader'>
-                    {list.id && <p 
-                        className="listTitle"
-                        id={"title-" + (list.id ? list.id : "new")} 
-                        onClick={props.handleListTitleClick}
-                    >{list.list_title}</p>}
+                
+                    {(list.id && props.renameList != list.id) && 
+                        <p 
+                            className="listTitle"
+                            id={"title-" + (list.id ? list.id : "new")} 
+                            onClick={props.handleListTitleClick}
+                        >
+                            {list.list_title}
+                        </p>
+                    }
+                    {(list.id && props.renameList == list.id) && 
+                        <input
+                            className="listTitleInput"
+                            id={"renameInput-" + (list.id ? list.id : "new")} 
+                            onChange={props.handleRenameListInputChange}
+                            onKeyUp={props.handleRenameListInputKeyUp}
+                            value={props.renameListInputValue}
+                    />}
+                    {(list.id && props.renameList != list.id) && 
                     <LIST_MENU_BTN 
                         listId = {list.id}
                         handleListDeleteClick = {props.handleListDeleteClick}
                         handleListMenuBtnClick = {props.handleListMenuBtnClick}
                         handleRenameListClick = {props.handleRenameListClick}
-                    />
+                    />}
                 </div>
                 {list.collapsed == 0 && <LIST_ITEMS items={list.items}/>}
             </div>

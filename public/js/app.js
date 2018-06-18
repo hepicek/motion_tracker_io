@@ -36554,16 +36554,20 @@ var Dashboard = function (_Component) {
             topMovies: [],
             userLists: [],
             friends: [],
-            newList: false
+            newList: false,
+            renameList: undefined
         };
         _this.handleListTitleClick = _this.handleListTitleClick.bind(_this);
         _this.handleListDeleteClick = _this.handleListDeleteClick.bind(_this);
         _this.handleNewListBtnClick = _this.handleNewListBtnClick.bind(_this);
         _this.saveNewList = _this.saveNewList.bind(_this);
-        // this.handleListMenuBtnClick = this.handleListMenuBtnClick.bind(this);
         _this.handleRenameListClick = _this.handleRenameListClick.bind(_this);
+        _this.handleRenameListInputChange = _this.handleRenameListInputChange.bind(_this);
+        _this.handleRenameListInputKeyUp = _this.handleRenameListInputKeyUp.bind(_this);
         return _this;
     }
+    //post the new list to the DB
+
 
     _createClass(Dashboard, [{
         key: 'saveNewList',
@@ -36574,12 +36578,8 @@ var Dashboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_4_axios___default.a.post("/userLists", {
                     list_title: newListInput.value
                 }).then(function (res) {
-                    _this2.setState({
-                        newList: false
-                    });
                     _this2.getLists();
                 }).catch(function (err) {
-                    console.log(err);
                     return err;
                 });
             }
@@ -36598,7 +36598,9 @@ var Dashboard = function (_Component) {
                         return response.data.response[key];
                     });
                     _this3.setState({
-                        userLists: userLists
+                        userLists: userLists,
+                        newList: false,
+                        renameList: undefined
                     });
                 }
             }).catch(function (err) {
@@ -36644,16 +36646,41 @@ var Dashboard = function (_Component) {
                 _this5.getLists();
             });
         }
-        // handleListMenuBtnClick(e) {
-        //     console.log("MenuBtn");
-        // }
-
     }, {
         key: 'handleRenameListClick',
         value: function handleRenameListClick(e) {
-            console.log("Rename");
+            var targetId = parseInt(e.target.parentNode.id.split("-")[1]);
+            var renameList = this.state.userLists.filter(function (list) {
+                return list.id == targetId;
+            })[0].list_title;
+            this.setState({
+                renameList: parseInt(e.target.parentNode.id.split("-")[1]),
+                renameListInputValue: renameList
+            });
         }
+    }, {
+        key: 'handleRenameListInputChange',
+        value: function handleRenameListInputChange(e) {
+            var renameListInputValue = e.target.value;
+            this.setState({
+                renameListInputValue: renameListInputValue
+            });
+        }
+    }, {
+        key: 'handleRenameListInputKeyUp',
+        value: function handleRenameListInputKeyUp(e) {
+            var _this6 = this;
 
+            if (e.keyCode == 13) {
+                __WEBPACK_IMPORTED_MODULE_4_axios___default.a.put('/userLists/' + this.state.renameList, {
+                    list_title: this.state.renameListInputValue
+                }).then(function () {
+                    _this6.getLists();
+                });
+            } else if (e.keyCode == 27) {
+                this.setState({ renameList: undefined });
+            }
+        }
         //create a new list
 
     }, {
@@ -36666,14 +36693,14 @@ var Dashboard = function (_Component) {
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this6 = this;
+            var _this7 = this;
 
             //external API call for Top 20 movies
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
                 } else {
-                    _this6.setState({
+                    _this7.setState({
                         topMovies: data.results
                     });
                 }
@@ -36694,12 +36721,16 @@ var Dashboard = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_dashboard_Lists_Widget__["a" /* default */], {
                     lists: this.state.userLists,
+                    renameList: this.state.renameList,
                     newList: this.state.newList ? this.state.newList : null,
                     handleListTitleClick: this.handleListTitleClick,
                     handleListDeleteClick: this.handleListDeleteClick,
                     handleNewListBtnClick: this.handleNewListBtnClick,
                     handleRenameListClick: this.handleRenameListClick,
-                    saveNewList: this.saveNewList
+                    saveNewList: this.saveNewList,
+                    handleRenameListInputChange: this.handleRenameListInputChange,
+                    handleRenameListInputKeyUp: this.handleRenameListInputKeyUp,
+                    renameListInputValue: this.state.renameListInputValue ? this.state.renameListInputValue : ""
                 }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__components_dashboard_Friends_Widget__["a" /* default */], null)
             );
@@ -57180,7 +57211,7 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'listHeader' },
-                    list.id && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    list.id && props.renameList != list.id && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'p',
                         {
                             className: 'listTitle',
@@ -57189,7 +57220,14 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
                         },
                         list.list_title
                     ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__lists_widget_components_List_Menu_Btn__["a" /* default */], {
+                    list.id && props.renameList == list.id && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+                        className: 'listTitleInput',
+                        id: "renameInput-" + (list.id ? list.id : "new"),
+                        onChange: props.handleRenameListInputChange,
+                        onKeyUp: props.handleRenameListInputKeyUp,
+                        value: props.renameListInputValue
+                    }),
+                    list.id && props.renameList != list.id && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__lists_widget_components_List_Menu_Btn__["a" /* default */], {
                         listId: list.id,
                         handleListDeleteClick: props.handleListDeleteClick,
                         handleListMenuBtnClick: props.handleListMenuBtnClick,
@@ -57608,8 +57646,6 @@ var LISTS_HEADER = function LISTS_HEADER(props) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -57620,35 +57656,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-
 var New_List = function (_Component) {
     _inherits(New_List, _Component);
 
     function New_List(props) {
         _classCallCheck(this, New_List);
 
-        var _this = _possibleConstructorReturn(this, (New_List.__proto__ || Object.getPrototypeOf(New_List)).call(this, props));
-
-        _this.newListInput = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createRef();
-
-        return _this;
+        return _possibleConstructorReturn(this, (New_List.__proto__ || Object.getPrototypeOf(New_List)).call(this, props));
     }
+    // componenentDidMount() {
+    //     console.log("WTF!");
+    //     this.newListInput.current.focus();
+    // }
 
     _createClass(New_List, [{
-        key: 'componenentDidMount',
-        value: function componenentDidMount() {
-            console.log("WTF!");
-            this.newListInput.current.focus();
-        }
-    }, {
-        key: 'render',
+        key: "render",
         value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-                type: 'text',
-                placeholder: 'new list title',
-                className: 'newListInput',
-                id: 'newListInput',
-                ref: this.newListInput,
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                type: "text",
+                placeholder: "new list title",
+                className: "newListInput",
+                id: "newListInput",
+
                 onKeyUp: this.props.saveNewList
             });
         }
@@ -57658,6 +57687,10 @@ var New_List = function (_Component) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (New_List);
+
+// ref={this.newListInput} goes in <input
+
+// this.newListInput = React.createRef(); goes in constructor
 
 /***/ }),
 /* 126 */

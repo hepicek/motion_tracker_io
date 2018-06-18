@@ -18,28 +18,26 @@ class Dashboard extends Component {
             topMovies: [],
             userLists: [],
             friends: [],
-            newList: false
+            newList: false,
+            renameList: undefined,
         }
         this.handleListTitleClick = this.handleListTitleClick.bind(this);    
         this.handleListDeleteClick = this.handleListDeleteClick.bind(this); 
         this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);  
         this.saveNewList = this.saveNewList.bind(this);
-        // this.handleListMenuBtnClick = this.handleListMenuBtnClick.bind(this);
         this.handleRenameListClick = this.handleRenameListClick.bind(this);
+        this.handleRenameListInputChange = this.handleRenameListInputChange.bind(this);
+        this.handleRenameListInputKeyUp = this.handleRenameListInputKeyUp.bind(this);
     }
-
+    //post the new list to the DB
     saveNewList(e) {
         if(e.key == "Enter") {
             axios.post("/userLists", {
                 list_title: newListInput.value
             })
             .then(res => {
-                this.setState({
-                    newList: false
-                })
                 this.getLists();
             }).catch(err => {
-                console.log(err);
                 return err;
             })
         }        
@@ -52,7 +50,9 @@ class Dashboard extends Component {
           if(response.data.response) {
                 let userLists = Object.keys(response.data.response).map(key => response.data.response[key]);
                 this.setState({
-                    userLists
+                    userLists,
+                    newList: false,
+                    renameList: undefined
                 });
             }            
         }).catch(err => {
@@ -92,13 +92,34 @@ class Dashboard extends Component {
             this.getLists();  
         });        
     }
-    // handleListMenuBtnClick(e) {
-    //     console.log("MenuBtn");
-    // }
-    handleRenameListClick(e) {
-        console.log("Rename");
-    }
 
+    handleRenameListClick(e) {
+        let targetId = parseInt(e.target.parentNode.id.split("-")[1]);
+        let renameList = this.state.userLists.filter(list => list.id == targetId)[0].list_title;
+        this.setState({
+            renameList: parseInt(e.target.parentNode.id.split("-")[1]),
+            renameListInputValue: renameList
+        })
+    }
+    handleRenameListInputChange(e) {
+            let renameListInputValue = e.target.value;
+            this.setState({
+                renameListInputValue
+            });
+    }
+    handleRenameListInputKeyUp(e) {
+        if(e.keyCode == 13) {
+            axios.put(`/userLists/${this.state.renameList}`,
+                {
+                    list_title: this.state.renameListInputValue
+                })
+                .then(() => {
+                    this.getLists();
+                })
+        } else if(e.keyCode == 27) {
+            this.setState({ renameList: undefined})
+        }
+    }
     //create a new list
     handleNewListBtnClick() {
         this.setState({
@@ -121,22 +142,25 @@ class Dashboard extends Component {
     }
     render() {
         return (
-           
-                <div className='dashboard'>
-                    <div className='searchSection'>
-                        <SEARCH_BAR />
-                        <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>
-                    </div>
-                    <LISTS_WIDGET 
-                        lists={this.state.userLists}
-                        newList={this.state.newList ? this.state.newList : null}
-                        handleListTitleClick={this.handleListTitleClick} 
-                        handleListDeleteClick={this.handleListDeleteClick}
-                        handleNewListBtnClick={this.handleNewListBtnClick} 
-                        handleRenameListClick={this.handleRenameListClick}
-                        saveNewList={this.saveNewList}
-                    />
-                    <FRIENDS_WIDGET />
+            <div className='dashboard'>
+                <div className='searchSection'>
+                    <SEARCH_BAR />
+                    <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>
+                </div>
+                <LISTS_WIDGET 
+                    lists={this.state.userLists}
+                    renameList={this.state.renameList}
+                    newList={this.state.newList ? this.state.newList : null}
+                    handleListTitleClick={this.handleListTitleClick} 
+                    handleListDeleteClick={this.handleListDeleteClick}
+                    handleNewListBtnClick={this.handleNewListBtnClick} 
+                    handleRenameListClick={this.handleRenameListClick}
+                    saveNewList={this.saveNewList}
+                    handleRenameListInputChange={this.handleRenameListInputChange}
+                    handleRenameListInputKeyUp={this.handleRenameListInputKeyUp}
+                    renameListInputValue={this.state.renameListInputValue ? this.state.renameListInputValue : ""}
+                />
+                <FRIENDS_WIDGET />
             </div>
         );
     }
