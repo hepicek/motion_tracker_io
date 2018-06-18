@@ -20,7 +20,8 @@ Route::group(['middleware' => ['auth']], function() {
     
     //Page View Routes
     Route::get('/dashboard', 'DashboardController@index');
-    Route::get('/userprofile', 'UserprofileController@index');
+    Route::get('/userprofile', 'UserController@index');
+    Route::post('/userprofile/{id}', 'UserController@destroyUserPhoto');
 
     //Data Routes
     Route::get('userDetails', 'UserController@userDetails');

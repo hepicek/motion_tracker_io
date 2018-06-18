@@ -7,7 +7,7 @@ import USER_PHOTO from './components/user_profile/user_photo';
 
 class User_Profile extends Component {
     constructor(props) {
-        super(props) 
+        super(props);
         this.state = {
             id: "",
             first_name: "",
@@ -19,11 +19,12 @@ class User_Profile extends Component {
             file: {
                 name: ""
             }
-        }
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFileSelected = this.handleFileSelected.bind(this);
         this.handleFileSubmit = this.handleFileSubmit.bind(this);
+        this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
     }
     componentWillMount() {
         axios("/userDetails")
@@ -89,6 +90,15 @@ class User_Profile extends Component {
             console.log(err);
         })
     }
+    handleDeletePhoto() {
+
+        axios.post(`/userprofile/${this.state.id}`)
+            .then(() => {
+                location.reload();
+            }).catch(err => {
+            console.log(err);
+        })
+    }
     render() {
         let userDetails = this.state;
         return (
@@ -98,6 +108,7 @@ class User_Profile extends Component {
                     <USER_PHOTO 
                         handleFileSelected={this.handleFileSelected} 
                         handleFileSubmit={this.handleFileSubmit}
+                        handleDeletePhoto={this.handleDeletePhoto}
                         img_url={userDetails.img_url}
                         file={this.state.file}
                     />
