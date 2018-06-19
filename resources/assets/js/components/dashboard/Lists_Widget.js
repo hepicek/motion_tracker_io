@@ -57,10 +57,5 @@ const LISTS_WIDGET = (props) => {
     )
 }
 
-export default LISTS_WIDGET;
 
-// <p 
-//                         className='listDeleteBtn'
-//                         id={"delete-" + (list.id ? list.id : "new")}
-//                         onClick={props.handleListDeleteClick}
-//                     >x</p>
+export default LISTS_WIDGET;

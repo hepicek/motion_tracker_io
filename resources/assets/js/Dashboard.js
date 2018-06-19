@@ -135,17 +135,23 @@ class Dashboard extends Component {
 
     //search db for movie
     handleSearch(e) {
-        let searchInput = e.target.value;
-        this.setState({searchText: searchInput});
+        let searchText = e.target.value;
+        this.setState({searchText});
         setTimeout(() => {
             if (this.state.searchText.length > 1) {
                 axios.get(`/search/${this.state.searchText}`)
                     .then((res) => {
-                        let searchResults = Object.keys(res.data).map(key => res.data[key]);
-                        this.setState({searchResults});
-                    })
-            }
-        }, 0)
+                        let searchString = res.data[0];
+                        let body = res.data[1];
+                        let searchResults = Object.keys(body).map(key => body[key]);
+                        console.log(searchString);
+                        if(searchString == this.state.searchText) {
+                            this.setState({searchResults}); 
+                        }
+                                               
+                    });
+            };
+        }, 0);
 
     }
 

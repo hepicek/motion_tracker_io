@@ -36,7 +36,7 @@ class MoviesController extends Controller
         $result = Movie::where('name','LIKE','%'.$movie.'%')
             ->get();
 
-        return $result;
+        return [$movie, $result];
     }
 
 /*    public function delete(Movie $movie)

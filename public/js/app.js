@@ -36662,17 +36662,22 @@ var Dashboard = function (_Component) {
         value: function handleSearch(e) {
             var _this7 = this;
 
-            var searchInput = e.target.value;
-            this.setState({ searchText: searchInput });
+            var searchText = e.target.value;
+            this.setState({ searchText: searchText });
             setTimeout(function () {
                 if (_this7.state.searchText.length > 1) {
                     __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('/search/' + _this7.state.searchText).then(function (res) {
-                        var searchResults = Object.keys(res.data).map(function (key) {
-                            return res.data[key];
+                        var searchString = res.data[0];
+                        var body = res.data[1];
+                        var searchResults = Object.keys(body).map(function (key) {
+                            return body[key];
                         });
-                        _this7.setState({ searchResults: searchResults });
+                        console.log(searchString);
+                        if (searchString == _this7.state.searchText) {
+                            _this7.setState({ searchResults: searchResults });
+                        }
                     });
-                }
+                };
             }, 0);
         }
     }, {
@@ -56531,6 +56536,7 @@ var SEARCH_BAR = function (_Component) {
                         name: "searchBar-input",
                         id: "searchBar-input",
                         type: "text",
+                        value: this.props.searchText,
                         placeholder: "Actor, director, title, year...",
                         onChange: this.props.handleSearch
                     })
@@ -56689,12 +56695,6 @@ var LISTS_WIDGET = function LISTS_WIDGET(props) {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (LISTS_WIDGET);
-
-// <p 
-//                         className='listDeleteBtn'
-//                         id={"delete-" + (list.id ? list.id : "new")}
-//                         onClick={props.handleListDeleteClick}
-//                     >x</p>
 
 /***/ }),
 /* 66 */
