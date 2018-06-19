@@ -68,6 +68,7 @@ class MoviesController extends Controller
 
         // $movie->savephoto("public/img/movie_img");
         return  $result;
+    }
     public function searchActors($imdb_id)
     {
         $movie = Movie::find($imdb_id);
