@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
+Route::get('imdb', 'MoviesController@imdbTest');
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
