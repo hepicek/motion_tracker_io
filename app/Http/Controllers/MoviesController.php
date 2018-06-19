@@ -33,7 +33,7 @@ class MoviesController extends Controller
     public function searchMovies($movie)
     {
 
-        $result = Movie::where('name','LIKE','%'.$movie.'%')
+        $result = Movie::where('name','LIKE','%'.$movie.'%')->orderBy('votes_nr', 'desc')->take(20)
             ->get();
 
         return [$movie, $result];

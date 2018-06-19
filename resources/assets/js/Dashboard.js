@@ -9,6 +9,7 @@ import SEARCH_BAR from './components/dashboard/Search_Bar';
 import TOP_MOVIES_WIDGET from './components/dashboard/Top_Movies_Widget';
 import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
+import SEARCH_MOVIES_WIDGET from './components/dashboard/Search_Movies_Widget';
 
 
 class Dashboard extends Component {
@@ -21,6 +22,7 @@ class Dashboard extends Component {
             newList: false,
             renameList: undefined,
             searchText: '',
+            searchResults: [],
         };
         this.handleListTitleClick = this.handleListTitleClick.bind(this);
         this.handleListDeleteClick = this.handleListDeleteClick.bind(this);
@@ -144,7 +146,6 @@ class Dashboard extends Component {
                         let searchString = res.data[0];
                         let body = res.data[1];
                         let searchResults = Object.keys(body).map(key => body[key]);
-                        console.log(searchString);
                         if(searchString == this.state.searchText) {
                             this.setState({searchResults}); 
                         }
@@ -181,7 +182,9 @@ class Dashboard extends Component {
                         handleSearch={this.handleSearch}
                         searchText={this.state.searchText}
                     />
-                    <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>
+                    {this.state.searchResults.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/> }
+                    {this.state.searchResults.length > 0 && <SEARCH_MOVIES_WIDGET searchResults={this.state.searchResults}/>}
+
                 </div>
                 <LISTS_WIDGET
                     lists={this.state.userLists}
