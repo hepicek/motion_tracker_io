@@ -40,8 +40,8 @@ class MoviesController extends Controller
 
         return [$movie, $result];
     }
-    public function imdbTest() {
-        $movie = new \Imdb\Title(335266);
+    public function externalSearch($movie_id) {
+        $movie = new \Imdb\Title($movie_id);
         $result['title'] = $movie->orig_title();
         $result['tagline'] = $movie->tagline();
         $result['seasons'] = $movie->seasons();

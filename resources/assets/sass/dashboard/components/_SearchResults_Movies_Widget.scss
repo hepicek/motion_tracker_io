@@ -8,7 +8,7 @@
 }
 
 .searchItemDetails {
-  animation: searchSlideItem .15s linear forwards;
+  animation: searchSlideItem .35s ease-out forwards;
 }
 @keyframes searchSlideItem {
   from {
@@ -16,7 +16,7 @@
     opacity: 0;
   }
   to {
-    height: 50px;
+    height: 200px;
     opacity: 1;
   }
 }

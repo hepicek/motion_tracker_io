@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('movies','MoviesController@store');
     Route::put('movies/{movie}','MoviesController@update');
     Route::get('search/{movie}', 'MoviesController@searchMovies');
+    Route::get('search/external/{movie_id}', 'MoviesController@externalSearch');
 
 
 
@@ -54,7 +55,7 @@ Route::group(['middleware' => ['auth']], function() {
 });
 Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
 
-Route::get('imdb', 'MoviesController@imdbTest');
+
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
