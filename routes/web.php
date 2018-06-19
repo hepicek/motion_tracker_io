@@ -47,10 +47,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/{movie}', 'MoviesController@searchMovies');
 
 
+
     Route::post('userLogin', 'UserController@userLogin');
     Route::post('userRegister', 'UserController@userRegister');
 
 });
+Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
 
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');

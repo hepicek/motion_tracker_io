@@ -33,10 +33,25 @@ class MoviesController extends Controller
     public function searchMovies($movie)
     {
 
-        $result = Movie::where('name','LIKE','%'.$movie.'%')->orderBy('votes_nr', 'desc')->take(20)
+        $result = Movie::where('name','LIKE','%'.$movie.'%')
+            ->orderBy('votes_nr', 'desc')
+            ->take(20)
             ->get();
 
         return [$movie, $result];
+    }
+
+    public function searchActors($imdb_id)
+    {
+        $movie = Movie::find($imdb_id);
+
+        $actors = $movie->Persons()
+            ->where('imdb_position_id', 254)
+            ->orderBy('priority', 'desc')
+            ->take(4)
+            ->get();
+
+        return $actors;
     }
 
 /*    public function delete(Movie $movie)
