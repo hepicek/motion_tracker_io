@@ -36677,7 +36677,11 @@ var Dashboard = function (_Component) {
                             _this7.setState({ searchResults: searchResults });
                         }
                     });
-                };
+                } else {
+                    _this7.setState({
+                        searchResults: []
+                    });
+                }
             }, 0);
         }
     }, {

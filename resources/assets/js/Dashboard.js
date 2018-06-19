@@ -150,7 +150,11 @@ class Dashboard extends Component {
                         }
                                                
                     });
-            };
+            } else {
+                this.setState({
+                    searchResults: []
+                });
+            }
         }, 0);
 
     }
