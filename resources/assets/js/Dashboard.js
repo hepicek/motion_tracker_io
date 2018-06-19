@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import jsonp from 'jsonp'; //used for API call to grab top movies
-import { TMDB_KEY } from '../../../config/js/config'; //file holding TMDB key (in .gitignore)
+import {TMDB_KEY} from '../../../config/js/config'; //file holding TMDB key (in .gitignore)
 import axios from 'axios'; //For API calls
 
 //react components
@@ -13,49 +13,52 @@ import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
 
 class Dashboard extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             topMovies: [],
             userLists: [],
             friends: [],
             newList: false,
             renameList: undefined,
-        }
-        this.handleListTitleClick = this.handleListTitleClick.bind(this);    
-        this.handleListDeleteClick = this.handleListDeleteClick.bind(this); 
-        this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);  
+            searchText: '',
+        };
+        this.handleListTitleClick = this.handleListTitleClick.bind(this);
+        this.handleListDeleteClick = this.handleListDeleteClick.bind(this);
+        this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);
         this.saveNewList = this.saveNewList.bind(this);
         this.handleRenameListClick = this.handleRenameListClick.bind(this);
         this.handleRenameListInputChange = this.handleRenameListInputChange.bind(this);
         this.handleRenameListInputKeyUp = this.handleRenameListInputKeyUp.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
     }
+
     //post the new list to the DB
     saveNewList(e) {
-        if(e.key == "Enter") {
+        if (e.key == "Enter") {
             axios.post("/userLists", {
                 list_title: newListInput.value
             })
-            .then(res => {
-                this.getLists();
-            }).catch(err => {
+                .then(res => {
+                    this.getLists();
+                }).catch(err => {
                 return err;
             })
-        }        
+        }
     }
-    
+
     //Gets User's Lists
     getLists() {
         axios('/userLists')
-        .then(response => {
-          if(response.data.response) {
-                let userLists = Object.keys(response.data.response).map(key => response.data.response[key]);
-                this.setState({
-                    userLists,
-                    newList: false,
-                    renameList: undefined
-                });
-            }            
-        }).catch(err => {
+            .then(response => {
+                if (response.data.response) {
+                    let userLists = Object.keys(response.data.response).map(key => response.data.response[key]);
+                    this.setState({
+                        userLists,
+                        newList: false,
+                        renameList: undefined
+                    });
+                }
+            }).catch(err => {
             console.log(err);
         });
     }
@@ -68,19 +71,19 @@ class Dashboard extends Component {
 
         //finds the clicked list in the array, toggles the 'collapsed' value and sets state 
         userLists.forEach(list => {
-            if(list.id == currentListId) {
+            if (list.id == currentListId) {
                 list.collapsed = list.collapsed === 0 ? 1 : 0;
-                    this.setState({
-                        userLists
-                    });
-                axios.put('userLists/' + currentListId,{
+                this.setState({
+                    userLists
+                });
+                axios.put('userLists/' + currentListId, {
                     collapsed: list.collapsed
                 }).then(result => {
-                    
+
                 })
-                .catch(err => {
-                    console.log(err);
-                })
+                    .catch(err => {
+                        console.log(err);
+                    })
             }
         });
     }
@@ -88,9 +91,9 @@ class Dashboard extends Component {
     //send delete API call
     handleListDeleteClick(e) {
         axios.delete('userLists/' + e.target.parentNode.id.split("-")[1])
-        .then(response => {
-            this.getLists();  
-        });        
+            .then(response => {
+                this.getLists();
+            });
     }
 
     handleRenameListClick(e) {
@@ -101,14 +104,16 @@ class Dashboard extends Component {
             renameListInputValue: renameList
         })
     }
+
     handleRenameListInputChange(e) {
-            let renameListInputValue = e.target.value;
-            this.setState({
-                renameListInputValue
-            });
+        let renameListInputValue = e.target.value;
+        this.setState({
+            renameListInputValue
+        });
     }
+
     handleRenameListInputKeyUp(e) {
-        if(e.keyCode == 13) {
+        if (e.keyCode == 13) {
             axios.put(`/userLists/${this.state.renameList}`,
                 {
                     list_title: this.state.renameListInputValue
@@ -116,15 +121,32 @@ class Dashboard extends Component {
                 .then(() => {
                     this.getLists();
                 })
-        } else if(e.keyCode == 27) {
-            this.setState({ renameList: undefined})
+        } else if (e.keyCode == 27) {
+            this.setState({renameList: undefined})
         }
     }
+
     //create a new list
     handleNewListBtnClick() {
         this.setState({
             newList: true
         });
+    }
+
+    //search db for movie
+    handleSearch(e) {
+        let searchInput = e.target.value;
+        this.setState({searchText: searchInput});
+        setTimeout(() => {
+            if (this.state.searchText.length > 1) {
+                axios.get(`/search/${this.state.searchText}`)
+                    .then((res) => {
+                        let searchResults = Object.keys(res.data).map(key => res.data[key]);
+                        this.setState({searchResults});
+                    })
+            }
+        }, 0)
+
     }
 
     componentWillMount() {
@@ -140,32 +162,36 @@ class Dashboard extends Component {
         });
         this.getLists();
     }
+
     render() {
         return (
             <div className='dashboard'>
                 <div className='searchSection'>
-                    <SEARCH_BAR />
+                    <SEARCH_BAR
+                        handleSearch={this.handleSearch}
+                        searchText={this.state.searchText}
+                    />
                     <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>
                 </div>
-                <LISTS_WIDGET 
+                <LISTS_WIDGET
                     lists={this.state.userLists}
                     renameList={this.state.renameList}
                     newList={this.state.newList ? this.state.newList : null}
-                    handleListTitleClick={this.handleListTitleClick} 
+                    handleListTitleClick={this.handleListTitleClick}
                     handleListDeleteClick={this.handleListDeleteClick}
-                    handleNewListBtnClick={this.handleNewListBtnClick} 
+                    handleNewListBtnClick={this.handleNewListBtnClick}
                     handleRenameListClick={this.handleRenameListClick}
                     saveNewList={this.saveNewList}
                     handleRenameListInputChange={this.handleRenameListInputChange}
                     handleRenameListInputKeyUp={this.handleRenameListInputKeyUp}
                     renameListInputValue={this.state.renameListInputValue ? this.state.renameListInputValue : ""}
                 />
-                <FRIENDS_WIDGET />
+                <FRIENDS_WIDGET/>
             </div>
         );
     }
 }
 
 if (document.getElementById('dashboard')) {
-    ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
+    ReactDOM.render(<Dashboard/>, document.getElementById('dashboard'));
 }

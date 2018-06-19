@@ -40,7 +40,19 @@ Route::group(['middleware' => ['auth']], function() {
         return 204;
     });
 
+    Route::get('movies', 'MoviesController@index');
+
+    Route::get('movies/{movie}', 'MoviesController@show');
+
+    Route::post('movies','MoviesController@store');
+
+    Route::put('movies/{movie}','MoviesController@update');
+
+    Route::post('userLogin', 'UserController@userLogin');
+    Route::post('userRegister', 'UserController@userRegister');
+
 });
+Route::get('search/{movie}', 'MoviesController@searchMovies');
 
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');

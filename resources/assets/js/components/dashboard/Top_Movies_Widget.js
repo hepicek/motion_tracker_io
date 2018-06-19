@@ -13,13 +13,13 @@ const TOP_MOVIES_WIDGET = (props) => {
             />
             <p className="topMoviesWidgetCard-title">{movie.original_title}</p>
         </div>
-    ))
+    ));
     return (
 
         <div className='dashboardWidget' id='topMoviesWidget'>
         {topMovies}
         </div>
     )
-}
+};
 
 export default TOP_MOVIES_WIDGET;

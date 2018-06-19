@@ -36515,7 +36515,8 @@ var Dashboard = function (_Component) {
             userLists: [],
             friends: [],
             newList: false,
-            renameList: undefined
+            renameList: undefined,
+            searchText: ''
         };
         _this.handleListTitleClick = _this.handleListTitleClick.bind(_this);
         _this.handleListDeleteClick = _this.handleListDeleteClick.bind(_this);
@@ -36524,8 +36525,10 @@ var Dashboard = function (_Component) {
         _this.handleRenameListClick = _this.handleRenameListClick.bind(_this);
         _this.handleRenameListInputChange = _this.handleRenameListInputChange.bind(_this);
         _this.handleRenameListInputKeyUp = _this.handleRenameListInputKeyUp.bind(_this);
+        _this.handleSearch = _this.handleSearch.bind(_this);
         return _this;
     }
+
     //post the new list to the DB
 
 
@@ -36641,6 +36644,7 @@ var Dashboard = function (_Component) {
                 this.setState({ renameList: undefined });
             }
         }
+
         //create a new list
 
     }, {
@@ -36650,17 +36654,38 @@ var Dashboard = function (_Component) {
                 newList: true
             });
         }
+
+        //search db for movie
+
+    }, {
+        key: 'handleSearch',
+        value: function handleSearch(e) {
+            var _this7 = this;
+
+            var searchInput = e.target.value;
+            this.setState({ searchText: searchInput });
+            setTimeout(function () {
+                if (_this7.state.searchText.length > 1) {
+                    __WEBPACK_IMPORTED_MODULE_4_axios___default.a.get('/search/' + _this7.state.searchText).then(function (res) {
+                        var searchResults = Object.keys(res.data).map(function (key) {
+                            return res.data[key];
+                        });
+                        _this7.setState({ searchResults: searchResults });
+                    });
+                }
+            }, 0);
+        }
     }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var _this7 = this;
+            var _this8 = this;
 
             //external API call for Top 20 movies
             __WEBPACK_IMPORTED_MODULE_2_jsonp___default()('https://api.themoviedb.org/3/discover/movie?api_key=' + __WEBPACK_IMPORTED_MODULE_3__config_js_config__["TMDB_KEY"] + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1', null, function (err, data) {
                 if (err) {
                     return undefined;
                 } else {
-                    _this7.setState({
+                    _this8.setState({
                         topMovies: data.results
                     });
                 }
@@ -36676,7 +36701,10 @@ var Dashboard = function (_Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'searchSection' },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_dashboard_Search_Bar__["a" /* default */], null),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_dashboard_Search_Bar__["a" /* default */], {
+                        handleSearch: this.handleSearch,
+                        searchText: this.state.searchText
+                    }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__components_dashboard_Top_Movies_Widget__["a" /* default */], { topMovies: this.state.topMovies })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__components_dashboard_Lists_Widget__["a" /* default */], {
@@ -56470,59 +56498,82 @@ function plural(ms, n, name) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
-var SEARCH_BAR = function SEARCH_BAR(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "form",
-        { method: "", action: "", id: "findMove", className: "searchBar" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            { style: { fontStyle: 'italic' } },
-            "find a movie... ",
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-                name: "searchBar-input",
-                id: "searchBar-input",
-                type: "text",
-                placeholder: "Actor, director, title, year..."
-            })
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "p",
-            null,
-            "Search By:",
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "select",
-                {
-                    name: "searchBar-mode",
-                    id: "searchBar-mode",
-                    type: "select"
-                },
+
+var SEARCH_BAR = function (_Component) {
+    _inherits(SEARCH_BAR, _Component);
+
+    function SEARCH_BAR(props) {
+        _classCallCheck(this, SEARCH_BAR);
+
+        return _possibleConstructorReturn(this, (SEARCH_BAR.__proto__ || Object.getPrototypeOf(SEARCH_BAR)).call(this, props));
+    }
+
+    _createClass(SEARCH_BAR, [{
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "form",
+                { method: "", action: "", id: "findMove", className: "searchBar" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "option",
-                    { value: "title" },
-                    "Title"
+                    "p",
+                    { style: { fontStyle: 'italic' } },
+                    "find a movie...",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                        name: "searchBar-input",
+                        id: "searchBar-input",
+                        type: "text",
+                        placeholder: "Actor, director, title, year...",
+                        onChange: this.props.handleSearch
+                    })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "option",
-                    { value: "cast" },
-                    "Cast"
+                    "p",
+                    null,
+                    "Search By:",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "select",
+                        {
+                            name: "searchBar-mode",
+                            id: "searchBar-mode",
+                            type: "select"
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "option",
+                            { value: "title" },
+                            "Title"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "option",
+                            { value: "cast" },
+                            "Cast"
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "option",
+                            { value: "director" },
+                            "Director"
+                        )
+                    )
                 ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "option",
-                    { value: "director" },
-                    "Director"
-                )
-            ),
-            " "
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-            id: "searchBar-submit",
-            type: "submit",
-            value: "Go!"
-        })
-    );
-};
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                    id: "searchBar-submit",
+                    type: "submit",
+                    value: "Go!"
+                })
+            );
+        }
+    }]);
+
+    return SEARCH_BAR;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["a"] = (SEARCH_BAR);
 

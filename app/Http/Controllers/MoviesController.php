@@ -30,6 +30,15 @@ class MoviesController extends Controller
         return response()->json($movie, 200);
     }
 
+    public function searchMovies($movie)
+    {
+
+        $result = Movie::where('name','LIKE','%'.$movie.'%')
+            ->get();
+
+        return $result;
+    }
+
 /*    public function delete(Movie $movie)
     {
         $movie->delete();

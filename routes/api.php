@@ -18,25 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('movies', 'MoviesController@index');
-
-Route::get('movies/{movie}', 'MoviesController@show');
-
-Route::post('movies','MoviesController@store');
-
-Route::put('movies/{movie}','MoviesController@update');
-
-Route::post('userLogin', 'UserController@userLogin');
-Route::post('userRegister', 'UserController@userRegister');
-
-
-
-Route::group(['middleware' => 'auth:api'], function(){
-    Route::get('userDetails', 'UserController@userDetails');
-    Route::get('userLists', 'ListController@getUserLists');
-    Route::post('userLists', 'ListController@storeUserList');
-    Route::delete('userLists/{id}', 'ListController@destroyUserList');
-});
 
 
 
