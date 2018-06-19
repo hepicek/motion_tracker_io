@@ -6,3 +6,17 @@
     margin: 0;
   }
 }
+
+.searchItemDetails {
+  animation: searchSlideItem .15s linear forwards;
+}
+@keyframes searchSlideItem {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: 50px;
+    opacity: 1;
+  }
+}
