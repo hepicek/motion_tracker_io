@@ -40,7 +40,34 @@ class MoviesController extends Controller
 
         return [$movie, $result];
     }
+    public function imdbTest() {
+        $movie = new \Imdb\Title(335266);
+        $result['title'] = $movie->orig_title();
+        $result['tagline'] = $movie->tagline();
+        $result['seasons'] = $movie->seasons();
+        $result['is_serial'] = $movie->is_serial();
+        $result['episodes'] = $movie->episodes();
+        $result['is_episode'] = $movie->episodeTitle();
+        $result['episodeSeason'] = $movie->episodeSeason();
+        $result['episodeAirDate'] = $movie->episodeAirDate();
+        $result['episodeDetails'] = $movie->get_episode_details();
+        $result['plotoutline'] = $movie->plotoutline();
+        $result['storyline'] = $movie->storyline();
+        $result['photoSmall'] = $movie->photo();
+        $result['photoLarge'] = $movie->photo(false);
+        $result['mainPictures'] = $movie->mainPictures();
+        $result['rating'] = $movie->mpaa();
+        $result['plot'] = $movie->plot();
+        $result['sysopsis'] = $movie->synopsis();
+        $result['director'] = $movie->director();
+        $result['cast'] = $movie->cast();
+        $result['writing'] = $movie->writing();
+        $result['producer'] = $movie->producer();
 
+        // $result['alsoknow'] = $movie->alsoknow();
+
+        // $movie->savephoto("public/img/movie_img");
+        return  $result;
     public function searchActors($imdb_id)
     {
         $movie = Movie::find($imdb_id);
