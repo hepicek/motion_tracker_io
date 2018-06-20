@@ -14,7 +14,7 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
         axios.get(`/searchActors/${movieItemImdbId}`)
             .then((res) => {
                 let searchResults = Object.keys(res).map(key => res[key]);
-                this.setState({actors: searchResults[0]});
+               this.setState({actors: searchResults[0]});
             });
     }
 
@@ -22,7 +22,7 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
         return (
             <div className="searchItemDetails">
                 <p>{this.props.MovieItemDetails.rating}</p>
-                <p>{console.log(this.state.actors[0])}</p>
+                 <p>{this.state.actors[0]}</p>
             </div>
         )
     }
