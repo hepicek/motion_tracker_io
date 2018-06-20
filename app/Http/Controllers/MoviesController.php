@@ -78,8 +78,12 @@ class MoviesController extends Controller
             ->orderBy('priority', 'desc')
             ->take(4)
             ->get();
-
-        return $actors;
+        $director = $movie->Persons()
+            ->where('imdb_position_id', 255)
+            ->orderBy('priority', 'desc')
+            ->take(2)
+            ->get();
+        return [$actors, $director];
     }
 
 /*    public function delete(Movie $movie)
