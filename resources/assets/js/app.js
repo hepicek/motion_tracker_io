@@ -1,9 +1,8 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Dashboard from './Dashboard';
+import Landingpage from './Landingpage';
+import User_Profile from './User_Profile';
 
 require('./bootstrap');
 
@@ -13,6 +12,14 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./Dashboard');
-require('./Landingpage');
-require('./User_Profile');
+
+
+if (document.getElementById('dashboard')) {
+    ReactDOM.render(<Dashboard/>, document.getElementById('dashboard'));
+} else
+if (document.getElementById('landingPage')) {
+    ReactDOM.render(<Landingpage />, document.getElementById('landingPage'));
+} else
+if (document.getElementById('userprofile')) {
+    ReactDOM.render(<User_Profile />, document.getElementById('userprofile'));
+}

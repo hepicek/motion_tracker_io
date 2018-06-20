@@ -1,60 +1,51 @@
 import React, { Component } from 'react';
-import LIST_ITEMS from './lists_widget_components/List_Items';
+// import LIST_ITEMS from './lists_widget_components/List_Items';
+import LIST from './lists_widget_components/List'
 import LISTS_HEADER from './lists_widget_components/Lists_Widget_Header';
 import New_List from './lists_widget_components/New_List';
-import LIST_MENU_BTN from './lists_widget_components/List_Menu_Btn';
 
-const LISTS_WIDGET = (props) => {
-    let lists = undefined;
 
-    if(props.lists.length > 0) {
-        lists = props.lists.map((list, index) => (
-            <div 
-                key={list.id ? list.id : "new-" + index} 
-                id={list.id ? list.id : "new-" + index} 
-                className='listItem'
-                onClick={props.handleListTitleClick}
-            >
-                <div className='listHeader'>
-                
-                    {(list.id && props.renameList != list.id) && 
-                        <p 
-                            className="listTitle"
-                            id={"title-" + (list.id ? list.id : "new")} 
-                            onClick={props.handleListTitleClick}
-                        >
-                            {list.list_title}
-                        </p>
-                    }
-                    {(list.id && props.renameList == list.id) && 
-                        <input
-                            className="listTitleInput"
-                            id={"renameInput-" + (list.id ? list.id : "new")} 
-                            onChange={props.handleRenameListInputChange}
-                            onKeyUp={props.handleRenameListInputKeyUp}
-                            value={props.renameListInputValue}
-                    />}
-                    {(list.id && props.renameList != list.id) && 
-                    <LIST_MENU_BTN 
-                        listId = {list.id}
-                        handleListDeleteClick = {props.handleListDeleteClick}
-                        handleListMenuBtnClick = {props.handleListMenuBtnClick}
-                        handleRenameListClick = {props.handleRenameListClick}
-                    />}
-                </div>
-                {list.collapsed == 0 && <LIST_ITEMS items={list.items}/>}
-            </div>
-        ));
+class LISTS_WIDGET extends Component  {
+    constructor(props) {
+        super(props)
+        this.lists = undefined;
+        
     }
-    return (
-        <div className="dashboardWidget" id="listsWidget">
-            <LISTS_HEADER handleNewListBtnClick={props.handleNewListBtnClick}/>
-            <div id="listsWidget-lists">
-                {props.newList && <New_List saveNewList={props.saveNewList}/>}
-                {lists && lists}
+    
+    render() {
+        let props = this.props;
+        
+        if(props.lists.length > 0) {
+            
+            this.lists = props.lists.map((list, index) => {
+                
+                return(
+                <LIST 
+                    
+                    key={list.id}
+                    list={list}
+                    handleRenameListInputChange={props.handleRenameListInputChange}
+                    handleRenameListInputKeyUp={props.handleRenameListInputKeyUp}
+                    renameListInputValue={props.renameListInputValue}
+                    handleListDeleteClick = {props.handleListDeleteClick}
+                    handleListMenuBtnClick = {props.handleListMenuBtnClick}
+                    handleRenameListClick = {props.handleRenameListClick}
+                    renameList={props.renameList}
+                    renameListInputValue={props.renameListInputValue}
+                />
+            )
+        });
+        }
+        return (
+            <div className="dashboardWidget" id="listsWidget">
+                <LISTS_HEADER handleNewListBtnClick={props.handleNewListBtnClick}/>
+                <div id="listsWidget-lists">
+                    {props.newList && <New_List saveNewList={props.saveNewList}/>}
+                    {this.lists && this.lists}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }    
 }
 
 

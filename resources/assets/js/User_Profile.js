@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+
 import axios from 'axios'; //For API calls
 
 import USER_DETAILS_FORM from './components/user_profile/user_details_form';
@@ -124,6 +124,4 @@ class User_Profile extends Component {
     }
 }
 
-if (document.getElementById('userprofile')) {
-    ReactDOM.render(<User_Profile />, document.getElementById('userprofile'));
-}
+export default User_Profile;

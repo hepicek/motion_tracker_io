@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';   
+import React, { Component } from 'react'; 
 import jsonp from 'jsonp';
 import { TMDB_KEY } from '../../../config/js/config';
 
@@ -43,6 +42,4 @@ class Landingpage extends Component {
     }
 }
 
-if (document.getElementById('landingPage')) {
-    ReactDOM.render(<Landingpage />, document.getElementById('landingPage'));
-}
+export default Landingpage;
