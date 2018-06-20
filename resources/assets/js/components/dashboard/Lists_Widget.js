@@ -32,6 +32,7 @@ class LISTS_WIDGET extends Component  {
                     handleRenameListClick = {props.handleRenameListClick}
                     renameList={props.renameList}
                     renameListInputValue={props.renameListInputValue}
+                    handleDragItemDrop={props.handleDragItemDrop}
                 />
             )
         });

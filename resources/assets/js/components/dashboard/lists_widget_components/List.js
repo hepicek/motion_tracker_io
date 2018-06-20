@@ -5,9 +5,9 @@ import LIST_MENU_BTN from './List_Menu_Btn';
 
 const listTarget = {
     drop: function (props, monitor){
-        // console.log(props);
-        // console.log(monitor);
-       console.log('dropped', props);
+       let movie_id = monitor.getItem().id;
+       let list_id = props.list.id;
+       props.handleDragItemDrop(movie_id, list_id);
     }
 }
 
