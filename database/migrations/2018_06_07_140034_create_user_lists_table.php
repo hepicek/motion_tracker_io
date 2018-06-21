@@ -15,13 +15,15 @@ class CreateUserListsTable extends Migration
     {
         Schema::create('user_lists', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('owner_id');
+            $table->integer('owner_id')->unsigned();
             $table->integer('visibility_status_id');
+            $table->integer('collapsed')->default(1);
             $table->dateTime('date_created');
             $table->string('list_title', 255);
 
+        });
+        Schema::table('user_lists', function (Blueprint $table) {
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 

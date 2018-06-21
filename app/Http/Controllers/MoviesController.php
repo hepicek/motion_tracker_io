@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\StoreDataFromExternalSource;
 use App\Movie;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -34,6 +35,8 @@ class MoviesController extends Controller
 
     public function searchMovies($movie)
     {
+        StoreDataFromExternalSource::dispatch($movie)
+            ->delay(now()->addSecond(10));
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
@@ -81,42 +84,14 @@ class MoviesController extends Controller
         return $result;
     }
 
-    public function exSearch($searchString) {
-        $search = new \Imdb\TitleSearch(); // Optional $config parameter
-        $results = $search->search($searchString, array(\Imdb\TitleSearch::MOVIE));
-        // dd(count($results));
-        $count = count($results) < 20 ? count($results) : 20;
-        $stuff = [];
+    public function exSearch($searchString)
+    {
+        StoreDataFromExternalSource::dispatch($searchString)
+            ->delay(now()->addSecond(10));
 
-        // function compare_votes($a, $b) {
-        //     if ($a['votes'] == $b['votes']) return 0;
-        //     return ($a['votes'] < $b['votes']) ? -1 : 1;
-        // }
-        
-        
-
-            for($i = 0; $i < $count; $i++) { /* @var $result \Imdb\Title */
-                $stuff[] = [
-                    'id'=>$results[$i]->imdbID(),
-                    'title'=>$results[$i]->title(),
-                    'orig_title'=>$results[$i]->orig_title(),
-                    'year'=>$results[$i]->year(),               
-                    'rating'=>$results[$i]->rating(),
-                    'votes'=>$results[$i]->votes()
-                ];
-            };
-
-            usort($stuff, function($a, $b) {
-                if ($a['votes'] == $b['votes']) return 0;
-                return ($a['votes'] > $b['votes']) ? -1 : 1;
-            });
-
-            // $stuff[] = $this->externalGetDetails('0094963');
-            // for($i = 0; $i < 5; $i++) {
-            //     $stuff[] = $this->externalGetDetails($results[$i]->imdbID());
-            // }
-        return $stuff;
+        return 'wating for data';
     }
+
     public function searchActors($imdb_id)
     {
         $movie = Movie::find($imdb_id);
@@ -140,11 +115,11 @@ class MoviesController extends Controller
         $url = $result['photoLarge'];
         $info = pathinfo($url);
 
-        $file_ext = $info['extension'] == '_V1' ? 'jpg': $info['extension'];
+        $file_ext = $info['extension'] == '_V1' ? 'jpg' : $info['extension'];
 
         $contents = file_get_contents($url);
         $file_name = preg_replace("/[\s_]/", "_", $result['title']) . "-" . str_random(6);
-        $file_name_ext = $file_name ."." . $file_ext;
+        $file_name_ext = $file_name . "." . $file_ext;
 
         $file = "../storage/app/public/img/movie_img/" . $file_name_ext;
         file_put_contents($file, $contents);

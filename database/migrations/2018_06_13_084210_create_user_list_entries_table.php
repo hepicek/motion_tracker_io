@@ -15,10 +15,12 @@ class CreateUserListEntriesTable extends Migration
     {
         Schema::create('user_list_entries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('list_id');
+            $table->integer('list_id')->unsigned();
             $table->integer('show_id');
             $table->integer('episode_id')->nullable();
+        });
 
+        Schema::table('user_list_entries', function (Blueprint $table) {
             $table->foreign('list_id')->references('id')->on('user_lists')->onDelete('cascade');
         });
     }
