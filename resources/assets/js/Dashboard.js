@@ -138,6 +138,19 @@ class Dashboard extends Component {
     }
     handleDragItemDrop(movie_id, list_id) {
         console.log("handled!", movie_id, list_id);
+
+        axios.get(`/userListsDnD/${list_id}/${movie_id}`)
+            .then((res) => {
+                console.log(res);
+                this.getLists();
+/*                let searchString = res.data[0];
+                let body = res.data[1];
+                let searchResults = Object.keys(body).map(key => body[key]);
+                if(searchString == this.state.searchText) {
+                    this.setState({searchResults});
+                }*/
+
+            });
     }
     componentWillMount() {
         // external API call for Top 20 movies

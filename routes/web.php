@@ -31,7 +31,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('userLists', 'ListController@storeUserList');
     Route::delete('userLists/{id}', 'ListController@destroyUserList');
     Route::put('userLists/{id}', 'ListController@updateUserList');
-    Route::post('userListsDnD/{id}', 'ListController@storeUserListItem');
 
     Route::post('userListItems/{id}', function(Request $request) {
         return List_Item::create($request->all());
@@ -55,6 +54,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
+
+Route::get('userListsDnD/{list_id}/{id}', 'ListController@storeUserListItem');
 
 
 

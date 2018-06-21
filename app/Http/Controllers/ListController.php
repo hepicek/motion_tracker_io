@@ -67,11 +67,10 @@ class ListController extends Controller
         return $request;
     }
 
-    public function storeUserListItem(Request $request, $id)
+    public function storeUserListItem($list_id, $id)
     {
-        $input = $request->all();
-        $input['list_id'] = $request['list_id'];
-        $input['show_id'] = $request[$id];
+        $input['list_id'] = $list_id;
+        $input['show_id'] = $id;
         $newItem = List_Item::create($input);
         $newItem->save();
 
