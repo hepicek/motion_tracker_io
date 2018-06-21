@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/{movie}', 'MoviesController@searchMovies');
     Route::get('search/external/{movie_id}', 'MoviesController@externalSearch');
 
+
     Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
 
 
@@ -66,6 +67,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
+Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
 
 

@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Movie;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class MoviesController extends Controller
 {
@@ -33,14 +35,16 @@ class MoviesController extends Controller
     public function searchMovies($movie)
     {
 
-        $result = Movie::where('name','LIKE','%'.$movie.'%')
+        $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
             ->take(20)
             ->get();
 
         return [$movie, $result];
     }
-    public function externalSearch($movie_id) {
+
+    public function externalSearch($movie_id)
+    {
         $movie = new \Imdb\Title($movie_id);
         $result['title'] = $movie->orig_title();
         $result['tagline'] = $movie->tagline();
@@ -64,11 +68,16 @@ class MoviesController extends Controller
         $result['writing'] = $movie->writing();
         $result['producer'] = $movie->producer();
 
+        $this->resizeAndStoreImage($result);
+
+        // $uploaded_file = new UploadedFile($file, $file_name);
+
         // $result['alsoknow'] = $movie->alsoknow();
 
         // $movie->savephoto("public/img/movie_img");
-        return  $result;
+        return $result;
     }
+
     public function searchActors($imdb_id)
     {
         $movie = Movie::find($imdb_id);
@@ -86,10 +95,34 @@ class MoviesController extends Controller
         return [$actors, $director];
     }
 
-/*    public function delete(Movie $movie)
+    protected function resizeAndStoreImage($result)
     {
-        $movie->delete();
 
-        return response()->json(null, 204);
-    }*/
+        $url = $result['photoLarge'];
+        $info = pathinfo($url);
+
+        $file_ext = $info['extension'] == '_V1' ? 'jpg': $info['extension'];
+
+        $contents = file_get_contents($url);
+        $file_name = preg_replace("/[\s_]/", "_", $result['title']) . "-" . str_random(6);
+        $file_name_ext = $file_name ."." . $file_ext;
+
+        $file = "../storage/app/public/img/movie_img/" . $file_name_ext;
+        file_put_contents($file, $contents);
+
+
+        $img = Image::make($file);
+        $img_width_300 = 300;
+        $img->resize($img_width_300, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save(public_path('../storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext));
+    }
+
+    /*    public function delete(Movie $movie)
+        {
+            $movie->delete();
+
+            return response()->json(null, 204);
+        }*/
 }
