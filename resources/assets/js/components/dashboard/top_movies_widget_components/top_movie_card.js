@@ -60,7 +60,7 @@ class TOP_MOVIE_CARD extends Component {
         let movie = this.props.movie;
         const { isDragging, connectDragSource, canDrag } = this.props;
         
-        return connectDragSource (
+        return connectDragSource(
             <div 
             className="topMoviesWidgetCard" 
             key={movie.id} 
