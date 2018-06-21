@@ -63,9 +63,19 @@ class ListController extends Controller
         } elseif($request->has('list_title')) {
             $user_list = User_List::findOrFail($id)->update(['list_title'=>$request->list_title]);
         }
-
-
+        
         return $request;
+    }
+
+    public function storeUserListItem(Request $request, $id)
+    {
+        $input = $request->all();
+        $input['list_id'] = $request['list_id'];
+        $input['show_id'] = $request[$id];
+        $newItem = List_Item::create($input);
+        $newItem->save();
+
+        return response()->json(['success'=> $newItem], 200);
     }
 
     public function destroyUserList(Request $request, $id)
