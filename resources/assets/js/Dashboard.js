@@ -138,23 +138,12 @@ class Dashboard extends Component {
         }, 0);
     }
     handleDragItemDrop(movie_id, list_id) {
-        console.log("handled!", movie_id, list_id);
-
         axios.get(`/userListsDnD/${list_id}/${movie_id}`)
             .then((res) => {
-                console.log(res);
                 this.getLists();
-/*                let searchString = res.data[0];
-                let body = res.data[1];
-                let searchResults = Object.keys(body).map(key => body[key]);
-                if(searchString == this.state.searchText) {
-                    this.setState({searchResults});
-                }*/
-
             });
     }
     handleDeleteListItem(e) {
-        console.log(e.target.parentNode.id.split("-")[1]);
         let listItemId = e.target.parentNode.id.split("-")[1];
         axios.delete("userListItem/" + listItemId)
         .then(() => this.getLists());

@@ -43,8 +43,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('movies/{movie}', 'MoviesController@show');
     Route::post('movies','MoviesController@store');
     Route::put('movies/{movie}','MoviesController@update');
+    Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
     Route::get('search/{movie}', 'MoviesController@searchMovies');
-    Route::get('search/external/{movie_id}', 'MoviesController@externalSearch');
+    
+    Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
 
 
     Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
@@ -73,3 +75,4 @@ Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');
+

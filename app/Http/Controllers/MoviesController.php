@@ -43,11 +43,14 @@ class MoviesController extends Controller
         return [$movie, $result];
     }
 
-    public function externalSearch($movie_id)
+    public function externalGetDetails($movie_id)
     {
         $movie = new \Imdb\Title($movie_id);
-        $result['title'] = $movie->orig_title();
+        $result['title'] = $movie->title();
+        $result['orig_title'] = $movie->orig_title();
         $result['tagline'] = $movie->tagline();
+        $result['rating'] = $movie->rating();
+        $result['votes'] = $movie->votes();
         $result['seasons'] = $movie->seasons();
         $result['is_serial'] = $movie->is_serial();
         $result['episodes'] = $movie->episodes();
@@ -78,6 +81,42 @@ class MoviesController extends Controller
         return $result;
     }
 
+    public function exSearch($searchString) {
+        $search = new \Imdb\TitleSearch(); // Optional $config parameter
+        $results = $search->search($searchString, array(\Imdb\TitleSearch::MOVIE));
+        // dd(count($results));
+        $count = count($results) < 20 ? count($results) : 20;
+        $stuff = [];
+
+        // function compare_votes($a, $b) {
+        //     if ($a['votes'] == $b['votes']) return 0;
+        //     return ($a['votes'] < $b['votes']) ? -1 : 1;
+        // }
+        
+        
+
+            for($i = 0; $i < $count; $i++) { /* @var $result \Imdb\Title */
+                $stuff[] = [
+                    'id'=>$results[$i]->imdbID(),
+                    'title'=>$results[$i]->title(),
+                    'orig_title'=>$results[$i]->orig_title(),
+                    'year'=>$results[$i]->year(),               
+                    'rating'=>$results[$i]->rating(),
+                    'votes'=>$results[$i]->votes()
+                ];
+            };
+
+            usort($stuff, function($a, $b) {
+                if ($a['votes'] == $b['votes']) return 0;
+                return ($a['votes'] > $b['votes']) ? -1 : 1;
+            });
+
+            // $stuff[] = $this->externalGetDetails('0094963');
+            // for($i = 0; $i < 5; $i++) {
+            //     $stuff[] = $this->externalGetDetails($results[$i]->imdbID());
+            // }
+        return $stuff;
+    }
     public function searchActors($imdb_id)
     {
         $movie = Movie::find($imdb_id);
