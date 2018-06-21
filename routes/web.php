@@ -26,11 +26,28 @@ Route::group(['middleware' => ['auth']], function() {
     //Data Routes
     Route::get('userDetails', 'UserController@userDetails');
     Route::post('userDetails/{id}', 'UserController@updateUserDetails');
-    
+
+    //User list routes
     Route::get('userLists', 'ListController@getUserLists');
     Route::post('userLists', 'ListController@storeUserList');
     Route::delete('userLists/{id}', 'ListController@destroyUserList');
     Route::put('userLists/{id}', 'ListController@updateUserList');
+
+    Route::delete('userListItem/{id}', 'ListController@destroyUserListItem');
+
+    //Drag and Drop route
+    Route::get('userListsDnD/{list_id}/{id}', 'ListController@storeUserListItem');
+
+    //Movies routes
+    Route::get('movies', 'MoviesController@index');
+    Route::get('movies/{movie}', 'MoviesController@show');
+    Route::post('movies','MoviesController@store');
+    Route::put('movies/{movie}','MoviesController@update');
+    Route::get('search/{movie}', 'MoviesController@searchMovies');
+    Route::get('search/external/{movie_id}', 'MoviesController@externalSearch');
+
+    Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
+
 
     Route::post('userListItems/{id}', function(Request $request) {
         return List_Item::create($request->all());
@@ -40,12 +57,7 @@ Route::group(['middleware' => ['auth']], function() {
         return 204;
     });
 
-    Route::get('movies', 'MoviesController@index');
-    Route::get('movies/{movie}', 'MoviesController@show');
-    Route::post('movies','MoviesController@store');
-    Route::put('movies/{movie}','MoviesController@update');
-    Route::get('search/{movie}', 'MoviesController@searchMovies');
-    Route::get('search/external/{movie_id}', 'MoviesController@externalSearch');
+
 
 
 
@@ -53,9 +65,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('userRegister', 'UserController@userRegister');
 
 });
-Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
 
-Route::get('userListsDnD/{list_id}/{id}', 'ListController@storeUserListItem');
 
 
 

@@ -89,4 +89,12 @@ class ListController extends Controller
 
         return 204;
     }
+    public function destroyUserListItem(Request $request, $id)
+    {
+        $user_list_item = List_Item::findOrFail($id);
+        $user_list_item->delete();
+
+        return 204;
+    }
 }
+
