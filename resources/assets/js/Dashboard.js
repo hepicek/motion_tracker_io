@@ -34,6 +34,7 @@ class Dashboard extends Component {
         this.handleRenameListInputKeyUp = this.handleRenameListInputKeyUp.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleDragItemDrop = this.handleDragItemDrop.bind(this);
+        this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
     }
 
     //post the new list to the DB
@@ -152,6 +153,9 @@ class Dashboard extends Component {
 
             });
     }
+    handleDeleteListItem(e) {
+        console.log(e.target.parentNode.id.split("-")[1]);
+    }
     componentWillMount() {
         // external API call for Top 20 movies
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
@@ -190,6 +194,7 @@ class Dashboard extends Component {
                     handleRenameListInputKeyUp={this.handleRenameListInputKeyUp}
                     renameListInputValue={this.state.renameListInputValue ? this.state.renameListInputValue : ""}
                     handleDragItemDrop={this.handleDragItemDrop}
+                    handleDeleteListItem={this.handleDeleteListItem}
                 />
                 <FRIENDS_WIDGET/>
             </div>

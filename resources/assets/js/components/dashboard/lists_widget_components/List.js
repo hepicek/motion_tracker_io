@@ -83,7 +83,11 @@ class LIST extends Component {
                         handleRenameListClick = {props.handleRenameListClick}
                     />}
                 </div>
-                {this.state.collapsed == 0 && <LIST_ITEMS items={list.items}/>}
+                {this.state.collapsed == 0 && 
+                    <LIST_ITEMS 
+                        items={list.items}
+                        handleDeleteListItem={props.handleDeleteListItem}
+                    />}
             </div>
             
         )

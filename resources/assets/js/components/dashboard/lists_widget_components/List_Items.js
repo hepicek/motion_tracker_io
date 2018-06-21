@@ -6,8 +6,12 @@ const LIST_ITEMS = (props) => {
     let itemsArray = Object.keys(props.items).map(key => props.items[key]);
 
     let items = itemsArray ? itemsArray.map(item => (
-        <div key={item.id}>
+        <div className="userListItem" key={item.id} id={"listItem-" + item.id}>
             <p>{item.name} - {item.year}</p>
+            <i 
+                className="fa fa-times"
+                onClick={props.handleDeleteListItem}
+            ></i>
         </div>
        )) : undefined;
    return (
