@@ -11,8 +11,8 @@ const spec = {
       // (like a card in Kanban board dragged between lists)
       // you can implement something like this to keep its
       // appearance dragged:
-
-      return {id: props.searchResultsItem.imdb_id};
+        // monitor.getItem()
+      return monitor.getItem();
     },
   
     beginDrag(props, monitor, component) {
@@ -85,7 +85,7 @@ class SEARCH_RESULTS_ITEM_WIDGET extends Component {
                     <p>{movieItem.rating}</p>
                 </div>
                 {this.state.caret === 'up' && <MOVIE_ITEM_SEARCH_DETAILS MovieItemDetails={movieItem}/>}
-                {isDragging && <h1>Dragging!</h1>}
+                {isDragging.id == movieItem.imdb_id && <h1>Dragging!</h1>}
             </div>
         )
     }
