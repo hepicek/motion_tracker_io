@@ -155,6 +155,9 @@ class Dashboard extends Component {
     }
     handleDeleteListItem(e) {
         console.log(e.target.parentNode.id.split("-")[1]);
+        let listItemId = e.target.parentNode.id.split("-")[1];
+        axios.delete("userListItem/" + listItemId)
+        .then(() => this.getLists());
     }
     componentWillMount() {
         // external API call for Top 20 movies
