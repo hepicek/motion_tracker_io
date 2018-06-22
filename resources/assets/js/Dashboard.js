@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import HTML5Backend from 'react-dnd-html5-backend'
-import { DragDropContext } from 'react-dnd'
+import {DragDropContext} from 'react-dnd'
 
 import jsonp from 'jsonp'; //used for API call to grab top movies
 import {TMDB_KEY} from '../../../config/js/config'; //file holding TMDB key (in .gitignore)
@@ -13,6 +13,7 @@ import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
 import SEARCH_MOVIES_WIDGET from './components/dashboard/Search_Movies_Widget';
 
+let inputTimer;
 
 class Dashboard extends Component {
     constructor(props) {
@@ -77,7 +78,7 @@ class Dashboard extends Component {
     }
 
     handleRenameListClick(e) {
-        
+
         let targetId = parseInt(e.target.parentNode.id.split("-")[1]);
         let renameList = this.state.userLists.filter(list => list.id == targetId)[0].list_title;
         this.setState({
@@ -118,36 +119,42 @@ class Dashboard extends Component {
     handleSearch(e) {
         let searchText = e.target.value;
         this.setState({searchText});
-        setTimeout(() => {
+
+        clearTimeout(inputTimer);
+
+        inputTimer = setTimeout(() => {
             if (this.state.searchText.length > 1) {
                 axios.get(`/search/${this.state.searchText}`)
                     .then((res) => {
                         let searchString = res.data[0];
                         let body = res.data[1];
                         let searchResults = Object.keys(body).map(key => body[key]);
-                        if(searchString == this.state.searchText) {
-                            this.setState({searchResults}); 
+                        if (searchString == this.state.searchText) {
+                            this.setState({searchResults});
                         }
-                                               
+
                     });
             } else {
                 this.setState({
                     searchResults: []
                 });
             }
-        }, 0);
+        }, 500);
     }
+
     handleDragItemDrop(movie_id, list_id) {
         axios.get(`/userListsDnD/${list_id}/${movie_id}`)
             .then((res) => {
                 this.getLists();
             });
     }
+
     handleDeleteListItem(e) {
         let listItemId = e.target.parentNode.id.split("-")[1];
         axios.delete("userListItem/" + listItemId)
-        .then(() => this.getLists());
+            .then(() => this.getLists());
     }
+
     componentWillMount() {
         // external API call for Top 20 movies
         jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
@@ -170,8 +177,9 @@ class Dashboard extends Component {
                         handleSearch={this.handleSearch}
                         searchText={this.state.searchText}
                     />
-                    {this.state.searchResults.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/> }
-                    {this.state.searchResults.length > 0 && <SEARCH_MOVIES_WIDGET searchResults={this.state.searchResults}/>}
+                    {this.state.searchResults.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>}
+                    {this.state.searchResults.length > 0 &&
+                    <SEARCH_MOVIES_WIDGET searchResults={this.state.searchResults}/>}
 
                 </div>
                 <LISTS_WIDGET

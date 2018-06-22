@@ -36,7 +36,7 @@ class MoviesController extends Controller
     public function searchMovies($movie)
     {
         StoreDataFromExternalSource::dispatch($movie)
-            ->delay(now()->addSecond(10));
+            ->delay(10);
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
@@ -87,7 +87,7 @@ class MoviesController extends Controller
     public function exSearch($searchString)
     {
         StoreDataFromExternalSource::dispatch($searchString)
-            ->delay(now()->addSecond(10));
+            ->delay(now()->addSecond(5));
 
         return 'wating for data';
     }
