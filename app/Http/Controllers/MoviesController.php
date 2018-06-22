@@ -106,23 +106,31 @@ class MoviesController extends Controller
         $queryDbData = [];
 
         foreach ($fetchedExternalData as $item) {
-            $intImdbId = $item['id'] + 0;
-            $movie = Movie::findOrFail($intImdbId);
-            $queryDbData[] = $movie['imdb_id'];
-            dd($queryDbData);
 
+            $intImdbId = $item['id']; //+ 0;
+            $movie = Movie::find($intImdbId);
+            $queryDbData[] = [
+                'id' => $movie['imdb_id'],
+                'title' => $movie['name'],
+                'year' => $movie['year'],
+                'rating' => $movie['rating'],
+                'votes_nr' => $movie['votes_nr'],
+            ];
         }
-//        foreach ($fetchedExternalData as $key => $item) {
-//            if ($fetchedExternalData[$key]['id'] !== $queryDbData[$key]['id']) {
-//                $movie = new Movie;
-//                $movie->create($item);
-//                $movie->save();
-//            }
-//        }
+        dd($queryDbData);
+    //    foreach ($fetchedExternalData as $key => $item) {
+        //    if ($fetchedExternalData[$key]['id'] !== $queryDbData[$key]['id']) {
+        //        $movie = new Movie;
+        //        $movie->create($item);
+        //        $movie->save();
+        //    }
+                // $count++;
+    //    }
+    //    dd($count);
 
       //  StoreDataFromExternalSource::dispatch($searchString)
        //     ->delay(now()->addSecond(5));
-        return $queryDbData;
+        // return $queryDbData;
     }
 
     public function searchActors($imdb_id)
