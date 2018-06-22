@@ -35,8 +35,8 @@ class MoviesController extends Controller
 
     public function searchMovies($movie)
     {
-        StoreDataFromExternalSource::dispatch($movie)
-            ->delay(10);
+       // StoreDataFromExternalSource::dispatch($movie)
+        //    ->delay(10);
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
@@ -86,10 +86,43 @@ class MoviesController extends Controller
 
     public function exSearch($searchString)
     {
-        StoreDataFromExternalSource::dispatch($searchString)
-            ->delay(now()->addSecond(5));
 
-        return 'wating for data';
+        $search = new \Imdb\TitleSearch(); // Optional $config parameter
+        $results = $search->search($searchString, array(\Imdb\TitleSearch::MOVIE));
+        $count = count($results) < 20 ? count($results) : 20;
+        $fetchedExternalData = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $fetchedExternalData[] = [
+                'id' => $results[$i]->imdbID(),
+                'title' => $results[$i]->title(),
+                'orig_title' => $results[$i]->orig_title(),
+                'year' => $results[$i]->year(),
+                'rating' => $results[$i]->rating(),
+                'votes_nr' => $results[$i]->votes()
+            ];
+        }
+
+        $queryDbData = [];
+
+        foreach ($fetchedExternalData as $item) {
+            $intImdbId = $item['id'] + 0;
+            $movie = Movie::findOrFail($intImdbId);
+            $queryDbData[] = $movie['imdb_id'];
+            dd($queryDbData);
+
+        }
+//        foreach ($fetchedExternalData as $key => $item) {
+//            if ($fetchedExternalData[$key]['id'] !== $queryDbData[$key]['id']) {
+//                $movie = new Movie;
+//                $movie->create($item);
+//                $movie->save();
+//            }
+//        }
+
+      //  StoreDataFromExternalSource::dispatch($searchString)
+       //     ->delay(now()->addSecond(5));
+        return $queryDbData;
     }
 
     public function searchActors($imdb_id)
