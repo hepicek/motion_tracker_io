@@ -31,52 +31,56 @@ class StoreDataFromExternalSource implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Movie $movie)
+    public function handle()
     {
+
 
 
         $search = new \Imdb\TitleSearch(); // Optional $config parameter
         $results = $search->search($this->searchString, array(\Imdb\TitleSearch::MOVIE));
-        // dd(count($results));
         $count = count($results) < 20 ? count($results) : 20;
         $fetchedExternalData = [];
 
-
-        // function compare_votes($a, $b) {
-        //     if ($a['votes'] == $b['votes']) return 0;
-        //     return ($a['votes'] < $b['votes']) ? -1 : 1;
-        // }
-
-
-
         for ($i = 0; $i < $count; $i++) {
-            /* @var $result \Imdb\Title */
             $fetchedExternalData[] = [
-                'id' => $results[$i]->imdbID(),
-                'title' => $results[$i]->title(),
-                'orig_title' => $results[$i]->orig_title(),
+                'imdb_id' => $results[$i]->imdbID() + 0,
+                'name' => $results[$i]->title(),
+                'orig_name' => $results[$i]->orig_title(),
                 'year' => $results[$i]->year(),
                 'rating' => $results[$i]->rating(),
                 'votes_nr' => $results[$i]->votes()
             ];
         }
-        Log::info("test" . $fetchedExternalData[0]['id']);
 
-//        usort($stuff, function ($a, $b) {
-//            if ($a['votes'] == $b['votes']) return 0;
-//            return ($a['votes'] > $b['votes']) ? -1 : 1;
-//        });
         $queryDbData = [];
+        // dd($fetchedExternalData);
 
         foreach ($fetchedExternalData as $item) {
-            $queryDbData[] = Movie::findOrFail($item['id']);
-        }
 
-        foreach ($fetchedExternalData as $key => $item) {
-            if ($fetchedExternalData[$key]['id'] !== $queryDbData[$key]['id']) {
-                $movie->create($item);
+            $movie = Movie::find($item['imdb_id']);
+
+            if($movie['imdb_id'] == NULL) {
+                $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
+                $fill = [
+                    'imdb_id' => $item['imdb_id'] + 0,
+                    'name' => $name,
+                    'year' => $item['year'],
+                    'rating' =>  $item['rating'],
+                    'votes_nr' =>  $item['votes_nr'],
+                ];
+                $newMovie = Movie::create($fill);
+                //    var_dump($newMovie);
+            }
+            else {
+                $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
+                $movie['name'] = $name;
+                $movie['year'] = $item['year'];
+                $movie['rating'] = $item['rating'];
+                $movie['votes_nr'] = $item['votes_nr'];
+
                 $movie->save();
             }
+            //
         }
 
         // $stuff[] = $this->externalGetDetails('0094963');

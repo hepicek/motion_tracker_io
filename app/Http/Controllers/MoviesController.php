@@ -35,8 +35,8 @@ class MoviesController extends Controller
 
     public function searchMovies($movie)
     {
-       // StoreDataFromExternalSource::dispatch($movie)
-        //    ->delay(10);
+        StoreDataFromExternalSource::dispatch($movie)
+            ->delay(10);
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
@@ -104,24 +104,24 @@ class MoviesController extends Controller
         }
 
         $queryDbData = [];
-        // dd($fetchedExternalData);   
-        
+        // dd($fetchedExternalData);
+
         foreach ($fetchedExternalData as $item) {
-            
+
             $movie = Movie::find($item['imdb_id']);
-            
+
             if($movie['imdb_id'] == NULL) {
                 $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
-               $fill = [
-                'imdb_id' => $item['imdb_id'] + 0,
-                'name' => $name,
-                'year' => $item['year'],
-                'rating' =>  $item['rating'],
-                'votes_nr' =>  $item['votes_nr'],
-               ];
-               $newMovie = Movie::create($fill);
-            //    var_dump($newMovie);
-            } 
+                $fill = [
+                    'imdb_id' => $item['imdb_id'] + 0,
+                    'name' => $name,
+                    'year' => $item['year'],
+                    'rating' =>  $item['rating'],
+                    'votes_nr' =>  $item['votes_nr'],
+                ];
+                $newMovie = Movie::create($fill);
+                //    var_dump($newMovie);
+            }
             else {
                 $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
                 $movie['name'] = $name;
@@ -131,9 +131,9 @@ class MoviesController extends Controller
 
                 $movie->save();
             }
-        //     
+            //
         }
-        dd($fetchedExternalData); 
+        dd($fetchedExternalData);
     }
 
     public function searchActors($imdb_id)
