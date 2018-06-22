@@ -8,6 +8,7 @@ class Movie extends Model
 {
     protected $table = 'imdb_movie';
     protected $primaryKey = 'imdb_id';
+    protected $guarded = [];
     public $timestamps = false;
 
     public function List_Item() {

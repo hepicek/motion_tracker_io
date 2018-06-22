@@ -49,8 +49,8 @@ class MoviesController extends Controller
     public function externalGetDetails($movie_id)
     {
         $movie = new \Imdb\Title($movie_id);
-        $result['title'] = $movie->title();
-        $result['orig_title'] = $movie->orig_title();
+        $result['name'] = $movie->title();
+        $result['orig_name'] = $movie->orig_title();
         $result['tagline'] = $movie->tagline();
         $result['rating'] = $movie->rating();
         $result['votes'] = $movie->votes();
@@ -94,9 +94,9 @@ class MoviesController extends Controller
 
         for ($i = 0; $i < $count; $i++) {
             $fetchedExternalData[] = [
-                'id' => $results[$i]->imdbID(),
-                'title' => $results[$i]->title(),
-                'orig_title' => $results[$i]->orig_title(),
+                'imdb_id' => $results[$i]->imdbID() + 0,
+                'name' => $results[$i]->title(),
+                'orig_name' => $results[$i]->orig_title(),
                 'year' => $results[$i]->year(),
                 'rating' => $results[$i]->rating(),
                 'votes_nr' => $results[$i]->votes()
@@ -104,33 +104,36 @@ class MoviesController extends Controller
         }
 
         $queryDbData = [];
-
+        // dd($fetchedExternalData);   
+        
         foreach ($fetchedExternalData as $item) {
+            
+            $movie = Movie::find($item['imdb_id']);
+            
+            if($movie['imdb_id'] == NULL) {
+                $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
+               $fill = [
+                'imdb_id' => $item['imdb_id'] + 0,
+                'name' => $name,
+                'year' => $item['year'],
+                'rating' =>  $item['rating'],
+                'votes_nr' =>  $item['votes_nr'],
+               ];
+               $newMovie = Movie::create($fill);
+            //    var_dump($newMovie);
+            } 
+            else {
+                $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
+                $movie['name'] = $name;
+                $movie['year'] = $item['year'];
+                $movie['rating'] = $item['rating'];
+                $movie['votes_nr'] = $item['votes_nr'];
 
-            $intImdbId = $item['id']; //+ 0;
-            $movie = Movie::find($intImdbId);
-            $queryDbData[] = [
-                'id' => $movie['imdb_id'],
-                'title' => $movie['name'],
-                'year' => $movie['year'],
-                'rating' => $movie['rating'],
-                'votes_nr' => $movie['votes_nr'],
-            ];
+                $movie->save();
+            }
+        //     
         }
-        dd($queryDbData);
-    //    foreach ($fetchedExternalData as $key => $item) {
-        //    if ($fetchedExternalData[$key]['id'] !== $queryDbData[$key]['id']) {
-        //        $movie = new Movie;
-        //        $movie->create($item);
-        //        $movie->save();
-        //    }
-                // $count++;
-    //    }
-    //    dd($count);
-
-      //  StoreDataFromExternalSource::dispatch($searchString)
-       //     ->delay(now()->addSecond(5));
-        // return $queryDbData;
+        dd($fetchedExternalData); 
     }
 
     public function searchActors($imdb_id)
