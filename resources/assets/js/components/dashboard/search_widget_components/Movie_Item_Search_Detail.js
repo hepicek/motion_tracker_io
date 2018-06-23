@@ -30,7 +30,6 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
 
     render() {
         let poster = <img src={"./storage/" + this.state.movieDetail.imdb_img} alt="poster"/>;
-        console.log(this.state.actors);
         let actor = this.state.actors.map((actor, id) => (
             <div key={'actor-detail-' + id}>
                 <img key={'actor-image-' + id}
