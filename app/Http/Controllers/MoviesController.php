@@ -189,7 +189,7 @@ class MoviesController extends Controller
             $movie = Movie::find($item['imdb_id']);
             $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
             $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->resizeAndStoreImage($item, $name, $count);
-            $count++;
+
             if($item['type'] == 'Movie') {
                 if($item['genre'] == "Documentary") {
                     $type = 6;
