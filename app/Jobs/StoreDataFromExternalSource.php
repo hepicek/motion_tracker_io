@@ -24,6 +24,7 @@ class StoreDataFromExternalSource implements ShouldQueue
 
     public function handle()
     {
+        ini_set('memory_limit','256M');
         $search = new \Imdb\TitleSearch(); // Optional $config parameter
         $results = $search->search($this->searchString, array(\Imdb\TitleSearch::MOVIE));
         $count = count($results) < 20 ? count($results) : 20;
@@ -67,7 +68,7 @@ class StoreDataFromExternalSource implements ShouldQueue
             
             $movie = Movie::find($item['imdb_id']);
             $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
-            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->resizeAndStoreImage($item, $name, $count);
+            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->resizeAndStoreImage($item, $name);
 
             if($item['type'] == 'Movie') {
                 if($item['genre'] == "Documentary") {
@@ -127,12 +128,13 @@ class StoreDataFromExternalSource implements ShouldQueue
 
         }
 
+        $this->storeCast($fetchedExternalData);
 
     }
-    protected function resizeAndStoreImage($result, $name, $count)
+    protected function resizeAndStoreImage($result, $name)
     {
-
-        $url = $result['photoLarge'];
+        
+        $url = $result['photoSmall'];
         $info = pathinfo($url);
         
         $file_ext = $info['extension'] == '_V1' ? 'jpg' : $info['extension'];
@@ -144,13 +146,20 @@ class StoreDataFromExternalSource implements ShouldQueue
         $file = "./storage/app/public/" . $datapath . $file_name_ext;
         file_put_contents($file, $contents);
         
-        $img = Image::make($file);
-        $img_width_300 = 300;
-        $img->resize($img_width_300, null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save('./storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext);
+        // $img = Image::make($file);
+        // $img_width_300 = 300;
+        // $img->resize($img_width_300, null, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        // $img->save('./storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext);
 
-        return $datapath . $file_name . '_' . $img_width_300 . '.' . $file_ext;
+        return $datapath . $file_name . $file_ext;
+    }
+    protected function storeCast($fetchedExternalData) {
+        foreach ($fetchedExternalData as $item) {
+            foreach($item['cast'] as $actor) {
+                echo 'valls';  
+            }
+        }
     }
 }

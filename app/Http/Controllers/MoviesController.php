@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\StoreDataFromExternalSource;
 use App\Movie;
+use App\Person;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -188,7 +189,7 @@ class MoviesController extends Controller
             
             $movie = Movie::find($item['imdb_id']);
             $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
-            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->resizeAndStoreImage($item, $name, $count);
+            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
 
             if($item['type'] == 'Movie') {
                 if($item['genre'] == "Documentary") {
@@ -249,11 +250,13 @@ class MoviesController extends Controller
         
 
         }
+        $this->storeCast($fetchedExternalData);
         return($fetchedExternalData);
     }
 
     public function searchActors($imdb_id)
     {
+       
         $movie = Movie::find($imdb_id);
 
         $actors = $movie->Persons()
@@ -268,8 +271,38 @@ class MoviesController extends Controller
             ->get();
         return [$actors, $director];
     }
-
-    protected function resizeAndStoreImage($result, $name, $count)
+    protected function storeCast($fetchedExternalData) {
+        foreach ($fetchedExternalData as $item) {
+            $castCount = count($item['cast']) < 4 ? count($item['cast']) : 4;
+            for ($i = 0; $i < $castCount; $i++) {
+                $actor= $item['cast'][$i];
+                $image = $actor['photo'] == "" || $actor['photo'] == NULL ? "" : $this->storePersonImage($actor, $actor['name']);
+                $dbActor = Person::find($actor['imdb']);
+                if($dbActor['imdb_id'] == NULL) {
+                    $fill = [
+                        'imdb_id' => $actor['imdb'],
+                        'fullname' => $actor['name'],
+                        'person_img' => $image,
+                    ];
+                    $newPerson = Person::create($fill);
+                } else {
+                    $dbActor['person_img'] = $image;
+                    $dbActor->save();
+                    $thisMovie = Movie::find($item['imdb_id']);
+                    if(
+                        count($thisMovie->Persons()
+                        ->where('imdb_id', $dbActor['imdb_id'])
+                        ->get()) == 0
+                    ) {
+                        dd("actor not there");
+                    } else {
+                        dd("actor there");
+                    }
+                }
+            }
+        }
+    }
+    protected function storeMovieImage($result, $name)
     {
 
         $url = $result['photoLarge'];
@@ -284,14 +317,39 @@ class MoviesController extends Controller
         $file = "../storage/app/public/" . $datapath . $file_name_ext;
         file_put_contents($file, $contents);
         
-        $img = Image::make($file);
-        $img_width_300 = 300;
-        $img->resize($img_width_300, null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $img->save(public_path('../storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext));
+        // $img = Image::make($file);
+        // $img_width_300 = 300;
+        // $img->resize($img_width_300, null, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        // $img->save(public_path('../storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext));
 
-        return $datapath . $file_name . '_' . $img_width_300 . '.' . $file_ext;
+        return $datapath . $file_name . '.' . $file_ext;
+    }
+
+    protected function storePersonImage($actor, $name)
+    {
+
+        $url = $actor['photo'];
+        $info = pathinfo($url);
+        
+        $file_ext = $info['extension'] == '_V1' ? 'jpg' : $info['extension'];
+        
+        $contents = file_get_contents($url);
+        $file_name = preg_replace("/[^a-z0-9]/i", "_", $name) . "-" . $actor['imdb'];
+        $file_name_ext = $file_name . "." . $file_ext;
+        $datapath = "img/person_img/";
+        $file = "../storage/app/public/" . $datapath . $file_name_ext;
+        file_put_contents($file, $contents);
+        
+        // $img = Image::make($file);
+        // $img_width_300 = 300;
+        // $img->resize($img_width_300, null, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        // $img->save(public_path('../storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext));
+
+        return $datapath . $file_name . '.' . $file_ext;
     }
 
     /*    public function delete(Movie $movie)
