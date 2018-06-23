@@ -36,8 +36,7 @@ class MoviesController extends Controller
 
     public function searchMovies($movie)
     {
-        StoreDataFromExternalSource::dispatch($movie)
-            ->delay(2);
+     //   StoreDataFromExternalSource::dispatch($movie)->delay(2);
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
@@ -254,11 +253,10 @@ class MoviesController extends Controller
         return($fetchedExternalData);
     }
 
-    public function searchActors($imdb_id)
+    public function searchMovieDetails($imdb_id)
     {
        
         $movie = Movie::find($imdb_id);
-
         $actors = $movie->Persons()
             ->where('imdb_position_id', 254)
             ->orderBy('priority', 'desc')
@@ -269,7 +267,7 @@ class MoviesController extends Controller
             ->orderBy('priority', 'desc')
             ->take(2)
             ->get();
-        return [$actors, $director];
+        return [$actors, $director, $movie];
     }
     protected function storeCast($fetchedExternalData) {
         foreach ($fetchedExternalData as $item) {

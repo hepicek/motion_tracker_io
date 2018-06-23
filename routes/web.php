@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
 
 
-    Route::get('searchActors/{imdb_id}', 'MoviesController@searchActors');
+    Route::get('searchMovieDetails/{imdb_id}', 'MoviesController@searchMovieDetails');
 
 
     Route::post('userListItems/{id}', function(Request $request) {
