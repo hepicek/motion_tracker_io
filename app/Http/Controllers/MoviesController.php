@@ -184,7 +184,7 @@ class MoviesController extends Controller
                 'producer' => $results[$i]->producer(),
             ];
         }        
-        $count = 0;
+        
         foreach ($fetchedExternalData as $item) {
             
             $movie = Movie::find($item['imdb_id']);
@@ -284,6 +284,15 @@ class MoviesController extends Controller
                         'person_img' => $image,
                     ];
                     $newPerson = Person::create($fill);
+                    DB::table('imdb_movie_has_person')->insert(
+                        [
+                            'imdb_movie_id' => $item['imdb_id'],
+                            'imdb_person_id' => $newPerson['imdb_id'],
+                            'imdb_position_id' => 254,
+                            'description' => $actor['role'],
+                            'priority' => 1
+                        ]
+                    );
                 } else {
                     $dbActor['person_img'] = $image;
                     $dbActor->save();
@@ -303,7 +312,7 @@ class MoviesController extends Controller
                                 'priority' => 1
                             ]
                         );
-                        dd([$item['imdb_id'], $dbActor]);
+                        // dd([$item['imdb_id'], $dbActor]);
                     } else {
                         // dd("actor there");
                     }
