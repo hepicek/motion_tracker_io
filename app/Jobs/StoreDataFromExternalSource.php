@@ -130,7 +130,7 @@ class StoreDataFromExternalSource implements ShouldQueue
 
         }
 
-        $this->storeCast($fetchedExternalData);
+       // $this->storeCast($fetchedExternalData);
 
     }
     protected function storeMovieImage($result, $name)
@@ -155,7 +155,7 @@ class StoreDataFromExternalSource implements ShouldQueue
         // });
         // $img->save('./storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext);
 
-        return $datapath . $file_name . $file_ext;
+        return $datapath . $file_name . '.' . $file_ext;
     }
     protected function storePersonImage($actor, $name)
     {
