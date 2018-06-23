@@ -133,8 +133,9 @@ class Dashboard extends Component {
                             this.setState({searchResults});
                         }
 
-                    });
+                    })
             } else {
+
                 this.setState({
                     searchResults: []
                 });
