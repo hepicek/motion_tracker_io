@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\StoreDataFromExternalSource;
+use DB;
 use App\Movie;
 use App\Person;
 use Illuminate\Http\Request;
@@ -292,9 +293,19 @@ class MoviesController extends Controller
                         ->where('imdb_id', $dbActor['imdb_id'])
                         ->get()) == 0
                     ) {
-                        dd("actor not there");
+                        
+                        DB::table('imdb_movie_has_person')->insert(
+                            [
+                                'imdb_movie_id' => $item['imdb_id'],
+                                'imdb_person_id' => $dbActor['imdb_id'],
+                                'imdb_position_id' => 254,
+                                'description' => $actor['role'],
+                                'priority' => 1
+                            ]
+                        );
+                        dd([$item['imdb_id'], $dbActor]);
                     } else {
-                        dd("actor there");
+                        // dd("actor there");
                     }
                 }
             }
