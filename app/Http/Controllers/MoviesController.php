@@ -58,26 +58,26 @@ class MoviesController extends Controller
         $result['votes_nr'] = $movie->votes();
         $result['genre'] = $movie->genre();
         $result['type'] = $movie->movietype();
-        $result['types'] = $movie->movietypes();
+        // $result['types'] = $movie->movietypes();
         $result['seasons'] = $movie->seasons();
         $result['is_serial'] = $movie->is_serial();
         $result['episodes'] = $movie->episodes();
-        $result['is_episode'] = $movie->episodeTitle();
-        $result['episodeSeason'] = $movie->episodeSeason();
-        $result['episodeAirDate'] = $movie->episodeAirDate();
-        $result['episodeDetails'] = $movie->get_episode_details();
-        $result['plotoutline'] = $movie->plotoutline();
+        // $result['is_episode'] = $movie->episodeTitle();
+        // $result['episodeSeason'] = $movie->episodeSeason();
+        // $result['episodeAirDate'] = $movie->episodeAirDate();
+        // $result['episodeDetails'] = $movie->get_episode_details();
+        // $result['plotoutline'] = $movie->plotoutline();
         $result['storyline'] = $movie->storyline();
         $result['photoSmall'] = $movie->photo();
         $result['photoLarge'] = $movie->photo(false);
-        $result['mainPictures'] = $movie->mainPictures();
-        $result['mpaa'] = $movie->mpaa();
-        $result['plot'] = $movie->plot();
-        $result['sysopsis'] = $movie->synopsis();
+        // $result['mainPictures'] = $movie->mainPictures();
+        // $result['mpaa'] = $movie->mpaa();
+        // $result['plot'] = $movie->plot();
+        // $result['sysopsis'] = $movie->synopsis();
         $result['director'] = $movie->director();
         $result['cast'] = $movie->cast();
-        $result['writing'] = $movie->writing();
-        $result['producer'] = $movie->producer();
+        // $result['writing'] = $movie->writing();
+        // $result['producer'] = $movie->producer();
 
         $movie2 = Movie::find($movie_id);
 
@@ -162,26 +162,26 @@ class MoviesController extends Controller
                 'votes_nr' => $results[$i]->votes(),
                 'genre' => $results[$i]->genre(),
                 'type' => $results[$i]->movietype(),
-                'types' => $results[$i]->movietypes(),
+                // 'types' => $results[$i]->movietypes(),
                 'seasons' => $results[$i]->seasons(),
                 'is_serial' => $results[$i]->is_serial(),
                 'episodes' => $results[$i]->episodes(),
-                'is_episode' => $results[$i]->episodeTitle(),
-                'episodeSeason' => $results[$i]->episodeSeason(),
-                'episodeAirDate' => $results[$i]->episodeAirDate(),
-                'episodeDetails' => $results[$i]->get_episode_details(),
-                'plotoutline' => $results[$i]->plotoutline(),
+                // 'is_episode' => $results[$i]->episodeTitle(),
+                // 'episodeSeason' => $results[$i]->episodeSeason(),
+                // 'episodeAirDate' => $results[$i]->episodeAirDate(),
+                // 'episodeDetails' => $results[$i]->get_episode_details(),
+                // 'plotoutline' => $results[$i]->plotoutline(),
                 'storyline' => $results[$i]->storyline(),
                 'photoSmall' => $results[$i]->photo(),
                 'photoLarge' => $results[$i]->photo(false),
-                'mainPictures' => $results[$i]->mainPictures(),
-                'mpaa' => $results[$i]->mpaa(),
-                'plot' => $results[$i]->plot(),
-                'sysopsis' => $results[$i]->synopsis(),
+                // 'mainPictures' => $results[$i]->mainPictures(),
+                // 'mpaa' => $results[$i]->mpaa(),
+                // 'plot' => $results[$i]->plot(),
+                // 'sysopsis' => $results[$i]->synopsis(),
                 'director' => $results[$i]->director(),
                 'cast' => $results[$i]->cast(),
-                'writing' => $results[$i]->writing(),
-                'producer' => $results[$i]->producer(),
+                // 'writing' => $results[$i]->writing(),
+                // 'producer' => $results[$i]->producer(),
             ];
         }        
         

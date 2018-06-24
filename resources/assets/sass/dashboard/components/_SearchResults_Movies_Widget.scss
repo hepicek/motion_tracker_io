@@ -11,6 +11,7 @@
 
 .searchItemDetails {
   animation: searchSlideItem .35s ease-out forwards;
+  overflow-y: scroll;
 }
 .searchItemDetails-main {
   display: flex;

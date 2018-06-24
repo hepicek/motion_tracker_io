@@ -48,10 +48,15 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
             <div className="searchItemDetails">
                 <div className="searchItemDetails-main">
                     {this.state.movieDetail.imdb_img && poster}
+                    <div className="searchItemDetails-main-text">
+                    <p>Director(s):</p>
+                    {directors}
                     {this.storyline()}
+                    </div>
                 </div>
-                {directors}
+                
                 <div className="actorsDetails">
+                <p>Cast:</p>
                     {actor}
                 </div>
             </div>
