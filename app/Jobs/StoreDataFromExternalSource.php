@@ -72,65 +72,20 @@ class StoreDataFromExternalSource implements ShouldQueue
             $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
             $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
 
-            if($item['type'] == 'Movie') {
-                if($item['genre'] == "Documentary") {
-                    $type = 6;
-                } else {
-                    $type = 1;
-                }                   
-            } elseif($item['type'] == 'TV Movie') {
-                $type = 2;
-            } elseif($item['type'] == 'TV Series') {
-                $type = 3;
-            } elseif($item['type'] == 'TV Special') {
-                $type = 4;
-            } elseif($item['type'] == 'TV Mini-Series') {
-                $type = 5;
-            } elseif($item['type'] == 'Video Game') {
-                $type = 7;
-            } elseif($item['type'] == 'Video') {
-                $type = 8;
-            } elseif($item['type'] == 'TV Mini-Series') {
-                $type = 8;
-            } else {
-                $type = 1;
-            }
+
+            $type = $this->setType($item['type']);
+            
 
             if($movie['imdb_id'] == NULL) {
-                
-
-                $fill = [
-                    'imdb_id' => $item['imdb_id'] + 0,
-                    'name' => $name,
-                    'year' => $item['year'],
-                    'rating' => $item['rating'],
-                    'votes_nr' => $item['votes_nr'],
-                    'tagline' => $item['tagline'],
-                    'seasons' => $item['seasons'],
-                    'is_serial' => $item['is_serial'],
-                    'storyline' => $item['storyline'],
-                    'imdb_movie_type_id' => $type,
-                    'imdb_img' => $img_path
-                ];
-                $newMovie = Movie::create($fill);
+                $newMovie = $this->newMovie($name, $img_path, $type, $item);
             }
             else {
-                $movie['name'] = $name;
-                $movie['year'] = $item['year'];
-                $movie['rating'] = $item['rating'];
-                $movie['votes_nr'] = $item['votes_nr'];
-                $movie['tagline'] = $item['tagline'];
-                $movie['seasons'] = $item['seasons'];
-                $movie['is_serial'] = $item['is_serial'];
-                $movie['storyline'] = $item['storyline'];
-                $movie['imdb_movie_type_id'] = $type;
-                $movie['imdb_img'] = $img_path;
-                $movie->save();
+                $this->saveMovie($name, $img_path, $type, $item, $movie);
             }
 
         }
 
-       // $this->storeCast($fetchedExternalData);
+       $this->storeCast($fetchedExternalData);
 
     }
     protected function storeMovieImage($result, $name)
@@ -145,15 +100,8 @@ class StoreDataFromExternalSource implements ShouldQueue
         $file_name = preg_replace("/[^a-z0-9]/i", "_", $name) . "-" . $result['year'];
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/movie_img/";
-        $file = "./storage/app/public/" . $datapath . $file_name_ext;
+        $file = "./storage/app/public/" . $datapath . '.' . $file_name_ext;
         file_put_contents($file, $contents);
-        
-        // $img = Image::make($file);
-        // $img_width_300 = 300;
-        // $img->resize($img_width_300, null, function ($constraint) {
-        //     $constraint->aspectRatio();
-        // });
-        // $img->save('./storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext);
 
         return $datapath . $file_name . '.' . $file_ext;
     }
@@ -169,18 +117,12 @@ class StoreDataFromExternalSource implements ShouldQueue
         $file_name = preg_replace("/[^a-z0-9]/i", "_", $name) . "-" . $actor['imdb'];
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/person_img/";
-        $file = "./storage/app/public/" . $datapath . $file_name_ext;
+        $file = "./storage/app/public/" . $datapath . '.' . $file_name_ext;
         file_put_contents($file, $contents);
         
-        // $img = Image::make($file);
-        // $img_width_300 = 300;
-        // $img->resize($img_width_300, null, function ($constraint) {
-        //     $constraint->aspectRatio();
-        // });
-        // $img->save(public_path('../storage/app/public/img/movie_img/' . $file_name . '_' . $img_width_300 . '.' . $file_ext));
-
         return $datapath . $file_name . '.' . $file_ext;
     }
+
     protected function storeCast($fetchedExternalData) {
         foreach ($fetchedExternalData as $item) {
             $castCount = count($item['cast']) < 4 ? count($item['cast']) : 4;
@@ -237,5 +179,60 @@ class StoreDataFromExternalSource implements ShouldQueue
                 }
             }
         }
+    }
+    protected function setType($input) {
+        if($input == 'Movie') {
+            if($item['genre'] == "Documentary") {
+                $type = 6;
+            } else {
+                $type = 1;
+            }                   
+        } elseif($input == 'TV Movie') {
+            $type = 2;
+        } elseif($input == 'TV Series') {
+            $type = 3;
+        } elseif($input == 'TV Special') {
+            $type = 4;
+        } elseif($input == 'TV Mini-Series') {
+            $type = 5;
+        } elseif($input == 'Video Game') {
+            $type = 7;
+        } elseif($input == 'Video') {
+            $type = 8;
+        } elseif($input == 'TV Mini-Series') {
+            $type = 8;
+        } else {
+            $type = 1;
+        }
+        return $type;
+    }
+    protected function newMovie($name, $img_path, $type, $item) {
+        $fill = [
+            'imdb_id' => $item['imdb_id'] + 0,
+            'name' => $name,
+            'year' => $item['year'],
+            'rating' => $item['rating'],
+            'votes_nr' => $item['votes_nr'],
+            'tagline' => $item['tagline'],
+            'seasons' => $item['seasons'],
+            'is_serial' => $item['is_serial'],
+            'storyline' => $item['storyline'],
+            'imdb_movie_type_id' => $type,
+            'imdb_img' => $img_path
+        ];
+        return Movie::create($fill);
+    }
+    protected function saveMovie($name, $img_path, $type, $item, $movie) {
+        $movie['name'] = $name;
+                $movie['year'] = $item['year'];
+                $movie['rating'] = $item['rating'];
+                $movie['votes_nr'] = $item['votes_nr'];
+                $movie['tagline'] = $item['tagline'];
+                $movie['seasons'] = $item['seasons'];
+                $movie['is_serial'] = $item['is_serial'];
+                $movie['storyline'] = $item['storyline'];
+                $movie['imdb_movie_type_id'] = $type;
+                $movie['imdb_img'] = $img_path;
+                $movie->save();
     }
 }

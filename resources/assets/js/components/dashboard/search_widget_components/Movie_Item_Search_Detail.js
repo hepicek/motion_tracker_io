@@ -29,7 +29,7 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
     };
 
     render() {
-        let poster = <img src={"./storage/" + this.state.movieDetail.imdb_img} alt="poster"/>;
+        let poster = <img className="searchItemDetails-mainImage" src={"./storage/" + this.state.movieDetail.imdb_img} alt="poster"/>;
         let actor = this.state.actors.map((actor, id) => (
             <div key={'actor-detail-' + id}>
                 <img key={'actor-image-' + id}
@@ -46,8 +46,10 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
         ));
         return (
             <div className="searchItemDetails">
-                {this.state.movieDetail.imdb_img && poster}
-                {this.storyline()}
+                <div className="searchItemDetails-main">
+                    {this.state.movieDetail.imdb_img && poster}
+                    {this.storyline()}
+                </div>
                 {directors}
                 <div className="actorsDetails">
                     {actor}

@@ -12,13 +12,22 @@
 .searchItemDetails {
   animation: searchSlideItem .35s ease-out forwards;
 }
+.searchItemDetails-main {
+  display: flex;
+  p {
+    padding: 5px 10px;
+  }
+}
+.searchItemDetails-mainImage {
+  height: 200px;
+}
 @keyframes searchSlideItem {
   from {
     height: 0px;
     opacity: 0;
   }
   to {
-    height: 250px;
+    height: 400px;
     opacity: 1;
   }
 }
@@ -27,5 +36,5 @@
   justify-content: space-around;
 }
 .actorImage {
-  width: 150px;
+  height: 100px;
 }
