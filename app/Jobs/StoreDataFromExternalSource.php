@@ -27,6 +27,7 @@ class StoreDataFromExternalSource implements ShouldQueue
     public function handle()
     {
         ini_set('memory_limit','256M');
+        set_time_limit(240);
         $search = new \Imdb\TitleSearch(); // Optional $config parameter
         $results = $search->search($this->searchString, array(\Imdb\TitleSearch::MOVIE));
         $count = count($results) < 20 ? count($results) : 20;
@@ -73,7 +74,7 @@ class StoreDataFromExternalSource implements ShouldQueue
             $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
 
 
-            $type = $this->setType($item['type']);
+            $type = $this->setType($item['type'], $item);
             
 
             if($movie['imdb_id'] == NULL) {
@@ -100,7 +101,7 @@ class StoreDataFromExternalSource implements ShouldQueue
         $file_name = preg_replace("/[^a-z0-9]/i", "_", $name) . "-" . $result['year'];
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/movie_img/";
-        $file = "./storage/app/public/" . $datapath . '.' . $file_name_ext;
+        $file = "./storage/app/public/" . $datapath . $file_name_ext;
         file_put_contents($file, $contents);
 
         return $datapath . $file_name . '.' . $file_ext;
@@ -117,7 +118,7 @@ class StoreDataFromExternalSource implements ShouldQueue
         $file_name = preg_replace("/[^a-z0-9]/i", "_", $name) . "-" . $actor['imdb'];
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/person_img/";
-        $file = "./storage/app/public/" . $datapath . '.' . $file_name_ext;
+        $file = "./storage/app/public/" . $datapath . $file_name_ext;
         file_put_contents($file, $contents);
         
         return $datapath . $file_name . '.' . $file_ext;
@@ -137,22 +138,19 @@ class StoreDataFromExternalSource implements ShouldQueue
                         'person_img' => $image,
                     ];
                     $newPerson = Person::create($fill);
+                    $dbActor = Person::find($actor['imdb']);
                     $thisMovie = Movie::find($item['imdb_id']);
-                    if(
-                        count($thisMovie->Persons()
-                        ->where('imdb_id', $dbActor['imdb_id'])
-                        ->get()) == 0
-                    ) {
-                        DB::table('imdb_movie_has_person')->insert(
-                            [
-                                'imdb_movie_id' => $item['imdb_id'],
-                                'imdb_person_id' => $newPerson['imdb_id'],
-                                'imdb_position_id' => 254,
-                                'description' => $actor['role'],
-                                'priority' => 1
-                            ]
-                        );
-                    }
+
+                    DB::table('imdb_movie_has_person')->insert(
+                        [
+                            'imdb_movie_id' => $item['imdb_id'],
+                            'imdb_person_id' => $dbActor['imdb_id'],
+                            'imdb_position_id' => 254,
+                            'description' => $actor['role'],
+                            'priority' => 1
+                        ]
+                    );
+
                 } else {
                     $dbActor['person_img'] = $image;
                     $dbActor->save();
@@ -180,7 +178,7 @@ class StoreDataFromExternalSource implements ShouldQueue
             }
         }
     }
-    protected function setType($input) {
+    protected function setType($input, $item) {
         if($input == 'Movie') {
             if($item['genre'] == "Documentary") {
                 $type = 6;

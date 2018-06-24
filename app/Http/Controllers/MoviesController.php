@@ -145,7 +145,7 @@ class MoviesController extends Controller
 
     public function exSearch($searchString)
     {
-
+        set_time_limit(500);
         $search = new \Imdb\TitleSearch(); // Optional $config parameter
         $results = $search->search($searchString, array(\Imdb\TitleSearch::MOVIE));
         $count = count($results) < 20 ? count($results) : 20;
@@ -275,28 +275,36 @@ class MoviesController extends Controller
             $castCount = count($item['cast']) < 4 ? count($item['cast']) : 4;
             for ($i = 0; $i < $castCount; $i++) {
                 $actor= $item['cast'][$i];
+
                 $image = $actor['photo'] == "" || $actor['photo'] == NULL ? "" : $this->storePersonImage($actor, $actor['name']);
                 $dbActor = Person::find($actor['imdb']);
-                if($dbActor['imdb_id'] == NULL) {
+
+                if($dbActor == null) {
                     $fill = [
                         'imdb_id' => $actor['imdb'],
                         'fullname' => $actor['name'],
                         'person_img' => $image,
                     ];
                     $newPerson = Person::create($fill);
+                    $dbActor = Person::find($actor['imdb']);
+
+                    $thisMovie = Movie::find($item['imdb_id']);
+
                     DB::table('imdb_movie_has_person')->insert(
                         [
                             'imdb_movie_id' => $item['imdb_id'],
-                            'imdb_person_id' => $newPerson['imdb_id'],
+                            'imdb_person_id' => $dbActor['imdb_id'],
                             'imdb_position_id' => 254,
                             'description' => $actor['role'],
                             'priority' => 1
                         ]
                     );
+                    
                 } else {
                     $dbActor['person_img'] = $image;
                     $dbActor->save();
                     $thisMovie = Movie::find($item['imdb_id']);
+
                     if(
                         count($thisMovie->Persons()
                         ->where('imdb_id', $dbActor['imdb_id'])
@@ -312,9 +320,9 @@ class MoviesController extends Controller
                                 'priority' => 1
                             ]
                         );
-                        // dd([$item['imdb_id'], $dbActor]);
+                        //  dd([$item['imdb_id'], $dbActor]);
                     } else {
-                        // dd("actor there");
+                        //  dd("actor there");
                     }
                 }
             }
