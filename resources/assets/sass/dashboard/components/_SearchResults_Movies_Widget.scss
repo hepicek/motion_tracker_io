@@ -1,6 +1,39 @@
+.searchCategories {
+  display: flex;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+}
+.searchCategories_button {
+  // border: 2px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+#moviesCategoryBtn {
+  background-color: rgb(104, 135, 139);
+}
+#actorsCategoryBtn {
+  background-color: rgb(184, 176, 105);
+}
+#usersCategoryBtn {
+  background-color: rgb(194, 157, 132);
+}
+.searchResultsContainer {
+  margin: 0;
+  overflow: auto;
+}
 .searchMoviesContainer {
   height: 600px;
-  overflow: auto;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .searchResultsItem {
   display: flex;
@@ -8,6 +41,7 @@
   align-items: center;
   user-select: none;
   padding: 5px;
+  background-color: #F0F0F0;
   border: 2px solid slategray;
   border-radius: 5px;
   margin: 3px 0;
@@ -25,6 +59,7 @@
 .searchItemDetails {
   padding: 5px;
   border: 2px solid slategray;
+  background-color: #F0F0F0;
   border-radius: 5px;
   animation: searchSlideItem .35s ease-out forwards;
   overflow-y: scroll;

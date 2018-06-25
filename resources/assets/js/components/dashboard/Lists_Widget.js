@@ -21,7 +21,6 @@ class LISTS_WIDGET extends Component  {
                 
                 return(
                 <LIST 
-                    
                     key={list.id}
                     list={list}
                     handleRenameListInputChange={props.handleRenameListInputChange}
