@@ -17,6 +17,14 @@ class UserController extends Controller
         return view('userprofile');
     }
 
+    public function searchUsers($user)
+    {
+        $result = User::where('first_name', 'LIKE', '%' . $user . '%')
+            ->orWhere('last_name', 'LIKE', '%' . $user . '%')
+            ->get();
+
+        return $result;
+    }
 
     public function updateUserDetails(request $request, $id)
     {

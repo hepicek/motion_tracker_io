@@ -272,6 +272,19 @@ class MoviesController extends Controller
             ->get();
         return [$actors, $director, $movie];
     }
+
+    public function searchActorDetails($imdb_id)
+    {
+        $actor = Person::find($imdb_id);
+        $movies = $actor->Persons()
+            ->where('imdb_position_id', 254)
+            ->orderBy('priority', 'desc')
+            ->take(10)
+            ->get();
+
+        return [$movies, $actor];
+    }
+
     protected function storeCast($fetchedExternalData) {
         foreach ($fetchedExternalData as $item) {
             $castCount = count($item['cast']) < 4 ? count($item['cast']) : 4;
