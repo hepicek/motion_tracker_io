@@ -23,7 +23,7 @@ class UserController extends Controller
             ->orWhere('last_name', 'LIKE', '%' . $user . '%')
             ->get();
 
-        return $result;
+        return [$user, $result];
     }
 
     public function updateUserDetails(request $request, $id)

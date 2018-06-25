@@ -24,6 +24,7 @@ class Dashboard extends Component {
             friends: [],
             newList: false,
             renameList: undefined,
+            searchType: 'movies',
             searchText: '',
             searchResults: [],
         };
@@ -36,6 +37,7 @@ class Dashboard extends Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleDragItemDrop = this.handleDragItemDrop.bind(this);
         this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
+        this.handleCategoryClick = this.handleCategoryClick.bind(this);
     }
 
     //post the new list to the DB
@@ -68,7 +70,19 @@ class Dashboard extends Component {
             console.log(err);
         });
     }
-
+    handleCategoryClick(e) {
+        this.setState({
+            searchType: e.target.id.split("-")[1],
+            searchResults: [{id: 0  }],
+        })
+        setTimeout(() => {
+            this.handleSearch({
+                target: {
+                    value: this.state.searchText
+                }
+            })
+        }, 0);
+    }
     //send delete API call
     handleListDeleteClick(e) {
         axios.delete('userLists/' + e.target.parentNode.id.split("-")[1])
@@ -117,14 +131,22 @@ class Dashboard extends Component {
 
     //search db for movie
     handleSearch(e) {
+        let urlPath;
         let searchText = e.target.value;
         this.setState({searchText});
 
         clearTimeout(inputTimer);
 
         inputTimer = setTimeout(() => {
-            if (this.state.searchText.length > 1) {
-                axios.get(`/search/${this.state.searchText}`)
+            if(this.state.searchType == 'movies') {
+                urlPath = 'search'
+            } else if(this.state.searchType == 'actors') {
+                urlPath = 'searchActors'
+            } else {
+                urlPath = 'searchUsers'
+            }
+            if(this.state.searchText.length > 1) {
+                axios.get(`/${urlPath}/${this.state.searchText}`)
                     .then((res) => {
                         let searchString = res.data[0];
                         let body = res.data[1];
@@ -137,9 +159,11 @@ class Dashboard extends Component {
             } else {
 
                 this.setState({
-                    searchResults: []
+                    searchResults: [],
+                    searchType: 'movies'
                 });
             }
+            
         }, 500);
     }
 
@@ -180,7 +204,12 @@ class Dashboard extends Component {
                     />
                     {this.state.searchResults.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>}
                     {this.state.searchResults.length > 0 &&
-                    <SEARCH_MOVIES_WIDGET searchResults={this.state.searchResults}/>}
+                        <SEARCH_MOVIES_WIDGET 
+                            searchType={this.state.searchType}
+                            searchResults={this.state.searchResults}
+                            handleCategoryClick={this.handleCategoryClick}
+                        />
+                    }
 
                 </div>
                 <LISTS_WIDGET

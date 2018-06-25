@@ -275,7 +275,9 @@ class MoviesController extends Controller
 
     public function searchActors($name)
     {
-        $actors = Person::where('fullname', 'LIKE', '%' . $name . '%')->get()
+        $actors = Person::where('fullname', 'LIKE', '%' . $name . '%')
+            ->orderBy('person_img', 'desc')
+            ->take(20)->get();
         return [$name, $actors];
     }
 

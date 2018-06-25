@@ -1,24 +1,35 @@
 import React from 'react';
-import SEARCH_RESULTS_ITEM_WIDGET_MOVIES from './search_widget_components/Search_Results_Item_Widget_Movies';
 import SEARCH_CATEGORIES from './search_widget_components/Search_Categories';
+import SEARCH_RESULTS_ITEM_WIDGET_MOVIES from './search_widget_components/Search_Results_Item_Widget_Movies';
+import SEARCH_RESULTS_ITEM_WIDGET_ACTORS from './search_widget_components/Search_Results_Item_Widget_Actors';
+import SEARCH_RESULTS_ITEM_WIDGET_USERS from './search_widget_components/Search_Results_Item_Widget_Users';
 
 
 const SEARCH_MOVIES_WIDGET = (props) => {
-    let searchResults = props.searchResults.map((movie, id) => (
+    let searchResults = props.searchResults.map((result, id) => (
         <div
             key={'search-' + id}
         >
-            
-            <SEARCH_RESULTS_ITEM_WIDGET_MOVIES searchResultsItem={movie}/> 
-            {/*props.category = "actors" && <SEARCH_RESULTS_ITEM_WIDGET searchResultsItem={movie} category={props.category}/>*/}
-            {/*props.category = "users" && <SEARCH_RESULTS_ITEM_WIDGET searchResultsItem={movie} category={props.category}/>*/}
+            {props.searchType == 'movies' && <SEARCH_RESULTS_ITEM_WIDGET_MOVIES searchResultsItem={result}/> } 
+            {props.searchType == "actors" && <SEARCH_RESULTS_ITEM_WIDGET_ACTORS searchResultsItem={result} />}
+            {props.searchType == "users" && <SEARCH_RESULTS_ITEM_WIDGET_USERS searchResultsItem={result} />}
         </div>
-
     ));
+    let bgColor;
+    if(props.searchType == 'movies') {
+        bgColor = '#68878b';
+    } else if(props.searchType == 'actors') {
+        bgColor = '#b8b069';
+    } else {
+        bgColor = '#c29d84';
+    }
     return (
         <div className="searchMoviesContainer">
-            <SEARCH_CATEGORIES />
-            <div className="searchResultsContainer" style={{backgroundColor: "rgb(104, 135, 139)"}}>
+            <SEARCH_CATEGORIES 
+                handleCategoryClick={props.handleCategoryClick}
+                searchType={props.searchType}
+            />
+            <div className="searchResultsContainer" style={{backgroundColor: bgColor}}>
             {searchResults}
             </div>
         </div>
