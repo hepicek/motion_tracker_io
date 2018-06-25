@@ -71,7 +71,7 @@ class TOP_MOVIE_CARD extends Component {
                 alt={movie.original_title} 
             />
             <p className="topMoviesWidgetCard-title">{movie.original_title}</p>
-            {isDragging && <h1>Dragging!</h1>}
+            {/*isDragging && <h1>Dragging!</h1>*/}
         </div>
         )
     }

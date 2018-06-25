@@ -41,7 +41,7 @@
   #listsWidget-lists {
     width: 100%;
     flex-grow: 1;
-    background-color: #f0f0f0;
+    background-color: white;
     padding: 10px;
     border-radius: 10px;
     overflow: auto;
@@ -50,6 +50,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
   }
   .listItem {
     display: flex;
@@ -64,7 +65,7 @@
     }
   }
   .listTitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
   }
@@ -134,6 +135,10 @@
     justify-content: space-between;
     .fa-times {
       font-size: .6rem;
+      margin-right: 2px;
       cursor: pointer;
+    }
+    p {
+      margin: 2px;
     }
   }

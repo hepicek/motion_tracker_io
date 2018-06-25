@@ -66,13 +66,13 @@ class LIST extends Component {
                 <div className='listHeader'>
                 
                     {(list.id && props.renameList != list.id) && 
-                        <p 
+                        <h5 
                             className="listTitle"
                             id={"title-" + (list.id ? list.id : "new")} 
                             onClick={this.handleListTitleClick}
                         >
                             {list.list_title}
-                        </p>
+                        </h5>
                     }
                     {(list.id && props.renameList == list.id) && 
                         <input
