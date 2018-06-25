@@ -66,12 +66,29 @@
 }
 .searchItemDetails-main {
   display: flex;
+  margin: 5px;
   p {
     padding: 1px 10px;
   }
 }
 .searchItemDetails-mainImage {
   height: 200px;
+}
+.actorsDetails {
+  display: flex;
+  justify-content: space-around;
+}
+.actorImage  {
+  height: 100px;
+}
+.searchItemDetails-actorMovieImg {
+  height: 100px;
+  width: 70px;
+  background-size: cover;
+  background-position: center;
+}
+.actorSearchImage {
+  height: 60px; 
 }
 @keyframes searchSlideItem {
   from {
@@ -82,15 +99,4 @@
     height: 400px;
     opacity: 1;
   }
-}
-.actorsDetails {
-  display: flex;
-  justify-content: space-around;
-}
-.actorImage {
-  height: 100px;
-}
-
-.actorSearchImage {
-  height: 60px; 
 }
