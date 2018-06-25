@@ -1,22 +1,38 @@
+.searchMoviesContainer {
+  height: 600px;
+  overflow: auto;
+}
 .searchResultsItem {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   user-select: none;
+  padding: 5px;
+  border: 2px solid slategray;
+  border-radius: 5px;
+  margin: 3px 0;
   cursor: pointer;
   p {
     width: 33%;
     margin: 0;
+    font-weight: bold;
   }
 }
-
+.fa-caret-up, .fa-caret-down {
+  font-size: 1.2rem;
+  margin: 2px 5px 2px 0;
+}
 .searchItemDetails {
+  padding: 5px;
+  border: 2px solid slategray;
+  border-radius: 5px;
   animation: searchSlideItem .35s ease-out forwards;
   overflow-y: scroll;
 }
 .searchItemDetails-main {
   display: flex;
   p {
-    padding: 5px 10px;
+    padding: 1px 10px;
   }
 }
 .searchItemDetails-mainImage {

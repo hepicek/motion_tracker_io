@@ -12,7 +12,7 @@ const SEARCH_MOVIES_WIDGET = (props) => {
 
     ));
     return (
-        <div>
+        <div className="searchMoviesContainer">
             {searchResults}
         </div>
     )

@@ -4,10 +4,17 @@ import LIST_ITEMS from './List_Items';
 import LIST_MENU_BTN from './List_Menu_Btn';
 
 const listTarget = {
-    drop: function (props, monitor){
+    drop(props, monitor, component){
        let movie_id = monitor.getItem().id;
        let list_id = props.list.id;
+       component.state.collapsed && component.handleListTitleClick();
        props.handleDragItemDrop(movie_id, list_id);
+    },
+    hover(props, monitor, component) {
+        
+        return {
+            hover: "border: 2px solid red"
+        }
     }
 }
 
@@ -15,7 +22,7 @@ function collect(connect, monitor){
     return {
         connectDropTarget: connect.dropTarget(),
         // highlighted: monitor.canDrop(),
-        // hovered: monitor.isOver()
+        hovered: monitor.isOver()
     }
 }
 
@@ -44,16 +51,17 @@ class LIST extends Component {
         }      
     }
     render() {
-        
-        const {connectDropTarget} = this.props;
+       
+        const {connectDropTarget, hovered} = this.props;
         let {props} = this;
         let {list} = props;
-         
+
         return connectDropTarget(
             <div 
                 id={list.id ? list.id : "new-" + index} 
                 className='listItem'
                 onClick={props.handleListTitleClick}
+                style={{border: hovered && "2px solid red"}}
             >
                 <div className='listHeader'>
                 

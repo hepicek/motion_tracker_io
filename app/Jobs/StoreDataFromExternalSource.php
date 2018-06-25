@@ -47,7 +47,7 @@ class StoreDataFromExternalSource implements ShouldQueue
                 // 'types' => $results[$i]->movietypes(),
                 'seasons' => $results[$i]->seasons(),
                 'is_serial' => $results[$i]->is_serial(),
-                'episodes' => $results[$i]->episodes(),
+                // 'episodes' => $results[$i]->episodes(),
                 // 'is_episode' => $results[$i]->episodeTitle(),
                 // 'episodeSeason' => $results[$i]->episodeSeason(),
                 // 'episodeAirDate' => $results[$i]->episodeAirDate(),
@@ -128,8 +128,11 @@ class StoreDataFromExternalSource implements ShouldQueue
         foreach ($fetchedExternalData as $item) {
             $castCount = count($item['cast']) < 4 ? count($item['cast']) : 4;
             for ($i = 0; $i < $castCount; $i++) {
-                $actor= $item['cast'][$i];
+
+                $actor= $item['cast'][$i]; 
+
                 $image = $actor['photo'] == "" || $actor['photo'] == NULL ? "" : $this->storePersonImage($actor, $actor['name']);
+
                 $dbActor = Person::find($actor['imdb']);
                 if($dbActor['imdb_id'] == NULL) {
                     $fill = [
@@ -139,17 +142,9 @@ class StoreDataFromExternalSource implements ShouldQueue
                     ];
                     $newPerson = Person::create($fill);
                     $dbActor = Person::find($actor['imdb']);
-                    $thisMovie = Movie::find($item['imdb_id']);
+                    // $thisMovie = Movie::find($item['imdb_id']);
 
-                    DB::table('imdb_movie_has_person')->insert(
-                        [
-                            'imdb_movie_id' => $item['imdb_id'],
-                            'imdb_person_id' => $dbActor['imdb_id'],
-                            'imdb_position_id' => 254,
-                            'description' => $actor['role'],
-                            'priority' => 1
-                        ]
-                    );
+                    $this->addPersonToMovie($item, $dbActor, $actor);
 
                 } else {
                     $dbActor['person_img'] = $image;
@@ -159,21 +154,9 @@ class StoreDataFromExternalSource implements ShouldQueue
                         count($thisMovie->Persons()
                         ->where('imdb_id', $dbActor['imdb_id'])
                         ->get()) == 0
-                    ) {
-                        
-                        DB::table('imdb_movie_has_person')->insert(
-                            [
-                                'imdb_movie_id' => $item['imdb_id'],
-                                'imdb_person_id' => $dbActor['imdb_id'],
-                                'imdb_position_id' => 254,
-                                'description' => $actor['role'],
-                                'priority' => 1
-                            ]
-                        );
-                        // dd([$item['imdb_id'], $dbActor]);
-                    } else {
-                        // dd("actor there");
-                    }
+                    ) { 
+                        $this->addPersonToMovie($item, $dbActor, $actor);
+                    } 
                 }
             }
         }
@@ -232,5 +215,16 @@ class StoreDataFromExternalSource implements ShouldQueue
                 $movie['imdb_movie_type_id'] = $type;
                 $movie['imdb_img'] = $img_path;
                 $movie->save();
+    }
+    protected function addPersonToMovie($item, $dbActor, $actor) {
+        DB::table('imdb_movie_has_person')->insert(
+            [
+                'imdb_movie_id' => $item['imdb_id'],
+                'imdb_person_id' => $dbActor['imdb_id'],
+                'imdb_position_id' => 254,
+                'description' => $actor['role'],
+                'priority' => 1
+            ]
+        );
     }
 }

@@ -8,6 +8,8 @@ use App\Movie;
 use App\Person;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
+use Tmdb\Laravel\Facades\Tmdb;
+
 
 class MoviesController extends Controller
 {
@@ -165,7 +167,7 @@ class MoviesController extends Controller
                 // 'types' => $results[$i]->movietypes(),
                 'seasons' => $results[$i]->seasons(),
                 'is_serial' => $results[$i]->is_serial(),
-                'episodes' => $results[$i]->episodes(),
+                // 'episodes' => $results[$i]->episodes(),
                 // 'is_episode' => $results[$i]->episodeTitle(),
                 // 'episodeSeason' => $results[$i]->episodeSeason(),
                 // 'episodeAirDate' => $results[$i]->episodeAirDate(),
@@ -378,6 +380,9 @@ class MoviesController extends Controller
         return $datapath . $file_name . '.' . $file_ext;
     }
 
+    public function tmdb($id) {
+        return Tmdb::getMoviesApi()->getMovie($id);
+    }
     /*    public function delete(Movie $movie)
         {
             $movie->delete();

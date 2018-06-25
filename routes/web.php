@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('userRegister', 'UserController@userRegister');
 
 });
-
+Route::get('tmdb/{id}', 'MoviesController@tmdb');
 Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
 

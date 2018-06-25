@@ -30,15 +30,20 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
 
     render() {
         let poster = <img className="searchItemDetails-mainImage" src={"./storage/" + this.state.movieDetail.imdb_img} alt="poster"/>;
-        let actor = this.state.actors.map((actor, id) => (
-            <div key={'actor-detail-' + id}>
-                <img key={'actor-image-' + id}
-                     src={"./storage/" + actor.person_img}
-                     alt="poster"
-                     className="actorImage"/>
-                <p key={'actor-' + id}>{actor.fullname}</p>
-            </div>
-        ));
+        let actor = this.state.actors.map((actor, id) => {
+            let image = (actor.person_img == "" || !actor.person_img) ? 'img/person_img/person_placeholder.png' : actor.person_img;
+
+            return (
+                <div key={'actor-detail-' + id}>
+                    <img key={'actor-image-' + id}
+                         src={"./storage/" + image}  
+                         alt="poster"
+                         className="actorImage"/>
+                    <p key={'actor-' + id}>{actor.fullname}</p>
+                </div>
+            )
+
+        });
         let directors = this.state.directors.map((director, id) => (
             <p
                 key={'director-' + id}
