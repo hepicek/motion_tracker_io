@@ -70,7 +70,8 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 Route::get('searchUsers/{user}', 'UserController@searchUsers');
-Route::get('searchActor/{name}', 'MoviesController@searchActorDetails');
+Route::get('searchActors/{name}', 'MoviesController@searchActors');
+Route::get('searchActorDetails/{id}', 'MoviesController@searchActorDetails');
 
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');

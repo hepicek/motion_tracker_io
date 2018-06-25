@@ -273,16 +273,20 @@ class MoviesController extends Controller
         return [$actors, $director, $movie];
     }
 
+    public function searchActors($name)
+    {
+        return Person::where('fullname', 'LIKE', '%' . $name . '%')->get();
+    }
+
     public function searchActorDetails($imdb_id)
     {
         $actor = Person::find($imdb_id);
         $movies = $actor->Persons()
-            ->where('imdb_position_id', 254)
-            ->orderBy('priority', 'desc')
+            ->orderBy('votes_nr', 'desc')
             ->take(10)
             ->get();
 
-        return [$movies, $actor];
+        return $movies;
     }
 
     protected function storeCast($fetchedExternalData) {
