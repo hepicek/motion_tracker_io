@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { DragSource } from 'react-dnd';
+import {decodeString} from '../../../helpers/helper';
 import MOVIE_ITEM_SEARCH_DETAILS from './Movie_Item_Search_Detail.js';
 
 const spec = {
@@ -56,7 +57,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                     onClick={this.handleCaretClick}
                 >
                     <i className={"fa fa-caret-" + this.state.caret} />
-                    <p>{movieItem.name}</p>
+                    <p>{decodeString(movieItem.name)}</p>
                     <p>{movieItem.year}</p>
                     <p>{movieItem.rating}</p>
                 </div>
