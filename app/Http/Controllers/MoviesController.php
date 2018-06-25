@@ -275,7 +275,8 @@ class MoviesController extends Controller
 
     public function searchActors($name)
     {
-        return Person::where('fullname', 'LIKE', '%' . $name . '%')->get();
+        $actors = Person::where('fullname', 'LIKE', '%' . $name . '%')->get()
+        return [$name, $actors];
     }
 
     public function searchActorDetails($imdb_id)
@@ -286,7 +287,7 @@ class MoviesController extends Controller
             ->take(10)
             ->get();
 
-        return $movies;
+        return [$imdb_id, $movies];
     }
 
     protected function storeCast($fetchedExternalData) {
