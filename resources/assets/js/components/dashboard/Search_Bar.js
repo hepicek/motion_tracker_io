@@ -17,7 +17,7 @@ class SEARCH_BAR extends Component {
                     placeholder='Actor, director, title, year...'
                     onChange={this.props.handleSearch}
                     /></p>
-                <p>Search By:
+                {/*<p>Search By:
                     <select
                         name='searchBar-mode'
                         id='searchBar-mode'
@@ -31,7 +31,7 @@ class SEARCH_BAR extends Component {
                     id='searchBar-submit'
                     type='submit'
                     value='Go!'
-                />
+                />*/}
             </form>
         )
     }
