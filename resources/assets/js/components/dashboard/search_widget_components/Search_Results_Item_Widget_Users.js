@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import MOVIE_ITEM_SEARCH_DETAILS from './Movie_Item_Search_Detail.js';
+import USER_ITEM_SEARCH_DETAILS from './User_Item_Search_Detail';
 
 
 class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
@@ -18,14 +18,28 @@ class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
     }
 
     render() {
+        let user = this.props.searchResultsItem;
+        let userImage = 'storage/' + user.img_url;
         return (
             <div>
-                <div className='searchResultsItem' 
-                    onClick={this.handleCaretClick}
+                <div className='searchResultsItem'>
+                <div 
+                    className="searchItemDetails-actorImgContainer"
+                    style={{
+                        backgroundImage: `url(${userImage})`
+                    }}
                 >
-                    <p>User!</p>
                 </div>
-                {this.state.caret === 'up' && <MOVIE_ITEM_SEARCH_DETAILS MovieItemDetails={movieItem}/>}
+                    <p>{user.first_name} {user.last_name} - ({user.common_name})</p>
+                    <div 
+                    className="addFriendButton"
+                    
+                    >
+                    Add Friend
+                    </div>
+                </div>
+                
+                {this.state.caret === 'up' && <USER_ITEM_SEARCH_DETAILS UserDetails={user}/>}
             </div>
         )
     }

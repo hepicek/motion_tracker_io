@@ -6,7 +6,15 @@ import SEARCH_RESULTS_ITEM_WIDGET_USERS from './search_widget_components/Search_
 
 
 const SEARCH_MOVIES_WIDGET = (props) => {
-    let searchResults = props.searchResults.map((result, id) => (
+    let results;
+    if(props.searchType == 'movies') {
+        results = props.searchResults.movies;
+    } else if(props.searchType == 'actors') {
+        results = props.searchResults.actors;
+    } else {
+        results = props.searchResults.users;
+    }
+    let searchResults = results.map((result, id) => (
         <div
             key={'search-' + id}
         >

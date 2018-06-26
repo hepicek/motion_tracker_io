@@ -24,16 +24,21 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
     }
 
     render() {
-        let poster = <img className="searchItemDetails-mainImage" src={"./storage/" + this.state.movieDetail.imdb_img} alt="poster"/>;
+        let poster = "storage/" + this.state.movieDetail.imdb_img;
         let actor = this.state.actors.map((actor, id) => {
             let image = (actor.person_img == "" || !actor.person_img) ? 'img/person_img/person_placeholder.png' : actor.person_img;
-
+            let imageBackground = 'storage/' + image;
             return (
-                <div key={'actor-detail-' + id}>
-                    <img key={'actor-image-' + id}
-                         src={"./storage/" + image}  
-                         alt="poster"
-                         className="actorImage"/>
+                <div 
+                    className="actorDetail"
+                    key={'actor-detail-' + id}
+                >
+                    <div key={'actor-image-' + id}
+                        className="searchItemDetails-actorImgContainer"
+                        style={{
+                            backgroundImage: `url(${imageBackground})`
+                        }}
+                    ></div>
                     <p key={'actor-' + id}>{decodeString(actor.fullname)}</p>
                 </div>
             )
@@ -47,17 +52,26 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
         return (
             <div className="searchItemDetails">
                 <div className="searchItemDetails-main">
-                    {this.state.movieDetail.imdb_img && poster}
+                    {/*this.state.movieDetail.imdb_img && poster*/}
+                    <div className="searchItemDetails-posterContainer"
+                        style={{
+                            backgroundImage: `url(${poster})`
+                        }}
+                    ></div>
                     <div className="searchItemDetails-main-text">
-                    <p>Director(s):</p>
-                    {this.state.directors && directors}
-                    {this.state.movieDetail.storyline && decodeString(this.state.movieDetail.storyline)}
+                        <p><strong>Director(s):</strong></p>
+                        {this.state.directors && directors}
+                        <p className="searchItemDetails-storyLine">
+                            {this.state.movieDetail.storyline && decodeString(this.state.movieDetail.storyline)}
+                        </p>
                     </div>
                 </div>
                 
                 <div className="actorsDetails">
-                <p>Cast:</p>
-                    {actor}
+                <p><strong>Cast:</strong></p>
+                    <div className="actorDetails-cast">
+                        {actor}
+                    </div>
                 </div>
             </div>
         )

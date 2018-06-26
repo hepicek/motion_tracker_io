@@ -8,6 +8,7 @@ use Auth;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\User;
+use DB;
 
 class UserController extends Controller
 {
@@ -19,11 +20,21 @@ class UserController extends Controller
 
     public function searchUsers($user)
     {
-        $result = User::where('first_name', 'LIKE', '%' . $user . '%')
+        $userList = [];
+        $currentUser = Auth::id();
+        $results = User::where('first_name', 'LIKE', '%' . $user . '%')
             ->orWhere('last_name', 'LIKE', '%' . $user . '%')
             ->get();
 
-        return [$user, $result];
+        foreach($results as $result) {
+            $thisuser['first_name'] = $result['first_name'];
+            $thisuser['last_name'] = $result['last_name'];
+            $thisuser['common_name'] = $result['common_name'];
+            $thisuser['img_url'] = $result['img_url'];
+            dd($thisuser);
+        }
+
+        return [$user, $results];
     }
 
     public function updateUserDetails(request $request, $id)

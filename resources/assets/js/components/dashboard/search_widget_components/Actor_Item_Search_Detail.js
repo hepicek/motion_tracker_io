@@ -16,7 +16,6 @@ class ACTOR_ITEM_SEARCH_DETAILS extends Component {
         .then((res) => {    
             let searchResults = Object.keys(res).map(key => res[key]);
             let actorMovies = searchResults[0][1];
-            console.log(actorMovies);
             this.setState({
                 actorMovies
             })

@@ -26,7 +26,11 @@ class Dashboard extends Component {
             renameList: undefined,
             searchType: 'movies',
             searchText: '',
-            searchResults: [],
+            searchResults: {
+                movies: [],
+                actors: [],
+                users: []
+            },
         };
         this.handleListDeleteClick = this.handleListDeleteClick.bind(this);
         this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);
@@ -73,7 +77,6 @@ class Dashboard extends Component {
     handleCategoryClick(e) {
         this.setState({
             searchType: e.target.id.split("-")[1],
-            searchResults: [{id: 0  }],
         })
         setTimeout(() => {
             this.handleSearch({
@@ -138,28 +141,70 @@ class Dashboard extends Component {
         clearTimeout(inputTimer);
 
         inputTimer = setTimeout(() => {
-            if(this.state.searchType == 'movies') {
-                urlPath = 'search'
-            } else if(this.state.searchType == 'actors') {
-                urlPath = 'searchActors'
-            } else {
-                urlPath = 'searchUsers'
-            }
+            // if(this.state.searchType == 'movies') {
+            //     urlPath = 'search'
+            // } else if(this.state.searchType == 'actors') {
+            //     urlPath = 'searchActors'
+            // } else {
+            //     urlPath = 'searchUsers'
+            // }
             if(this.state.searchText.length > 1) {
-                axios.get(`/${urlPath}/${this.state.searchText}`)
+                axios.get(`/search/${this.state.searchText}`)
                     .then((res) => {
                         let searchString = res.data[0];
                         let body = res.data[1];
                         let searchResults = Object.keys(body).map(key => body[key]);
                         if (searchString == this.state.searchText) {
-                            this.setState({searchResults});
+                            this.setState({
+                                searchResults: {
+                                    movies: searchResults,
+                                    actors: this.state.searchResults.actors,
+                                    users: this.state.searchResults.users
+                                }
+                            });
                         }
 
-                    })
-            } else {
+                    });
+                    axios.get(`/searchActors/${this.state.searchText}`)
+                    .then((res) => {
+                        let searchString = res.data[0];
+                        let body = res.data[1];
+                        let searchResults = Object.keys(body).map(key => body[key]);
+                        if (searchString == this.state.searchText) {
+                            this.setState({
+                                searchResults: {
+                                    movies: this.state.searchResults.movies,
+                                    actors: searchResults,
+                                    users: this.state.searchResults.users
+                                }
+                            });
+                        }
 
+                    });
+                    axios.get(`/searchUsers/${this.state.searchText}`)
+                    .then((res) => {
+                        let searchString = res.data[0];
+                        let body = res.data[1];
+                        let searchResults = Object.keys(body).map(key => body[key]);
+                        if (searchString == this.state.searchText) {
+                            this.setState({
+                                searchResults: {
+                                    movies: this.state.searchResults.movies,
+                                    actors: this.state.searchResults.actors,
+                                    users: searchResults
+                                }
+                            });
+                        }
+
+                    });
+                   
+            } else {
                 this.setState({
-                    searchResults: [],
+                    searchResults: {
+                        movies: [],
+                        actors: [],
+                        users: []
+                    },
                     searchType: 'movies'
                 });
             }
@@ -195,6 +240,7 @@ class Dashboard extends Component {
     }
 
     render() {
+        // console.log(this.state.searchResults.movies.length);
         return (
             <div className='dashboard'>
                 <div className='searchSection'>
@@ -202,8 +248,8 @@ class Dashboard extends Component {
                         handleSearch={this.handleSearch}
                         searchText={this.state.searchText}
                     />
-                    {this.state.searchResults.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>}
-                    {this.state.searchResults.length > 0 &&
+                    {this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>}
+                    {this.state.searchResults.movies.length > 0 &&
                         <SEARCH_MOVIES_WIDGET 
                             searchType={this.state.searchType}
                             searchResults={this.state.searchResults}
