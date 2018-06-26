@@ -9,6 +9,7 @@ const listTarget = {
        let list_id = props.list.id;
        component.state.collapsed && component.handleListTitleClick();
        props.handleDragItemDrop(movie_id, list_id);
+
     },
     hover(props, monitor, component) {
         

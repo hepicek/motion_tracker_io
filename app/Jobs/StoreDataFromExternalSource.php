@@ -79,7 +79,7 @@ class StoreDataFromExternalSource implements ShouldQueue
             for ($i = 0; $i < $releaseLength; $i++) {
 
                 if ($item['releaseInfo'][$i]['country'] == 'USA') {
-                    $releaseDate = $item['releaseInfo'][$i]['day'] . " " . $item['releaseInfo'][$i]['mon'] . " " . $item['releaseInfo'][$i]['year'];
+                    $releaseDate = $item['releaseInfo'][$i]['day'] . ". " . $item['releaseInfo'][$i]['mon'] . ". " . $item['releaseInfo'][$i]['year'];
                     break;
                 }
             }

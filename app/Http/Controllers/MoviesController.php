@@ -86,7 +86,7 @@ class MoviesController extends Controller
         $releaseLength =  count($result['releaseInfo']);
         for ($i = 0; $i < $releaseLength; $i++) {
                 if ($result['releaseInfo'][$i]['country'] == 'USA') {
-                    $releaseDate = $result['releaseInfo'][$i]['day'] . " " . $result['releaseInfo'][$i]['mon'] . " " . $result['releaseInfo'][$i]['year'];
+                    $releaseDate = $result['releaseInfo'][$i]['day'] . ". " . $result['releaseInfo'][$i]['mon'] . ". " . $result['releaseInfo'][$i]['year'];
                     break;
                 }
         }

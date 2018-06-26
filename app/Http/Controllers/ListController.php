@@ -70,16 +70,27 @@ class ListController extends Controller
     public function storeUserListItem($list_id, $id)
     {
         $listItemInDb = List_Item::where('show_id', $id)->where('list_id', $list_id)->get();
-
        if (count($listItemInDb) == 0) {
             $input['list_id'] = $list_id;
             $input['show_id'] = $id;
             $newItem = List_Item::create($input);
             $newItem->save();
-            return response()->json(['success'=> $newItem], 200);
+
+           return response()->json(['success'=> $newItem], 200);
         }
 
         return 'List item already in list';
+    }
+
+    public function storeUserRating(Request $request)
+    {
+
+        $listItemInDb = List_Item::where('show_id', $request[0])->get();
+        if (!$listItemInDb->isEmpty()) {
+            List_Item::where('show_id', $request[0])->update(['user_rating' => $request[1]]);
+            return $request[1];
+        }
+    return 'not in list';
     }
 
     public function destroyUserList(Request $request, $id)
