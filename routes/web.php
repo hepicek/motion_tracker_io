@@ -49,7 +49,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 
-
+    //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
     Route::get('searchActors/{name}', 'MoviesController@searchActors');
     Route::get('searchActorDetails/{id}', 'MoviesController@searchActorDetails');
@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth']], function() {
         List_Item::find($id)->delete();
         return 204;
     });
+
+    Route::post('relationships', 'UserController@relationship');
 
 
 

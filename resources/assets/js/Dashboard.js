@@ -42,6 +42,7 @@ class Dashboard extends Component {
         this.handleDragItemDrop = this.handleDragItemDrop.bind(this);
         this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
         this.handleCategoryClick = this.handleCategoryClick.bind(this);
+        this.handleFriendBtnClick = this.handleFriendBtnClick.bind(this);
     }
 
     //post the new list to the DB
@@ -73,6 +74,21 @@ class Dashboard extends Component {
             }).catch(err => {
             console.log(err);
         });
+    }
+    handleFriendBtnClick(status, id) {
+        console.log("Friends", status, id);
+        axios.post('/relationships',
+            {
+                id,
+                status
+            })
+            .then(res => {
+                this.handleSearch({
+                    target: {
+                        value: this.state.searchText
+                    }
+                })
+            })
     }
     handleCategoryClick(e) {
         this.setState({
@@ -254,6 +270,7 @@ class Dashboard extends Component {
                             searchType={this.state.searchType}
                             searchResults={this.state.searchResults}
                             handleCategoryClick={this.handleCategoryClick}
+                            handleFriendBtnClick={this.handleFriendBtnClick}
                         />
                     }
 

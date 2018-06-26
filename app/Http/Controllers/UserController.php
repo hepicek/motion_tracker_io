@@ -27,14 +27,34 @@ class UserController extends Controller
             ->get();
 
         foreach($results as $result) {
+            $userIDs = [$result['id'], $currentUser];
             $thisuser['first_name'] = $result['first_name'];
             $thisuser['last_name'] = $result['last_name'];
             $thisuser['common_name'] = $result['common_name'];
             $thisuser['img_url'] = $result['img_url'];
-            dd($thisuser);
+            $thisuser['id'] = $result['id'];
+            sort($userIDs);    
+            $rel = DB::table('relationships')->where([
+                ['user_one_id', "=", $userIDs[0]], 
+                ['user_two_id', "=", $userIDs[1]]
+            ])
+                ->get();
+            if(count($rel) == 0) {
+                $thisuser['relStatus'] = 0;
+            } else {
+                if($rel[0]->status_id == 1) {
+                    $thisuser['relStatus'] = 1;
+                }
+                else if($rel[0]->action_user_id == Auth::id()) {
+                    $thisuser['relStatus'] = 2;
+                } else {
+                    $thisuser['relStatus'] = 3;
+                }
+            }
+            if($userIDs[0] != $userIDs[1]) $userList[] = $thisuser;
+            
         }
-
-        return [$user, $results];
+        return [$user, $userList];
     }
 
     public function updateUserDetails(request $request, $id)
@@ -98,5 +118,51 @@ class UserController extends Controller
             return 200;
         }
             return 'No image to delete';
+    }
+
+    public function relationship(Request $request) {
+        $currentUser = Auth::id();
+        $otherUser = $request['id'];
+        $userIDs = [$currentUser, $otherUser];
+        sort($userIDs);
+        // return $userIDs;
+
+        if($request['status'] == 0) {
+            //write a new line to the table with status 
+            //status 2
+            //action_user_id = $currentUser
+           $newRel =  DB::table('relationships')->insert(
+                [
+                    'user_one_id' => $userIDs[0],
+                    'user_two_id' => $userIDs[1],
+                    'action_user_id' => Auth::id(),
+                    'status_id' => 2,
+                    'action_date' => date('Y-m-d H:i:s'),
+                    'date_created' => date('Y-m-d H:i:s')
+                ]);
+                return 2;
+        } else if ($request['status'] == 1) {
+            return "Already Friends";
+        } else if ($request['status'] == 2) {
+            return "Waiting on action from other user";
+        } else if ($request['status'] == 3) {
+            $newRel =  DB::table('relationships')->update(
+                [
+                    'user_one_id' => $userIDs[0],
+                    'user_two_id' => $userIDs[1],
+                    'action_user_id' => Auth::id(),
+                    'status_id' => 1,
+                    'action_date' => date('Y-m-d H:i:s'),
+                ]);
+                return 1;
+        } else if ($request['status'] == 4) {
+            return 'Rejected Bitch!';
+            $newRel =  DB::table('relationships')->delete(
+                [
+                    'user_one_id' => $userIDs[0],
+                    'user_two_id' => $userIDs[1],
+                ]);
+        }
+        return 400;
     }
 }

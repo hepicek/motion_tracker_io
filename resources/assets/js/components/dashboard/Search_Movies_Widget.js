@@ -20,7 +20,12 @@ const SEARCH_MOVIES_WIDGET = (props) => {
         >
             {props.searchType == 'movies' && <SEARCH_RESULTS_ITEM_WIDGET_MOVIES searchResultsItem={result}/> } 
             {props.searchType == "actors" && <SEARCH_RESULTS_ITEM_WIDGET_ACTORS searchResultsItem={result} />}
-            {props.searchType == "users" && <SEARCH_RESULTS_ITEM_WIDGET_USERS searchResultsItem={result} />}
+            {props.searchType == "users" && 
+                <SEARCH_RESULTS_ITEM_WIDGET_USERS 
+                        searchResultsItem={result} 
+                        handleFriendBtnClick={props.handleFriendBtnClick}
+                />
+            }
         </div>
     ));
     let bgColor;

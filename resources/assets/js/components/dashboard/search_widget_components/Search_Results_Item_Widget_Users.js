@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import USER_ITEM_SEARCH_DETAILS from './User_Item_Search_Detail';
-
+import FRIEND_RESPOND_BTN from './Friend_Respond_Btn';
 
 class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
     constructor(props) {
@@ -20,23 +20,41 @@ class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
     render() {
         let user = this.props.searchResultsItem;
         let userImage = 'storage/' + user.img_url;
+        let friendBtnText;
+        if(user.relStatus == 0) {
+            friendBtnText = 'Add Friend';
+        } else if(user.relStatus == 1) {
+            friendBtnText = <i className="fa fa-check"></i>;
+        } else if(user.relStatus == 2) {
+            friendBtnText = 'Pending'
+        } else {
+            friendBtnText = 'Approve/Deny'
+        }
         return (
             <div>
                 <div className='searchResultsItem'>
                 <div 
-                    className="searchItemDetails-actorImgContainer"
+                    className="searchItemDetails-userImgContainer"
                     style={{
                         backgroundImage: `url(${userImage})`
                     }}
                 >
                 </div>
                     <p>{user.first_name} {user.last_name} - ({user.common_name})</p>
-                    <div 
-                    className="addFriendButton"
-                    
+                    {user.relStatus != 3 && <div 
+                        className="addFriendButton"
+                        onClick={() => {
+                            this.props.handleFriendBtnClick(user.relStatus, user.id);
+                        }}
                     >
-                    Add Friend
-                    </div>
+                    {friendBtnText}
+                    </div>}
+                    {user.relStatus == 3 && 
+                        <FRIEND_RESPOND_BTN 
+                            id={user.id} 
+                            handleFriendBtnClick={this.props.handleFriendBtnClick}
+                        />
+                    }
                 </div>
                 
                 {this.state.caret === 'up' && <USER_ITEM_SEARCH_DETAILS UserDetails={user}/>}
