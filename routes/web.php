@@ -43,14 +43,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('movies/{movie}', 'MoviesController@show');
     Route::post('movies','MoviesController@store');
     Route::put('movies/{movie}','MoviesController@update');
-    Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
     Route::get('search/{movie}', 'MoviesController@searchMovies');
     
-    Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
-
-
     Route::get('searchMovieDetails/{imdb_id}', 'MoviesController@searchMovieDetails');
 
+
+
+
+    Route::get('searchUsers/{user}', 'UserController@searchUsers');
+    Route::get('searchActors/{name}', 'MoviesController@searchActors');
+    Route::get('searchActorDetails/{id}', 'MoviesController@searchActorDetails');
 
     Route::post('userListItems/{id}', function(Request $request) {
         return List_Item::create($request->all());
@@ -69,9 +71,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 });
 
-Route::get('searchUsers/{user}', 'UserController@searchUsers');
-Route::get('searchActors/{name}', 'MoviesController@searchActors');
-Route::get('searchActorDetails/{id}', 'MoviesController@searchActorDetails');
+Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
+Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
