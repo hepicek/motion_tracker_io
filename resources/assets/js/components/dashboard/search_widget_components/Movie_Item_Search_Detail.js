@@ -29,15 +29,15 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
             let image = (actor.person_img == "" || !actor.person_img) ? 'img/person_img/person_placeholder.png' : actor.person_img;
             let imageBackground = 'storage/' + image;
             return (
-                <div 
+                <div
                     className="actorDetail"
                     key={'actor-detail-' + id}
                 >
                     <div key={'actor-image-' + id}
-                        className="searchItemDetails-actorImgContainer"
-                        style={{
-                            backgroundImage: `url(${imageBackground})`
-                        }}
+                         className="searchItemDetails-actorImgContainer"
+                         style={{
+                             backgroundImage: `url(${imageBackground})`
+                         }}
                     ></div>
                     <p key={'actor-' + id}>{decodeString(actor.fullname)}</p>
                 </div>
@@ -54,21 +54,27 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
                 <div className="searchItemDetails-main">
                     {/*this.state.movieDetail.imdb_img && poster*/}
                     <div className="searchItemDetails-posterContainer"
-                        style={{
-                            backgroundImage: `url(${poster})`
-                        }}
+                         style={{
+                             backgroundImage: `url(${poster})`
+                         }}
                     ></div>
                     <div className="searchItemDetails-main-text">
-                        <p><strong>Director(s):</strong></p>
-                        {this.state.directors && directors}
+                        <div className="searchItemDetails-mainInfo">
+                            <p><strong>Director(s):</strong></p>
+                            {this.state.directors && directors}
+                            <p><strong>Release Date:</strong></p>
+                            {this.state.movieDetail && this.state.movieDetail.releaseInfo}
+                            <p><strong>Runtime:</strong></p>
+                            {this.state.movieDetail && this.state.movieDetail.runTime + " min"}
+                        </div>
                         <p className="searchItemDetails-storyLine">
                             {this.state.movieDetail.storyline && decodeString(this.state.movieDetail.storyline)}
                         </p>
                     </div>
                 </div>
-                
+
                 <div className="actorsDetails">
-                <p><strong>Cast:</strong></p>
+                    <p><strong>Cast:</strong></p>
                     <div className="actorDetails-cast">
                         {actor}
                     </div>

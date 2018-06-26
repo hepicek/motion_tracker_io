@@ -64,6 +64,9 @@
   animation: searchSlideItem .35s ease-out forwards;
   overflow-y: scroll;
 }
+.movieItemInfo {
+  display: flex;
+}
 .searchItemDetails-main {
   display: flex;
   margin: 5px;
@@ -88,6 +91,15 @@
   background-color: #D0D0D0;
   background-size: cover;
   background-position: center;
+}
+.searchItemDetails-mainInfo {
+  display: flex;
+}
+.movieItemRating {
+  display: flex;
+}
+.fa-star {
+  color: #E4BB24;
 }
 .searchItemDetails-storyLine {
   padding: 0 10px;

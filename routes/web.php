@@ -36,7 +36,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('userListItem/{id}', 'ListController@destroyUserListItem');
 
     //Drag and Drop route
-    Route::get('userListsDnD/{list_id}/{id}', 'ListController@storeUserListItem');
 
     //Movies routes
     Route::get('movies', 'MoviesController@index');
@@ -46,7 +45,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/{movie}', 'MoviesController@searchMovies');
     
     Route::get('searchMovieDetails/{imdb_id}', 'MoviesController@searchMovieDetails');
-
+    Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
+    Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 
 
 
@@ -62,17 +62,13 @@ Route::group(['middleware' => ['auth']], function() {
         return 204;
     });
 
-
-
-
-
     Route::post('userLogin', 'UserController@userLogin');
     Route::post('userRegister', 'UserController@userRegister');
 
 });
 
-Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
-Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
+Route::post('userRatings', 'ListController@storeUserRating');
+Route::get('userListsDnD/{list_id}/{id}', 'ListController@storeUserListItem');
 
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');

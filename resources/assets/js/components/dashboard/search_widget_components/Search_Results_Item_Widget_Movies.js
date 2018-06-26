@@ -1,33 +1,35 @@
 import React, {Component} from 'react';
-import { DragSource } from 'react-dnd';
+import {DragSource} from 'react-dnd';
 import {decodeString} from '../../../helpers/helper';
 import MOVIE_ITEM_SEARCH_DETAILS from './Movie_Item_Search_Detail.js';
+import Rating from "react-rating";
+import axios from "axios/index";
 
 const spec = {
     isDragging(props, monitor) {
-      return monitor.getItem();
+        return monitor.getItem();
     },
-  
+
     beginDrag(props, monitor, component) {
-    return {id: props.searchResultsItem.imdb_id, dragging: "2px solid red"};
+        return {id: props.searchResultsItem.imdb_id, dragging: "2px solid red"};
     },
-  
+
     endDrag(props, monitor, component) {
-      if (!monitor.didDrop()) {        
-        return;
-      }
-  
-      const item = monitor.getItem();
-      const dropResult = monitor.getDropResult();
+        if (!monitor.didDrop()) {
+            return;
+        }
+
+        const item = monitor.getItem();
+        const dropResult = monitor.getDropResult();
     }
 }
 
 function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-    canDrag: monitor.canDrag()
-  };
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging(),
+        canDrag: monitor.canDrag()
+    };
 }
 
 
@@ -35,8 +37,10 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
     constructor(props) {
         super(props);
         this.handleCaretClick = this.handleCaretClick.bind(this);
+        this.handleRatingChange = this.handleRatingChange.bind(this);
         this.state = {
             caret: 'down',
+            rating: 0
         }
     }
 
@@ -45,22 +49,53 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
             caret: this.state.caret === 'down' ? 'up' : 'down'
         });
     }
+    handleRatingChange(value) {
 
+        axios.post('userRatings', [this.props.searchResultsItem.imdb_id, value])
+            .then((res) => {
+                 let searchResults = Object.keys(res).map(key => res[key]);
+                 this.setState({rating: searchResults[0]});
+            });
+    }
+    componentWillMount() {
+        let movieItem = this.props.searchResultsItem;
+        // axios.get('userRatings/', [this.props.searchResultsItem.imdb_id, value])
+        //     .then((res) => {
+        //         let searchResults = Object.keys(res).map(key => res[key]);
+        //         this.setState({rating: searchResults[0]});
+        //     });
+    }
     render() {
         let movieItem = this.props.searchResultsItem;
-        const { isDragging, connectDragSource, canDrag } = this.props;
+        const {isDragging, connectDragSource, canDrag} = this.props;
 
         return connectDragSource(
             <div>
-                <div className='searchResultsItem' 
-                    style={{border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging}}
-                    onClick={this.handleCaretClick}
+                <div className='searchResultsItem'
+                     style={{border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging}}
                 >
-                    <i className={"fa fa-caret-" + this.state.caret} />
-                    <p>{decodeString(movieItem.name)}</p>
-                    <p>{movieItem.year}</p>
-                    <p>{movieItem.rating}</p>
+                    <div
+                        className="movieItemInfo"
+                        onClick={this.handleCaretClick}
+                    >
+                        <i className={"fa fa-caret-" + this.state.caret}/>
+                        <p>{decodeString(movieItem.name)}</p>
+                        <p>Year: {movieItem.year}</p>
+                        <p>IMDB Rating: {movieItem.rating}</p>
+                    </div>
+                    <div className="movieItemRating">
+                        <p>My Rating: {movieItem.rating}</p>
+                        <Rating
+                            emptySymbol="fa fa-star-o fa-2x"
+                            fullSymbol="fa fa-star fa-2x"
+                            initialRating={this.state.rating}
+                            fractions={2}
+                            onChange={this.handleRatingChange}
+
+                        />
+                    </div>
                 </div>
+
                 {this.state.caret === 'up' && <MOVIE_ITEM_SEARCH_DETAILS MovieItemDetails={movieItem}/>}
             </div>
         )

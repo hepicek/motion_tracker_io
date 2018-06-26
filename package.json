@@ -24,9 +24,11 @@
         "react-dom": "^16.2.0"
     },
     "dependencies": {
+        "ajv": "^6.5.1",
         "font-awesome": "^4.7.0",
         "jsonp": "^0.2.1",
         "react-dnd": "^5.0.0",
-        "react-dnd-html5-backend": "^5.0.1"
+        "react-dnd-html5-backend": "^5.0.1",
+        "react-rating": "^1.2.1"
     }
 }
