@@ -156,12 +156,13 @@ class UserController extends Controller
                 ]);
                 return 1;
         } else if ($request['status'] == 4) {
-            return 'Rejected Bitch!';
-            $newRel =  DB::table('relationships')->delete(
+            
+            $newRel =  DB::table('relationships')->where(
                 [
                     'user_one_id' => $userIDs[0],
                     'user_two_id' => $userIDs[1],
-                ]);
+                ])->delete();
+                return 'Rejected Bitch!';
         }
         return 400;
     }
