@@ -50,7 +50,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
     Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 
-
+    //Relationships routes
+    Route::post('relationships', 'RelationshipsController@updateRelationship');
+    Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
+    Route::get('relationships/{id}', 'RelationshipsController@getRelationships');
 
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
@@ -65,9 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
         return 204;
     });
 
-    Route::post('relationships', 'UserController@updateRelationship');
-    Route::get('relationships/pending/{id}', 'UserController@pendingRelationships');
-    Route::get('relationships/{id}', 'UserController@getRelationships');
+    
 
 
 
