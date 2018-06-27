@@ -1,3 +1,10 @@
+@import './lists_widget_components/_list_items.scss';
+@import './lists_widget_components/_list_menu_btn_options.scss';
+@import './lists_widget_components/_list_menu_btn.scss';
+@import './lists_widget_components/_list.scss';
+@import './lists_widget_components/_lists_widget_header.scss';
+@import './lists_widget_components/_new_lists.scss';
+
 
 #listsWidget {
     width: 28%;
@@ -11,33 +18,7 @@
     align-items: center;
     height: 600px;
    }
-  #listsWidget-topButtons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  #listsWidget-topButtons p {
-    display: flex;
-    align-items: center;
-    margin: 0;
-  }
-  #listsWidget-topButtons p:first-child i {
-    display: flex;
-    align-items: center;
-    margin-right: 5px;
-  }
-  #listsWidget-topButtons p:nth-child(2) i {
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-  }
-  #listsWidget-topButtons i {
-    color: slategray;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
+
   #listsWidget-lists {
     width: 100%;
     flex-grow: 1;
@@ -46,99 +27,13 @@
     border-radius: 10px;
     overflow: auto;
   }
-  .listHeader {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .listItem {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 5px;
-    border: 2px solid slategray;
-    border-radius: 5px;
-    margin: 5px 0;
-    img {
-      height: 100px;
-    }
-  }
-  .listTitle {
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .listTitleInput {
-    width: 80%; 
-  }
-  .expandedListItems {
-    padding-left: 15px;
-    overflow: hidden;
-  }
-  .listDeleteBtn {
-    cursor: pointer; 
-  }
-  .newListInput {
-    outline: none;
-    border: 1px solid slategray;
-    border-radius: 10px;
-    padding: 5px;
-    width: 80%;
-  }
-  .listMenuBtn {
-    position: relative;
-    cursor: pointer;
-    p {
-      font-size: .8rem;
-      margin: 0;
-      padding: 2px 5px;
-    }
-    
-  }
-  .listMenuBtn_listOptions {
-    position: absolute;
-    right: 0;
-    background-color: slategray;
-    box-shadow: 3px 3px 8px 0 black;
-    border-radius: 5px;
-    color: white;
-    width: 85px;
-    // padding: 2px 5px;
-    z-index: 1;
-    transition: opacity .2s;
-    user-select: none;
-    overflow: hidden;
-    animation: list_menu_open .15s linear forwards;
-  }
-  .listMenutBtn_listOptions_option {
-    height: 50%;    
-    &:hover {
-      background-color: white;
-      color: slategray;
-    }
-  }
-  
-  @keyframes list_menu_open {
-    from {
-      height: 0px;
-      opacity: 0;
-    }
-    to {
-      height: 50px;
-      opacity: 1;
-    }
-  }
 
-  .userListItem {
-    display: flex;
-    justify-content: space-between;
-    .fa-times {
-      font-size: .6rem;
-      margin-right: 2px;
-      cursor: pointer;
-    }
-    p {
-      margin: 2px;
-    }
-  }
+  // .listDeleteBtn {
+  //   cursor: pointer; 
+  // }
+
+
+  
+  
+
+

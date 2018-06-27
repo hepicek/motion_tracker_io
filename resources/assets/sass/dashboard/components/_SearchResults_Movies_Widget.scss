@@ -1,29 +1,15 @@
-.searchCategories {
-  display: flex;
-  height: 50px;
-  margin: 0;
-  padding: 0;
-  background-color: white;
-}
-.searchCategories_button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-  height: 50px;
-  color: white;
-  cursor: pointer;
-  user-select: none;
-}
-#categoryBtn-movies {
-  background-color: #68878b;
-}
-#categoryBtn-actors {
-  background-color: #b8b069;
-}
-#categoryBtn-users {
-  background-color: #c29d84;
-}
+@import './search_widget_components/_actor_item_search_detail.scss';
+@import './search_widget_components/_friend_respond_btn.scss';
+@import './search_widget_components/_movie_item_search_detail.scss';
+@import './search_widget_components/_search_categories.scss';
+@import './search_widget_components/_search_results_item_widget_actors.scss';
+@import './search_widget_components/_search_results_item_widget_movies.scss';
+@import './search_widget_components/_search_results_item_widget_users.scss';
+@import './search_widget_components/_user_item_search_detail.scss';
+
+
+
+
 .searchResultsContainer {
   padding: 10px;
   margin: 0;
@@ -74,21 +60,8 @@
 .searchItemDetails-main-text {
   width: 70%;
 }
-.searchItemDetails-posterContainer {
-  height: 200px;
-  width: 125px;
-  // flex-grow: 1;
-  background-color: #D0D0D0;
-  background-size: cover;
-  background-position: center;
-}
-.searchItemDetails-actorImgContainer {
-  height: 100px;
-  width: 70px;
-  background-color: #D0D0D0;
-  background-size: cover;
-  background-position: center;
-}
+
+
 .searchItemDetails-userImgContainer {
   height: 80px;
   width: 80px;
@@ -97,37 +70,13 @@
   background-size: cover;
   background-position: center;
 }
-.searchItemDetails-storyLine {
-  padding: 0 10px;
-}
-.actorsDetails {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.actorDetail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;  
-}
-.actorDetails-cast {
-  display: flex;
-  width: 90%; 
-  justify-content: space-evenly;
-}
+
+
 .actorImage  {
   height: 100px;
 }
-.searchItemDetails-actorMovieImg {
-  height: 100px;
-  width: 70px;
-  background-size: cover;
-  background-position: center;
-  background-color: #D0D0D0;
-}
-.actorSearchImage {
-  height: 60px; 
-}
+
+
 @keyframes searchSlideItem {
   from {
     height: 0px;
@@ -139,48 +88,3 @@
   }
 }
 
-
-.addFriendButton {
-  height: 50px;
-  width: 100px;
-  background-color: dodgerblue;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 0 3px;
-  i {
-    margin: 0;
-  }
-}
-.select {
-  justify-content: space-around;
-  position: relative;
-}
-.select-selectBtn {
-  position: absolute;
-  top: 52px;
-  width: 100px;
-  height: 50px;
-  background-color: dodgerblue;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 2px 2px 5px 0 black;
-  border-radius: 5px;
-  overflow: hidden;
-  p {
-    margin: 0;
-    height: 50%;
-    width: 100%;
-    text-align: center;
-    
-    &:hover {
-      color: dodgerblue;
-      background-color: white;
-    }
-  }
-}

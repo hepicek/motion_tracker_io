@@ -1,0 +1,23 @@
+.searchItemDetails-userImgContainer {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    background-color: #D0D0D0;
+    background-size: cover;
+    background-position: center;
+  }
+  .addFriendButton {
+    height: 50px;
+    width: 100px;
+    background-color: dodgerblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 0 3px;
+    i {
+      margin: 0;
+    }
+  }

@@ -1,0 +1,39 @@
+.actorDetail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+  }
+  .searchItemDetails-actorMovieImg {
+    height: 100px;
+    width: 70px;
+    background-size: cover;
+    background-position: center;
+    background-color: #D0D0D0;
+  }
+
+  .searchItemDetails-posterContainer {
+    height: 200px;
+    width: 125px;
+    // flex-grow: 1;
+    background-color: #D0D0D0;
+    background-size: cover;
+    background-position: center;
+  }
+  .searchItemDetails-storyLine {
+    padding: 0 10px;
+  }
+
+  .actorsDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .actorDetails-cast {
+    display: flex;
+    width: 90%; 
+    justify-content: space-evenly;
+  }
+  .searchItemDetails-mainInfo {
+    display: flex;
+  }

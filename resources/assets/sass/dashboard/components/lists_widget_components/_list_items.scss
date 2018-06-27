@@ -1,0 +1,17 @@
+.userListItem {
+    display: flex;
+    justify-content: space-between;
+    .fa-times {
+      font-size: .6rem;
+      margin-right: 2px;
+      cursor: pointer;
+    }
+    p {
+      margin: 2px;
+    }
+  }
+
+  .expandedListItems {
+    padding-left: 15px;
+    overflow: hidden;
+  }

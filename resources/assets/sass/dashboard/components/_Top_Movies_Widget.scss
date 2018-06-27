@@ -1,22 +1,9 @@
+@import './top_movies_widget_components/_top_movie_card.scss';  
+
 #topMoviesWidget {
     height: 600px;
     display: flex;
     flex-wrap: wrap;
     overflow-y: scroll;
   }
-  .topMoviesWidgetCard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2px;
-    width: 23%;
-    cursor: pointer;
-    margin: 2px;
-    
-  }
-  .topMoviesWidgetCard-img {
-    width: 8rem;
-  }
-  .topMoviesWidgetCard-title {
-    text-align: center;
-  }
+  

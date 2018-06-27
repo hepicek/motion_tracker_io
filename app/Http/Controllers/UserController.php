@@ -120,7 +120,7 @@ class UserController extends Controller
             return 'No image to delete';
     }
 
-    public function relationship(Request $request) {
+    public function updateRelationship(Request $request) {
         $currentUser = Auth::id();
         $otherUser = $request['id'];
         $userIDs = [$currentUser, $otherUser];

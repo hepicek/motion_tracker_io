@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('userLists', 'ListController@storeUserList');
     Route::delete('userLists/{id}', 'ListController@destroyUserList');
     Route::put('userLists/{id}', 'ListController@updateUserList');
+    Route::post('userRatings', 'ListController@storeUserRating');
 
     Route::delete('userListItem/{id}', 'ListController@destroyUserListItem');
 
@@ -46,6 +47,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/{movie}', 'MoviesController@searchMovies');
     
     Route::get('searchMovieDetails/{imdb_id}', 'MoviesController@searchMovieDetails');
+    Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
+    Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 
 
 
@@ -62,7 +65,9 @@ Route::group(['middleware' => ['auth']], function() {
         return 204;
     });
 
-    Route::post('relationships', 'UserController@relationship');
+    Route::post('relationships', 'UserController@updateRelationship');
+    Route::get('relationships/pending/{id}', 'UserController@pendingRelationships');
+    Route::get('relationships/{id}', 'UserController@getRelationships');
 
 
 
