@@ -4,7 +4,7 @@
   }
   .select-selectBtn {
     position: absolute;
-    top: 52px;
+    top: 51px;
     width: 100px;
     height: 50px;
     background-color: dodgerblue;
@@ -15,12 +15,12 @@
     box-shadow: 2px 2px 5px 0 black;
     border-radius: 5px;
     overflow: hidden;
+    cursor: pointer;
     p {
       margin: 0;
       height: 50%;
       width: 100%;
       text-align: center;
-      
       &:hover {
         color: dodgerblue;
         background-color: white;

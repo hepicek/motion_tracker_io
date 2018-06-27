@@ -1,15 +1,3 @@
-@import './search_widget_components/_actor_item_search_detail.scss';
-@import './search_widget_components/_friend_respond_btn.scss';
-@import './search_widget_components/_movie_item_search_detail.scss';
-@import './search_widget_components/_search_categories.scss';
-@import './search_widget_components/_search_results_item_widget_actors.scss';
-@import './search_widget_components/_search_results_item_widget_movies.scss';
-@import './search_widget_components/_search_results_item_widget_users.scss';
-@import './search_widget_components/_user_item_search_detail.scss';
-
-
-
-
 .searchResultsContainer {
   padding: 10px;
   margin: 0;
@@ -88,3 +76,11 @@
   }
 }
 
+@import './search_widget_components/_actor_item_search_detail.scss';
+@import './search_widget_components/_movie_item_search_detail.scss';
+@import './search_widget_components/_search_categories.scss';
+@import './search_widget_components/_search_results_item_widget_actors.scss';
+@import './search_widget_components/_search_results_item_widget_movies.scss';
+@import './search_widget_components/_search_results_item_widget_users.scss';
+@import './search_widget_components/_user_item_search_detail.scss';
+@import './search_widget_components/_friend_respond_btn.scss';

@@ -31,6 +31,7 @@ class Dashboard extends Component {
                 actors: [],
                 users: []
             },
+            pendingRequests: []
         };
         this.handleListDeleteClick = this.handleListDeleteClick.bind(this);
         this.handleNewListBtnClick = this.handleNewListBtnClick.bind(this);
@@ -43,6 +44,7 @@ class Dashboard extends Component {
         this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
         this.handleCategoryClick = this.handleCategoryClick.bind(this);
         this.handleFriendBtnClick = this.handleFriendBtnClick.bind(this);
+        this.getPendingRequests = this.getPendingRequests.bind(this);
     }
 
     //post the new list to the DB
@@ -82,13 +84,22 @@ class Dashboard extends Component {
                 id,
                 status
             })
-            .then(res => {
+            .then(() => {
+                this.getPendingRequests();
                 this.handleSearch({
                     target: {
                         value: this.state.searchText
                     }
                 })
             })
+    }
+    getPendingRequests() {
+        axios.get('/relationships/pending')
+        .then(res => {
+            this.setState({
+                pendingRequests: res.data
+            })
+        });
     }
     handleCategoryClick(e) {
         this.setState({
@@ -289,7 +300,11 @@ class Dashboard extends Component {
                     handleDragItemDrop={this.handleDragItemDrop}
                     handleDeleteListItem={this.handleDeleteListItem}
                 />
-                <FRIENDS_WIDGET/>
+                <FRIENDS_WIDGET
+                    handleFriendBtnClick={this.handleFriendBtnClick}    
+                    getPendingRequests={this.getPendingRequests}
+                    pendingRequests={this.state.pendingRequests}
+                />
             </div>
         );
     }

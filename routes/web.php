@@ -54,6 +54,12 @@ Route::group(['middleware' => ['auth']], function() {
     //Rating routes
     Route::post('movieRating', 'RatingsController@storeMovieRating');
     Route::get('movieRating/{imdb_id}', 'RatingsController@getUserRatingOrAverageRating');
+
+    //Relationships routes
+    Route::post('relationships', 'RelationshipsController@updateRelationship');
+    Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
+    Route::get('relationships/{id}', 'RelationshipsController@getRelationships');
+
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
     Route::get('searchActors/{name}', 'MoviesController@searchActors');
@@ -66,14 +72,6 @@ Route::group(['middleware' => ['auth']], function() {
         List_Item::find($id)->delete();
         return 204;
     });
-
-    Route::post('relationships', 'UserController@updateRelationship');
-    Route::get('relationships/pending/{id}', 'UserController@pendingRelationships');
-    Route::get('relationships/{id}', 'UserController@getRelationships');
-
-
-
-
 
     Route::post('userLogin', 'UserController@userLogin');
     Route::post('userRegister', 'UserController@userRegister');
