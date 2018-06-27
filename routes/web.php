@@ -52,7 +52,8 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     //Rating routes
-
+    Route::post('movieRating', 'RatingsController@storeMovieRating');
+    Route::get('movieRating/{imdb_id}', 'RatingsController@getUserRatingOrAverageRating');
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
     Route::get('searchActors/{name}', 'MoviesController@searchActors');
@@ -85,8 +86,7 @@ Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
-Route::post('movieRating', 'RatingsController@storeMovieRating');
-Route::get('movieRating/{imdb_id}', 'RatingsController@getUserRatingOrAverageRating');
+
 
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
