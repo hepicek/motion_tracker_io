@@ -17,7 +17,7 @@ class AddRatingTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('imdb_id');
-            $table->float('mt_rating')->default(0);
+            $table->float('mt_user_rating')->default(0);
             $table->integer('mt_votes')->default(0);
 
         });

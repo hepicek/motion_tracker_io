@@ -50,20 +50,18 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
         });
     }
     handleRatingChange(value) {
-
-        axios.post('userRatings', [this.props.searchResultsItem.imdb_id, value])
+        axios.post('movieRating', [this.props.searchResultsItem.imdb_id, value])
             .then((res) => {
-                 let searchResults = Object.keys(res).map(key => res[key]);
-                 this.setState({rating: searchResults[0]});
+                this.setState({rating: res.data[0].mt_user_rating});
             });
     }
     componentWillMount() {
         let movieItem = this.props.searchResultsItem;
-        // axios.get('userRatings/', [this.props.searchResultsItem.imdb_id, value])
-        //     .then((res) => {
-        //         let searchResults = Object.keys(res).map(key => res[key]);
-        //         this.setState({rating: searchResults[0]});
-        //     });
+        axios.get('userRatings/', [this.props.searchResultsItem.imdb_id, value])
+            .then((res) => {
+                let searchResults = Object.keys(res).map(key => res[key]);
+                this.setState({rating: searchResults[0]});
+            });
     }
     render() {
         let movieItem = this.props.searchResultsItem;
@@ -91,7 +89,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                             initialRating={this.state.rating}
                             fractions={2}
                             onChange={this.handleRatingChange}
-
+                            value={this.state.rating}
                         />
                     </div>
                 </div>
