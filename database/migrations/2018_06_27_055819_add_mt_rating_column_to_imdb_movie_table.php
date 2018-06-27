@@ -14,7 +14,7 @@ class AddMtRatingColumnToImdbMovieTable extends Migration
     public function up()
     {
         Schema::table('imdb_movie', function (Blueprint $table) {
-            $table->float('mt_rating')->default(0);
+            $table->float('mt_user_rating')->default(0);
         });
     }
 

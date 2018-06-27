@@ -20,9 +20,9 @@ class RatingsController extends Controller
 
         $user_voted = $this->userVoted($curr_user_id, $imdb_id);
         if ($user_voted) {
-            return Rating::where(['user_id' => $curr_user_id, 'imdb_id' => $imdb_id])->get(['mt_user_rating']);
+            return [Rating::where(['user_id' => $curr_user_id, 'imdb_id' => $imdb_id])->get(['mt_user_rating']), 'goldStar'];
         }
-        return Movie::where('imdb_id', $imdb_id)->get(['mt_user_rating']);
+        return [Movie::where('imdb_id', $imdb_id)->get(['mt_user_rating']), 'blackStar'];
     }
 
     public function storeMovieRating(Request $request)
