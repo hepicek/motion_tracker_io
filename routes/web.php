@@ -75,6 +75,7 @@ Route::get('userListsDnD/{list_id}/{id}', 'ListController@storeUserListItem');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
 Route::post('movieRating', 'RatingsController@storeMovieRating');
+Route::get('movieRating/{imdb_id}', 'RatingsController@getUserRatingOrAverageRating');
 
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');

@@ -56,11 +56,9 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
             });
     }
     componentWillMount() {
-        let movieItem = this.props.searchResultsItem;
-        axios.get('userRatings/', [this.props.searchResultsItem.imdb_id, value])
+        axios.get(`movieRating/${this.props.searchResultsItem.imdb_id}`)
             .then((res) => {
-                let searchResults = Object.keys(res).map(key => res[key]);
-                this.setState({rating: searchResults[0]});
+                this.setState({rating: res.data[0].mt_user_rating});
             });
     }
     render() {
