@@ -1,7 +1,34 @@
 import React, {Component} from 'react';
+import {DragSource} from 'react-dnd';
 import {decodeString} from '../../../helpers/helper'
 import ACTOR_ITEM_SEARCH_DETAILS from './Actor_Item_Search_Detail.js';
 
+const spec = {
+    isDragging(props, monitor) {
+        return monitor.getItem();
+    },
+
+    beginDrag(props, monitor, component) {
+        return {id: props.searchResultsItem.imdb_id, dragging: "2px solid red"};
+    },
+
+    endDrag(props, monitor, component) {
+        if (!monitor.didDrop()) {
+            return;
+        }
+
+        const item = monitor.getItem();
+        const dropResult = monitor.getDropResult();
+    }
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDragSource: connect.dragSource(),
+        isDragging: monitor.isDragging(),
+        canDrag: monitor.canDrag()
+    };
+}
 
 class SEARCH_RESULTS_ITEM_WIDGET_ACTORS extends Component {
     constructor(props) {
@@ -19,9 +46,11 @@ class SEARCH_RESULTS_ITEM_WIDGET_ACTORS extends Component {
     }
 
     render() {
+        const {isDragging, connectDragSource, canDrag} = this.props;
+
         // console.log(this.props);
         let image_src = (this.props.searchResultsItem.person_img == "" || !this.props.searchResultsItem.person_img) ? 'img/person_img/person_placeholder.png' : this.props.searchResultsItem.person_img;
-        return (
+        return connectDragSource(
             <div>
                 <div className='searchResultsItem' 
                     onClick={this.handleCaretClick}
@@ -38,4 +67,4 @@ class SEARCH_RESULTS_ITEM_WIDGET_ACTORS extends Component {
 
 }
 
-export default SEARCH_RESULTS_ITEM_WIDGET_ACTORS;
+export default DragSource('list', spec, collect)(SEARCH_RESULTS_ITEM_WIDGET_ACTORS);
