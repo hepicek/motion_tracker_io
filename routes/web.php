@@ -50,15 +50,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('search/external/{movie_id}', 'MoviesController@externalGetDetails');
     Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 
-<<<<<<< HEAD
+
     //Relationships routes
     Route::post('relationships', 'RelationshipsController@updateRelationship');
     Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
     Route::get('relationships/{id}', 'RelationshipsController@getRelationships');
-=======
-
-    //Rating routes
->>>>>>> f20b04a72026a7af09d95ce029ad31061b684c08
 
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
