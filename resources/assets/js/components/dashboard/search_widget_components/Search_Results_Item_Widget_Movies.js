@@ -40,7 +40,8 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
         this.handleRatingChange = this.handleRatingChange.bind(this);
         this.state = {
             caret: 'down',
-            rating: 0
+            rating: 0,
+            starColor: 'blackStar'
         }
     }
 
@@ -49,22 +50,22 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
             caret: this.state.caret === 'down' ? 'up' : 'down'
         });
     }
-    handleRatingChange(value) {
 
-        axios.post('userRatings', [this.props.searchResultsItem.imdb_id, value])
+    handleRatingChange(value) {
+        axios.post('movieRating', [this.props.searchResultsItem.imdb_id, value])
             .then((res) => {
-                 let searchResults = Object.keys(res).map(key => res[key]);
-                 this.setState({rating: searchResults[0]});
+                this.setState({rating: res.data[0].mt_user_rating});
             });
     }
+
     componentWillMount() {
-        let movieItem = this.props.searchResultsItem;
-        // axios.get('userRatings/', [this.props.searchResultsItem.imdb_id, value])
-        //     .then((res) => {
-        //         let searchResults = Object.keys(res).map(key => res[key]);
-        //         this.setState({rating: searchResults[0]});
-        //     });
+        axios.get(`movieRating/${this.props.searchResultsItem.imdb_id}`)
+            .then((res) => {
+                this.setState({rating: res.data[0][0].mt_user_rating});
+                this.setState({starColor: res.data[1]});
+            });
     }
+
     render() {
         let movieItem = this.props.searchResultsItem;
         const {isDragging, connectDragSource, canDrag} = this.props;
@@ -87,11 +88,11 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                         <p>My Rating: {movieItem.rating}</p>
                         <Rating
                             emptySymbol="fa fa-star-o fa-2x"
-                            fullSymbol="fa fa-star fa-2x"
+                            fullSymbol={"fa fa-star fa-2x " + this.state.starColor}
                             initialRating={this.state.rating}
                             fractions={2}
                             onChange={this.handleRatingChange}
-
+                            value={this.state.rating}
                         />
                     </div>
                 </div>

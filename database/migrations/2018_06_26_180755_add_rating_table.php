@@ -17,8 +17,8 @@ class AddRatingTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('imdb_id');
-            $table->integer('mt_rating');
-            $table->integer('mt_votes');
+            $table->float('mt_user_rating')->default(0);
+            $table->integer('mt_votes')->default(0);
 
         });
         Schema::table('mt_ratings', function (Blueprint $table) {
