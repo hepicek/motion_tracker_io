@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { decodeString } from '../../../helpers/helper';
 const LIST_ITEMS = (props) => {
 
     //convert to Array of Objects
@@ -7,7 +7,7 @@ const LIST_ITEMS = (props) => {
 
     let items = itemsArray ? itemsArray.map(item => (
         <div className="userListItem" key={item.id} id={"listItem-" + item.id}>
-            <p>{item.name} - {item.year}</p>
+            <p>{decodeString(item.name)} - {item.year}</p>
             <i 
                 className="fa fa-times"
                 onClick={props.handleDeleteListItem}

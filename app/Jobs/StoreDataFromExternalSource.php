@@ -74,7 +74,7 @@ class StoreDataFromExternalSource implements ShouldQueue
             $movie = Movie::find($item['imdb_id']);
             $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
             $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
-
+            $releaseDate = "";
             $releaseLength = count($item['releaseInfo']);
             for ($i = 0; $i < $releaseLength; $i++) {
 
