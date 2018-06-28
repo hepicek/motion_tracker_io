@@ -82,6 +82,7 @@ class LIST extends Component {
                             onChange={props.handleRenameListInputChange}
                             onKeyUp={props.handleRenameListInputKeyUp}
                             value={props.renameListInputValue}
+                            autoFocus
                     />}
                     {(list.id && props.renameList != list.id) && 
                     <LIST_MENU_BTN 

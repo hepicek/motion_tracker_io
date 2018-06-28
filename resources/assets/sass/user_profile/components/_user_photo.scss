@@ -1,0 +1,39 @@
+.userPhotoSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    input {
+        margin: 5px;
+        padding: 10px;
+    }
+}
+.userPhotoSection-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+.userPhoto {
+    border-radius: 5px;
+}
+.uploadPhotoBtn {
+    font-size: .8rem;
+    padding: 3px 10px;
+    border: 1px solid slategray;
+    background-color: slategray;
+    color: white;
+    border-radius: 10px;
+    margin: 5px;
+    transition: transform .2s;
+    cursor: pointer;
+    user-select: none;
+    &:active {
+        box-shadow: 1px 1px 8px 0 black;
+        transform: translate(2px, 2px);
+    }
+}
+.deleteBtn {
+    background-color: firebrick;
+}
+.userPhoto {
+    height: 300px;
+}

@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth']], function() {
     //Relationships routes
     Route::post('relationships', 'RelationshipsController@updateRelationship');
     Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
-    Route::get('relationships/{id}', 'RelationshipsController@getRelationships');
+    Route::get('relationships', 'RelationshipsController@getRelationships');
 
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');

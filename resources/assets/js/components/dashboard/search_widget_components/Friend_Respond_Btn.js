@@ -22,7 +22,7 @@ class FRIEND_RESPOND_BTN extends Component {
                 className="addFriendButton select"
                 onClick={this.handleFriendBtnClick}
             >
-                Repsond
+                Respond
                 <i className={"fa fa-caret-" + this.state.caret} />
                 {this.state.caret == 'down' && 
                     <div className="select-selectBtn">

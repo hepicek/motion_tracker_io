@@ -17,26 +17,27 @@ const USER_PHOTO = (props) => {
                 ref={fileInput => this.fileInput = fileInput}
                 hidden
             />
-            <div
-                className="uploadPhotoBtn"
-                onClick={() => this.fileInput.click()}
-            >
-                Choose file
+            <div className="userPhotoSection-buttons">
+                <div
+                    className="uploadPhotoBtn"
+                    onClick={() => this.fileInput.click()}
+                >
+                    Choose file
+                </div>
+                {file && <p>{props.file.name} - </p>}
+                <div
+                    className="uploadPhotoBtn"
+                    onClick={props.handleFileSubmit}
+                >
+                    Upload file
+                </div>
+                <div
+                    className="uploadPhotoBtn deleteBtn"
+                    onClick={props.handleDeletePhoto}
+                >
+                    Delete Photo
+                </div>
             </div>
-            {file && <p>{props.file.name} - </p>}
-            <div
-                className="uploadPhotoBtn"
-                onClick={props.handleFileSubmit}
-            >
-                Upload file
-            </div>
-            <div
-                className="uploadPhotoBtn"
-                onClick={props.handleDeletePhoto}
-            >
-                Delete Photo
-            </div>
-
         </div>
     )
 }

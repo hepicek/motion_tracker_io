@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import LIST_ITEMS from './lists_widget_components/List_Items';
 import LIST from './lists_widget_components/List'
 import LISTS_HEADER from './lists_widget_components/Lists_Widget_Header';
 import New_List from './lists_widget_components/New_List';
@@ -27,7 +26,6 @@ class LISTS_WIDGET extends Component  {
                     handleRenameListInputKeyUp={props.handleRenameListInputKeyUp}
                     renameListInputValue={props.renameListInputValue}
                     handleListDeleteClick = {props.handleListDeleteClick}
-                    handleListMenuBtnClick = {props.handleListMenuBtnClick}
                     handleRenameListClick = {props.handleRenameListClick}
                     renameList={props.renameList}
                     renameListInputValue={props.renameListInputValue}

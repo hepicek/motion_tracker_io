@@ -58,6 +58,10 @@ class Dashboard extends Component {
                 }).catch(err => {
                 return err;
             })
+        } else if(e.key == "Escape") {
+            this.setState({
+                newList: false
+            })
         }
     }
 
@@ -154,9 +158,9 @@ class Dashboard extends Component {
 
     //create a new list
     handleNewListBtnClick() {
-        this.setState({
-            newList: true
-        });
+        this.setState(prevState => ({
+            newList: !prevState.newList
+        }));
     }
 
     //search db for movie

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import FRIENDS_LIST from './components/user_profile/friends_list';
 import axios from 'axios'; //For API calls
 
 import USER_DETAILS_FORM from './components/user_profile/user_details_form';
@@ -104,21 +104,21 @@ class User_Profile extends Component {
         return (
             <div className="userProfileMain">
                 <h1>{userDetails.common_name}'s Profile</h1>
-                <div className="userProfileDetails">
-                    <USER_PHOTO 
-                        handleFileSelected={this.handleFileSelected} 
-                        handleFileSubmit={this.handleFileSubmit}
-                        handleDeletePhoto={this.handleDeletePhoto}
-                        img_url={userDetails.img_url}
-                        file={this.state.file}
-                    />
+                <div className="userProfile-detailsSection">
                     <USER_DETAILS_FORM 
                         userDetails={userDetails}
                         handleChange={this.handleChange}
                         handleSubmit={this.handleSubmit}  
                         handleFileSelected={this.handleFileSelected}
+                        handleFileSelected={this.handleFileSelected} 
+                        handleFileSubmit={this.handleFileSubmit}
+                        handleDeletePhoto={this.handleDeletePhoto}
+                        img_url={userDetails.img_url}
+                        file={this.state.file}
                     />  
+                    <FRIENDS_LIST />
                 </div>
+                
             </div>
         )
     }

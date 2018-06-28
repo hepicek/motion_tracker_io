@@ -41,8 +41,33 @@ class RelationshipsController extends Controller
             
         return $pendingRequests;
     }
-    public function getRelationships($id) {
-        dd($id);
+    public function getRelationships() {
+        $friends = [];
+        $relationships = DB::table('relationships')
+            ->where(function($query) {
+                $query->where('user_one_id', '=', Auth::id())
+                ->where('status_id', '=', 1);  
+            })
+            ->orWhere(
+                function($query) {
+                    $query->where('user_two_id', '=', Auth::id())
+                    ->where('status_id', '=', 1);
+                }
+            )->get();
+            foreach($relationships as $rel) {
+                $otherUserId = $rel->user_one_id == Auth::id() ? $rel->user_two_id : $rel->user_one_id;
+                $otherUser = User::find($otherUserId);
+                $friends[] = [
+                    'first_name' =>  $otherUser->first_name,
+                    'last_name' => $otherUser->last_name,
+                    'common_name' => $otherUser->common_name,
+                    'id' => $otherUser->id,
+                    'action_date' => $rel->action_date,
+                    'img_url' => $otherUser->img_url
+                 ];
+            };
+            
+        return $friends;
     }
     public function updateRelationship(Request $request) {
         $currentUser = Auth::id();

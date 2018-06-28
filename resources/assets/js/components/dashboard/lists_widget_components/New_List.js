@@ -18,7 +18,7 @@ class New_List extends Component {
                 placeholder="new list title" 
                 className="newListInput" 
                 id="newListInput"
-                
+                autoFocus
                 onKeyUp={this.props.saveNewList}
             />
         )
