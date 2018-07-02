@@ -6,9 +6,39 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 use App\User;
+use Carbon;
+use App\Movie;
 
 class RelationshipsController extends Controller
 {
+    protected function getRecentActivity($id, & $array) {
+        $user = User::find($id);
+        $user_name = $user->first_name . ' ' . $user->last_name . ' (' . $user->common_name .')';
+
+        $lists = $user->lists;
+
+        foreach($lists as $list) {
+            $list_title = $list->list_title;
+
+            $listItems = $list->list_items()
+                ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
+                ->get();
+
+            foreach($listItems as $item) {
+                $movie = $item->movie;
+                $array[] = [
+                    'user_name' => $user_name,
+                    'user_img' => $user->img_url,
+                    'list_title' => $list_title,
+                    'movie_title' => $movie->name,
+                    'movie_year' => $movie->year,
+                    'date' => $item->created_at
+                ];
+            }
+        }
+
+        return $array;
+    }
     public function pendingRelationships() {
         $pendingRequests = [];
         $pendingRels =  DB::table('relationships')->where(
@@ -74,12 +104,10 @@ class RelationshipsController extends Controller
         $otherUser = $request['id'];
         $userIDs = [$currentUser, $otherUser];
         sort($userIDs);
-        // return $userIDs;
 
         if($request['status'] == 0) {
             //write a new line to the table with status 
             //status 2
-            //action_user_id = $currentUser
            $newRel =  DB::table('relationships')->insert(
                 [
                     'user_one_id' => $userIDs[0],
@@ -115,5 +143,22 @@ class RelationshipsController extends Controller
                 return 'Rejected Bitch!';
         }
         return 400;
+    }
+    
+    public function getNewsFeed() {
+
+        $friends = $this->getRelationships();
+        $newAdditions = [];
+        foreach($friends as $friend) {
+            $this->getRecentActivity($friend['id'], $newAdditions);
+        }
+          
+        usort($newAdditions, function($a, $b)
+        {
+            $t1 = strtotime($a['date']);
+            $t2 = strtotime($b['date']);
+            return $t2 - $t1;
+        }); 
+        return $newAdditions; 
     }
 }

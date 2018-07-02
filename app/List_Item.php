@@ -13,4 +13,7 @@ class List_Item extends Model
     public function User_List() {
         return $this->belongsTo('App\User_List');
     }
+    public function movie() {
+        return $this->hasOne('App\Movie', 'imdb_id', 'show_id');
+    }
 }

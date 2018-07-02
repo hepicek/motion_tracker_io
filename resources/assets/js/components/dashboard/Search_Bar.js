@@ -7,7 +7,7 @@ class SEARCH_BAR extends Component {
 
     render() {
         return (
-            <form method="" action="" id='findMove' className='searchBar'>
+            <div id='findMove' className='searchBar'>
                 <p style={{fontStyle: 'italic'}}>find a movie...
                     <input
                     name='searchBar-input'
@@ -32,7 +32,7 @@ class SEARCH_BAR extends Component {
                     type='submit'
                     value='Go!'
                 />*/}
-            </form>
+            </div>
         )
     }
 }

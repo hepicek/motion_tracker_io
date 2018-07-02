@@ -2,14 +2,14 @@
 
 namespace App;
 
-use Laravel\Passport\HasApiTokens;
+// use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
-
+    use Notifiable;
+    //,HasApiTokens
     /**
      * The attributes that are mass assignable.
      *
@@ -28,7 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function List_Item() {
-        return $this->hasMany('App\List_Item');
+    public function lists() {
+        return $this->hasMany('App\User_List', 'owner_id');
     }
+
+    // public function friends() {
+    //     return $this->belongsToMany(User::class, 'relationships', );
+    // }
 }

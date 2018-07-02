@@ -8,10 +8,11 @@ import axios from 'axios'; //For API calls
 
 //react components
 import SEARCH_BAR from './components/dashboard/Search_Bar';
-import TOP_MOVIES_WIDGET from './components/dashboard/Top_Movies_Widget';
+// import TOP_MOVIES_WIDGET from './components/dashboard/Top_Movies_Widget';
 import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
 import SEARCH_MOVIES_WIDGET from './components/dashboard/Search_Movies_Widget';
+import NEWS_FEED from './components/dashboard/News_Feed_Widget'
 
 let inputTimer;
 
@@ -279,7 +280,8 @@ class Dashboard extends Component {
                         handleSearch={this.handleSearch}
                         searchText={this.state.searchText}
                     />
-                    {this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>}
+                    {/*this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>*/}
+                    {this.state.searchResults.movies.length === 0 && <NEWS_FEED topMovies={this.state.topMovies}/>}
                     {this.state.searchResults.movies.length > 0 &&
                         <SEARCH_MOVIES_WIDGET 
                             searchType={this.state.searchType}

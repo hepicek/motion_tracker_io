@@ -13,7 +13,7 @@ class User_List extends Model
     public $timestamps = false;
 
 
-    public function List_Items() {
-        return $this->hasMany('App\List_Item');
+    public function list_items() {
+        return $this->hasMany('App\List_Item', 'list_id');
     }
 }
