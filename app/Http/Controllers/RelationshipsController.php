@@ -14,16 +14,13 @@ class RelationshipsController extends Controller
     protected function getRecentActivity($id, & $array) {
         $user = User::find($id);
         $user_name = $user->first_name . ' ' . $user->last_name . ' (' . $user->common_name .')';
-
         $lists = $user->lists;
-
         foreach($lists as $list) {
             $list_title = $list->list_title;
 
             $listItems = $list->list_items()
                 ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
                 ->get();
-
             foreach($listItems as $item) {
                 $movie = $item->movie;
                 $array[] = [
@@ -36,7 +33,6 @@ class RelationshipsController extends Controller
                 ];
             }
         }
-
         return $array;
     }
     public function pendingRelationships() {
@@ -158,7 +154,8 @@ class RelationshipsController extends Controller
             $t1 = strtotime($a['date']);
             $t2 = strtotime($b['date']);
             return $t2 - $t1;
-        }); 
+        });
+
         return $newAdditions; 
     }
 }

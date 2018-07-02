@@ -21,7 +21,7 @@ class NEWS_FEED extends Component {
         let oneDay = 24*60*60*1000; 
         let news = this.state.news.map(item => {
             let background = 'storage/' + item.user_img;
-            let daysAgo = (new Date() - new Date(item.date)) / oneDay;
+            let daysAgo = (new Date() - new Date(item.date.date)) / oneDay;
             daysAgo = daysAgo < 1 ? 'Today' : Math.floor(daysAgo) + ' day(s) ago';
             return (
                 <div 
