@@ -281,8 +281,8 @@ class Dashboard extends Component {
                         searchText={this.state.searchText}
                     />
                     {/*this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>*/}
-                    {this.state.searchResults.movies.length === 0 && <NEWS_FEED topMovies={this.state.topMovies}/>}
-                    {this.state.searchResults.movies.length > 0 &&
+                    {(this.state.searchResults.movies.length === 0 && this.state.searchResults.actors.length === 0 && this.state.searchResults.users.length === 0) && <NEWS_FEED topMovies={this.state.topMovies}/>}
+                    {(this.state.searchResults.movies.length > 0 || this.state.searchResults.actors.length > 0 || this.state.searchResults.users.length > 0) &&
                         <SEARCH_MOVIES_WIDGET 
                             searchType={this.state.searchType}
                             searchResults={this.state.searchResults}
