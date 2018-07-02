@@ -3,7 +3,8 @@ import FRIENDS_LIST from './components/user_profile/friends_list';
 import axios from 'axios'; //For API calls
 
 import USER_DETAILS_FORM from './components/user_profile/user_details_form';
-import USER_PHOTO from './components/user_profile/user_photo';
+// import USER_PHOTO from './components/user_profile/user_photo';
+import CHANGE_PASSWORD from './components/user_profile/change_password';
 
 class User_Profile extends Component {
     constructor(props) {
@@ -116,6 +117,7 @@ class User_Profile extends Component {
                         img_url={userDetails.img_url}
                         file={this.state.file}
                     />  
+                    <CHANGE_PASSWORD />
                     <FRIENDS_LIST />
                 </div>
                 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Validator;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -118,5 +119,21 @@ class UserController extends Controller
             return 200;
         }
             return 'No image to delete';
+    }
+    public function updatePw(Request $request) {
+        $user = Auth::user();
+        $matches = Hash::check($request->oldPassword, $user->password);
+        $newMatch = $request->newPassword == $request->repeatPassword;
+        if(!$matches) {
+            return "Old Password Incorrect";
+        }
+        elseif(!$newMatch) {
+            return "New Passwords don't match";
+        } elseif($matches && $newMatch) {
+            $user->password = bcrypt($request->newPassword);
+            $user->save();
+            return "Password Changed Successfully";
+        }
+
     }
 }
