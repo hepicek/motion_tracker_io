@@ -23,3 +23,6 @@ if (document.getElementById('landingPage')) {
 if (document.getElementById('userprofile')) {
     ReactDOM.render(<User_Profile />, document.getElementById('userprofile'));
 }
+if (document.getElementById('userpublicprofile')) {
+    ReactDOM.render(<Public_User_Profile />, document.getElementById('userpublicprofile'));
+}
