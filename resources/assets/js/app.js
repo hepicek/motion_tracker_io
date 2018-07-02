@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Dashboard from './Dashboard';
 import Landingpage from './Landingpage';
 import User_Profile from './User_Profile';
+import Public_User_Profile from './Public_User_Profile';
 
 require('./bootstrap');
 

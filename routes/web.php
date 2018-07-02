@@ -85,6 +85,9 @@ Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
+//User public profile
+Route::get('publicuserprofile', 'PublicUserProfileController@index');
+Route::get('publicuserprofile/{user_id}', 'PublicUserProfileController@userDetails');
 
 
 
