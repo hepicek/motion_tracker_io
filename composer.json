@@ -14,6 +14,7 @@
         "laravel/passport": "^6.0",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
+        "league/flysystem-aws-s3-v3": "~1.0",
         "php-tmdb/laravel": "^1.1"
     },
     "require-dev": {

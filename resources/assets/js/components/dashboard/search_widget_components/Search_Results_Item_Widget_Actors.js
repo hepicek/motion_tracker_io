@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {DragSource} from 'react-dnd';
 import {decodeString} from '../../../helpers/helper'
 import ACTOR_ITEM_SEARCH_DETAILS from './Actor_Item_Search_Detail.js';
+import { AWS_URL } from '../../../../../../config/js/config';
 
 const spec = {
     isDragging(props, monitor) {
@@ -56,7 +57,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_ACTORS extends Component {
                     onClick={this.handleCaretClick}
                 >   
                 <i className={"fa fa-caret-" + this.state.caret} />
-                <img className="actorSearchImage" src={"./storage/" + image_src} alt="Person image" />
+                <img className="actorSearchImage" src={AWS_URL + image_src} alt="Person image" />
                     <p>{decodeString(this.props.searchResultsItem.fullname)}</p>
                 </div>
                 {this.state.caret === 'up' && 

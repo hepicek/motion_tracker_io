@@ -59,7 +59,7 @@
                                     height: 40px; 
                                     width: 40px;
                                     border-radius: 50%;
-                                    background-image: url('storage/{{Auth::user()->img_url}}');
+                                    background-image: url('{{ env('AWS_STORAGE') }}{{Auth::user()->img_url}}');
                                     background-size: cover;
                                     background-postion: center;
                                 "

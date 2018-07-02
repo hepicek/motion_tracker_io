@@ -74,8 +74,6 @@ class ListController extends Controller
             $input['list_id'] = $list_id;
             $input['show_id'] = $id;
             $newItem = List_Item::create($input);
-            dd($newItem);
-            //$newItem->save();
 
            return response()->json(['success'=> $newItem], 200);
         }

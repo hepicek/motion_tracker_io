@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios/index";
 import {decodeString} from '../../../helpers/helper';
+import { AWS_URL } from '../../../../../../config/js/config';
 
 class ACTOR_ITEM_SEARCH_DETAILS extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class ACTOR_ITEM_SEARCH_DETAILS extends Component {
     render() {
         
         let movies = this.state.actorMovies.map((movie, index) => {
-            let backgroundImage = 'storage/' + movie.imdb_img;
+            let backgroundImage = AWS_URL + movie.imdb_img;
             return (
             <div className="searchItemDetails-main" key={index} style={{display: 'flex'}}>
                 <div  

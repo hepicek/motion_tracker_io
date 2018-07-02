@@ -7,19 +7,7 @@ class USER_ITEM_SEARCH_DETAILS extends Component {
         super(props)
 
     }
-    // componentWillMount() {
-    //     let actor_id = this.props.actor.imdb_id;
-    //     axios.get(`/searchActorDetails/${actor_id}`)
-    //     .then((res) => {    
-    //         let searchResults = Object.keys(res).map(key => res[key]);
-    //         let actorMovies = searchResults[0][1];
-    //         this.setState({
-    //             actorMovies
-    //         })
-    //     });
 
-
-    // }
     render() {
         console.log(this.props);
         

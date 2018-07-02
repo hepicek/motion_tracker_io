@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import USER_ITEM_SEARCH_DETAILS from './User_Item_Search_Detail';
 import FRIEND_RESPOND_BTN from './Friend_Respond_Btn';
+import { AWS_URL } from '../../../../../../config/js/config';
 
 class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
     constructor(props) {
@@ -19,7 +20,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
 
     render() {
         let user = this.props.searchResultsItem;
-        let userImage = 'storage/' + user.img_url;
+        let userImage = AWS_URL + user.img_url;
         let friendBtnText;
         if(user.relStatus == 0) {
             friendBtnText = 'Add Friend';
