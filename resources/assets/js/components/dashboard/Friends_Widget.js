@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FRIEND_RESPOND_BTN from './search_widget_components/Friend_Respond_Btn';
-// import axios from 'axios';
+import { AWS_URL } from '../../../../../config/js/config';
 
 class FRIENDS_WIDGET extends Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class FRIENDS_WIDGET extends Component {
         let requests = this.props.pendingRequests.map((req, ind) => {
             let daysAgo = (new Date() -new Date(req.action_date)) / oneDay;
             daysAgo = daysAgo < 1 ? <p>Today</p> : <p>{Math.floor(daysAgo)} day(s) ago</p>;
-            let user_image = 'storage/' + req.img_url;
+            let user_image = AWS_URL + req.img_url;
             return (
                 <div key={"pending-" + ind} className="friendsWidget-pendingRequests">
                     <div 

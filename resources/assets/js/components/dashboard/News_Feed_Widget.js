@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {decodeString} from '../../helpers/helper';
+import { AWS_URL } from '../../../../../config/js/config';
 
 class NEWS_FEED extends Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class NEWS_FEED extends Component {
     render() {
         let oneDay = 24*60*60*1000; 
         let news = this.state.news.map(item => {
-            let background = 'storage/' + item.user_img;
+            let background = AWS_URL + item.user_img;
             let daysAgo = (new Date() - new Date(item.date)) / oneDay;
             daysAgo = daysAgo < 1 ? 'Today' : Math.floor(daysAgo) + ' day(s) ago';
             return (

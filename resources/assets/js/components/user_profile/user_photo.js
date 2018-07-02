@@ -1,4 +1,5 @@
 import React from 'react';
+import { AWS_URL } from '../../../../../config/js/config';
 
 const USER_PHOTO = (props) => {
     if (props.file.name == "") {
@@ -8,7 +9,7 @@ const USER_PHOTO = (props) => {
     }
     return (
         <div className="userPhotoSection">
-            <img className="userPhoto" src={"/storage/" + props.img_url}/>
+            <img className="userPhoto" src={AWS_URL + props.img_url}/>
             <input
                 className="userProfileForm-input"
                 name="user_photo"

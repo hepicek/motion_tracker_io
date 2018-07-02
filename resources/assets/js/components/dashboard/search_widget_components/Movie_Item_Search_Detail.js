@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios/index";
 import {decodeString} from '../../../helpers/helper';
+import { AWS_URL } from '../../../../../../config/js/config';
 
 class MOVIE_ITEM_SEARCH_DETAILS extends Component {
     constructor(props) {
@@ -24,10 +25,10 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
     }
 
     render() {
-        let poster = "storage/" + this.state.movieDetail.imdb_img;
+        let poster = AWS_URL + this.state.movieDetail.imdb_img;
         let actor = this.state.actors.map((actor, id) => {
             let image = (actor.person_img == "" || !actor.person_img) ? 'img/person_img/person_placeholder.png' : actor.person_img;
-            let imageBackground = 'storage/' + image;
+            let imageBackground = AWS_URL + image;
             return (
                 <div
                     className="actorDetail"
