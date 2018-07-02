@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FRIEND from './friend';
+import { AWS_URL } from '../../../../../config/js/config';
 
 class FREINDS_LIST extends Component {
     constructor(props) {
@@ -23,7 +24,7 @@ class FREINDS_LIST extends Component {
     
     render() {
          let friends = this.state.friends.map((friend, ind) => {
-            let user_image = 'storage/' + friend.img_url;
+            let user_image = AWS_URL + friend.img_url;
             return (
                 <FRIEND 
                     key={"pending-" + ind}
