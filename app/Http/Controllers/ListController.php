@@ -24,7 +24,7 @@ class ListController extends Controller
             $list->items = [];
         }
 
-        $list_items = List_Item::selectRaw('user_list_entries.*, imdb_movie.rating, imdb_movie.year, imdb_movie.imdb_id, imdb_movie.name')
+        $list_items = List_Item::selectRaw('user_list_entries.*, imdb_movie.rating, imdb_movie.year, imdb_movie.imdb_id, imdb_movie.name, imdb_movie.imdb_img')
             ->leftJoin('imdb_movie', 'show_id', '=', 'imdb_movie.imdb_id')
             ->whereIn('list_id', array_keys($user_lists))
             ->get()->getDictionary();
@@ -35,7 +35,6 @@ class ListController extends Controller
             $array[$key] = $list_item;
             $user_lists[$list_item->list_id]->items = $array;
         }
-
         return response()->json(['response' => $user_lists], 200);
     }
 
@@ -78,7 +77,7 @@ class ListController extends Controller
            return response()->json(['success'=> $newItem], 200);
         }
 
-        return 'List item already in list';
+        return 'UserList item already in list';
     }
 
     public function storeUserRating(Request $request)

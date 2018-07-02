@@ -58,8 +58,8 @@ Route::group(['middleware' => ['auth']], function() {
     //Relationships routes
     Route::post('relationships', 'RelationshipsController@updateRelationship');
     Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
-    Route::get('relationships', 'RelationshipsController@getRelationships');
     Route::get('relationships/news', 'RelationshipsController@getNewsFeed');
+    Route::get('relationships/{user_id?}', 'RelationshipsController@getRelationships');
 
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
@@ -88,6 +88,7 @@ Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 //User public profile
 Route::get('publicuserprofile', 'PublicUserProfileController@index');
 Route::get('publicuserprofile/{user_id}', 'PublicUserProfileController@userDetails');
+Route::get('recentactivity/{user_id}', 'RelationshipsController@getRecentUserActivity');
 
 
 
