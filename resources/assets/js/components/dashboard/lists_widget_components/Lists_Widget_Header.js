@@ -5,7 +5,7 @@ const LISTS_HEADER = (props) => {
         <div id="listsWidget-topButtons">
         <p
             onClick={props.handleNewListBtnClick}
-        ><i className="fa fa-plus-square"></i>Create a new list</p>
+        ><i className="fa fa-plus-square"/>Create a new list</p>
        
     </div> 
     )

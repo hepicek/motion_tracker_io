@@ -1,12 +1,14 @@
 import React, { Component } from 'react'; 
 import jsonp from 'jsonp';
 import { TMDB_KEY } from '../../../config/js/config';
+import Spinner from "./helpers/Spinner";
 
 class Landingpage extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            topMovies: []
+            topMovies: [],
+            loading: true,
         }
     }
     componentWillMount() {
@@ -15,13 +17,15 @@ class Landingpage extends Component {
                 return undefined;
             } else {
                 this.setState({
-                    topMovies: data.results
+                    topMovies: data.results,
+                    loading: false,
                 });
             }
         });
 
     }   
     render() {
+        const loading =this.state.loading;
         let topMovies = this.state.topMovies.map(movie => (
 
             <div className="card" key={movie.id} style={{padding: '10px', width: '48%', height: '20rem', alignItems: 'center', flexDirection: 'row', margin: '2px'}} >
@@ -31,11 +35,13 @@ class Landingpage extends Component {
                     <p className="card-text">{movie.overview}</p>
                 </div>
             </div>
-        ))
+        ));
         return (
             <div className="container">
+                {loading && <div>Loading...</div>}
+                {loading && <Spinner/>}
                 <div className='topMovies'>
-                    {topMovies}
+                    {topMovies && topMovies}
                 </div>
             </div>
         );

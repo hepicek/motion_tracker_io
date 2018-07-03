@@ -31,7 +31,7 @@ class LIST_MENU_BTN extends Component {
                 <i 
                     className="fa fa-cog"
                     onClick={this.handleListMenuBtnClick}
-                ></i>
+                />
                 {this.state.open &&
                     <LIST_BTN_OPTIONS 
                         listId = {props.listId}

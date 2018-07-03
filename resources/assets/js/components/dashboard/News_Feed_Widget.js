@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {decodeString} from '../../helpers/helper';
 import { AWS_URL } from '../../../../../config/js/config';
+import Spinner from "../../helpers/Spinner";
 
 class NEWS_FEED extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            news: []
+            news: [],
+            loading: true,
         }
     }
 
@@ -14,13 +16,21 @@ class NEWS_FEED extends Component {
         axios('/relationships/news')
         .then(res => {
             this.setState({
-                news: res.data
-            })
+                news: res.data,
+                loading: false,
+            });
+        })
+            .catch(error => {
+                console.log('error', error);
+                this.setState({
+                    error: error,
+                    loading: false,
+                })
         });
     }
     render() {
         let oneDay = 24*60*60*1000; 
-
+        const {loading} = this.state;
         let news = this.state.news.map(item => {
 
             let background = AWS_URL + item.user_img;
@@ -34,12 +44,14 @@ class NEWS_FEED extends Component {
                     <p><a href={"/publicprofile/" + item.user_id} className="newsFeedUserName"><strong>{decodeString(item.user_name)}</strong></a> added <strong>{decodeString(item.movie_title)}</strong> to <strong>{decodeString(item.list_title)}</strong> - {daysAgo} </p>
                 </div>
             )
-        })
+        });
         return (
             <div className="newsFeed">
                 <div className="newsFeed-header"><h5>News Feed</h5></div>
                 <div className="newsFeed-feed">
-                    {news}
+                    {loading && loading}
+                    {loading && <Spinner />}
+                    {news && news}
                 </div>
             </div>
         )

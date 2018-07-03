@@ -40,7 +40,7 @@ class LIST extends Component {
         let items = Object.keys(this.props.list.items).map(key => this.props.list.items[key]);
         
         if(items.length > 0) {
-            let collapsed = this.state.collapsed === 0 ? 1 : 0   
+            let collapsed = this.state.collapsed === 0 ? 1 : 0;
             this.setState({
                 collapsed
             });
