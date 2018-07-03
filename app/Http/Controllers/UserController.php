@@ -124,11 +124,14 @@ class UserController extends Controller
         $user = Auth::user();
         $matches = Hash::check($request->oldPassword, $user->password);
         $newMatch = $request->newPassword == $request->repeatPassword;
-        if(!$matches) {
-            return "Old Password Incorrect";
+        if(strlen($request->newPassword) < 6) {
+            return response()->json(['data'=>"Password must be 6 or more characters"], 400);
+        }
+        elseif(!$matches) {
+            return response()->json(['data'=>"Old Password Incorrect"], 400);
         }
         elseif(!$newMatch) {
-            return "New Passwords don't match";
+            return response()->json(['data'=>"New Passwords don't match"], 400);
         } elseif($matches && $newMatch) {
             $user->password = bcrypt($request->newPassword);
             $user->save();

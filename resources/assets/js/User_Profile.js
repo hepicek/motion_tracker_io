@@ -26,13 +26,16 @@ class User_Profile extends Component {
         this.handleFileSelected = this.handleFileSelected.bind(this);
         this.handleFileSubmit = this.handleFileSubmit.bind(this);
         this.handleDeletePhoto = this.handleDeletePhoto.bind(this);
+        this.handleChangePasswordBtnClick = this.handleChangePasswordBtnClick.bind(this);
+        this.keyListener = this.keyListener.bind(this);
+        this.handlePwSubmit = this.handlePwSubmit.bind(this);
+        this.handleChangePwCloseBtnClick = this.handleChangePwCloseBtnClick.bind(this);
     }
     componentWillMount() {
         axios("/userDetails")
         .then(res => {
             let userDetails =  Object.keys(res.data).map(key => res.data[key])[0];
             this.setState({
-                
                     id: userDetails.id,
                     first_name: userDetails.first_name,
                     last_name: userDetails.last_name,
@@ -42,8 +45,12 @@ class User_Profile extends Component {
                     img_url: userDetails.img_url,
                     file: {
                         name: ""
-                    }
-
+                    },
+                    showChangePwModal: false,
+                    oldPassword: '',
+                    newPassword: '',
+                    repeatPassword: '',
+                    pwReturnMessage: null,
             });
         })
         .catch(err => {
@@ -58,18 +65,13 @@ class User_Profile extends Component {
     handleFileSelected(e) { 
         this.setState({
             file: e.target.files[0]
-        });        
-        console.log(e.target.files[0]);
+        });
     }
     handleFileSubmit(e) {
         const FD = new FormData();
         FD.append('image', this.state.file, this.state.file.name);
         axios.post(`/userDetails/${this.state.id}`,FD)
-        .then(res => {
-            // this.setState({
-            //     file: "",
-            //     img_url: "img/user_profile_img/" + this.state.file.name
-            // });
+        .then(() => {
             location.reload();
         }).catch(err => {
             console.log(err);
@@ -92,7 +94,6 @@ class User_Profile extends Component {
         })
     }
     handleDeletePhoto() {
-
         axios.post(`/userprofile/${this.state.id}`)
             .then(() => {
                 location.reload();
@@ -100,11 +101,64 @@ class User_Profile extends Component {
             console.log(err);
         })
     }
+    handleChangePasswordBtnClick() {
+        this.setState(prevState => ({
+            showChangePwModal: !prevState.showChangePwModal
+        }))
+        window.addEventListener("keydown", this.keyListener);
+    }
+    keyListener(e) {
+        if(e.keyCode === 27) {
+            window.removeEventListener("keydown", this.keyListener);
+            this.setState(prevState => ({
+                showChangePwModal: !prevState.showChangePwModal
+            }))
+        }
+    }
+    handleChangePwCloseBtnClick() {
+        this.setState(prevState => ({
+            showChangePwModal: !prevState.showChangePwModal
+        }))
+    }
+    handlePwSubmit() {
+        axios.post('/userDetails/pw', {
+            oldPassword: this.state.oldPassword,
+            newPassword: this.state.newPassword,
+            repeatPassword: this.state.repeatPassword
+        })
+        .then(res => {
+            console.log(res);
+            this.setState({
+                pwReturnMessage: res.data
+            })
+            if(res.status === 200) {
+                setTimeout(() => {
+                    this.setState(prevState => ({
+                        showChangePwModal: !prevState.showChangePwModal,
+                        pwReturnMessage: null
+                    }));
+                }, 500);
+            }
+
+        }).catch((err, res) => {
+            // console.log(err);
+            console.log('ERROR::', err.response.data.data);
+            this.setState({
+                pwReturnMessage: err.response.data.data
+            })
+        })
+    }
     render() {
         let userDetails = this.state;
         return (
             <div className="userProfileMain">
-                <h1>{userDetails.common_name}'s Profile</h1>
+                <div className="userProfileMain-header">
+                    <h1>{userDetails.common_name}'s Profile</h1>
+                    <div 
+                        className="userProfileMain-changePwBtn"
+                        onClick={this.handleChangePasswordBtnClick}
+                    >Change Password</div>
+                </div>
                 <div className="userProfile-detailsSection">
                     <USER_DETAILS_FORM 
                         userDetails={userDetails}
@@ -117,13 +171,21 @@ class User_Profile extends Component {
                         img_url={userDetails.img_url}
                         file={this.state.file}
                     />  
-                    <CHANGE_PASSWORD />
                     <FRIENDS_LIST />
                 </div>
-                
+                {this.state.showChangePwModal && 
+                    <CHANGE_PASSWORD 
+                        handlePwSubmit={this.handlePwSubmit}
+                        updateInputValue={this.handleChange}
+                        pwReturnMessage={this.state.pwReturnMessage}
+                        handleChangePwCloseBtnClick={this.handleChangePwCloseBtnClick}
+                    />}
             </div>
         )
     }
 }
 
 export default User_Profile;
+
+
+//<CHANGE_PASSWORD />

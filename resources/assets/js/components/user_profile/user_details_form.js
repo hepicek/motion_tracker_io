@@ -22,7 +22,6 @@ const USER_DETAILS_FORM = (props) => {
                             value={userDetails.first_name} 
                             onChange={props.handleChange}
                         />
-                        {/*<i className="fa fa-edit"></i>*/}
                     </span>
                 </div>
                 <div className="userProfile_formRow" >
@@ -34,7 +33,6 @@ const USER_DETAILS_FORM = (props) => {
                             value={userDetails.last_name} 
                             onChange={props.handleChange}
                         />
-                        {/*<i className="fa fa-edit"></i>*/}
                     </span>
                 </div>
                 <div className="userProfile_formRow" >
@@ -46,7 +44,6 @@ const USER_DETAILS_FORM = (props) => {
                             value={userDetails.common_name} 
                             onChange={props.handleChange}
                         />
-                        {/*<i className="fa fa-edit"></i>*/}
                     </span>
                 </div>
                 <div className="userProfile_formRow" >
@@ -59,7 +56,7 @@ const USER_DETAILS_FORM = (props) => {
                             onChange={props.handleChange}
                             disabled
                         />
-                        {/*<i className="fa fa-edit"></i>*/}
+
                     </span>
                 </div>
                 <div className="userProfile_formRow" >
@@ -72,7 +69,7 @@ const USER_DETAILS_FORM = (props) => {
                             value={userDetails.dob} 
                             onChange={props.handleChange}
                         />
-                        {/*<i className="fa fa-edit"></i>*/}
+
                     </span>
                 </div>
                 <input 
@@ -86,3 +83,6 @@ const USER_DETAILS_FORM = (props) => {
 }
 
 export default USER_DETAILS_FORM;
+
+//For later use when removing save button and
+//{/*<i className="fa fa-edit"></i>*/}

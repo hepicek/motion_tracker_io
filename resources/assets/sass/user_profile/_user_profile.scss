@@ -16,6 +16,20 @@
     justify-content: space-around;
 
 }
+.userProfileMain-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.userProfileMain-changePwBtn {
+    font-size: .8rem;
+    font-weight: bold;
+    background-color: goldenrod;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+}
 @import './components/_user_details_form.scss';
 @import './components/_user_photo.scss';
 @import './components/_friends_list.scss';

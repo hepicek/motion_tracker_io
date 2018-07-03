@@ -11,33 +11,6 @@ use App\Movie;
 
 class RelationshipsController extends Controller
 {
-    protected function getRecentActivity($id, & $array)
-    {
-        $user = User::find($id);
-        $user_name = $user->first_name . ' ' . $user->last_name . ' (' . $user->common_name . ')';
-        $lists = $user->lists;
-        foreach ($lists as $list) {
-            $list_title = $list->list_title;
-
-            $listItems = $list->list_items()
-                ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
-                ->get();
-            foreach ($listItems as $item) {
-                $movie = $item->movie;
-                $array[] = [
-                    'user_id' => $id,
-                    'user_name' => $user_name,
-                    'user_img' => $user->img_url,
-                    'list_title' => $list_title,
-                    'movie_title' => $movie->name,
-                    'movie_year' => $movie->year,
-                    'date' => $item->created_at
-                ];
-            }
-        }
-        return $array;
-    }
-
     public function pendingRelationships()
     {
         $pendingRequests = [];
@@ -151,7 +124,32 @@ class RelationshipsController extends Controller
         }
         return 400;
     }
+    protected function getRecentActivity($id, & $array)
+    {
+        $user = User::find($id);
+        $user_name = $user->first_name . ' ' . $user->last_name . ' (' . $user->common_name . ')';
+        $lists = $user->lists;
+        foreach ($lists as $list) {
+            $list_title = $list->list_title;
 
+            $listItems = $list->list_items()
+                ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
+                ->get();
+            foreach ($listItems as $item) {
+                $movie = $item->movie;
+                $array[] = [
+                    'user_id' => $id,
+                    'user_name' => $user_name,
+                    'user_img' => $user->img_url,
+                    'list_title' => $list_title,
+                    'movie_title' => $movie->name,
+                    'movie_year' => $movie->year,
+                    'date' => $item->created_at
+                ];
+            }
+        }
+        return $array;
+    }
     public function getNewsFeed()
     {
 
