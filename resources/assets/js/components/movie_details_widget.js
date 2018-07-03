@@ -13,7 +13,8 @@ class MOVIE_DETAILS_WIDGET extends Component {
             boxShadow: "3px 3px 8px 0 black",
             borderRadius: "10px",
             right: "300px",
-            width: "450px"
+            width: "450px",
+            zIndex: "1"
         }
         this.state = {
             loading: true
@@ -98,7 +99,6 @@ class MOVIE_DETAILS_WIDGET extends Component {
                         ></div> 
                         <div
                             style={{
-                                flexShrink: "1",
                                 width: "60%"                            
                             }}
                         >
