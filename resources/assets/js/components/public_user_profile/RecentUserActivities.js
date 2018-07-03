@@ -3,13 +3,14 @@ import UserActivity from "./UserActivity";
 
 const RecentUserActivities = (props) => {
 
-    const recentActivities = props.recentActivity;
+    let recentActivities = props.recentActivity;
+
     return (
-        <div>
+        <div className="recentUserActivities">
             <h4>Recent Activity</h4>
             {recentActivities.reverse().map((activity, index) => {
                 return (
-                    <UserActivity key={'act-' + index} activity={activity}/>
+                    <UserActivity key={'act-'+index} activity={activity}/>
                 )
             })}
         </div>

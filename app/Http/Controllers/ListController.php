@@ -15,8 +15,11 @@ class ListController extends Controller
     public function index(Request $request) {
         return Auth::id();
     }
-    public function getUserLists(Request $request) {
-        $current_user_id = Auth::id();
+    public function getUserLists($current_user_id = null) {
+        if (!$current_user_id) {
+            $current_user_id = Auth::id();
+        }
+
         $user_lists = User_List::where('owner_id', $current_user_id)->get()->getDictionary();
 
 

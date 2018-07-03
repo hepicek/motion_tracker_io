@@ -3,11 +3,12 @@ import {AWS_URL} from "../../../../../config/js/config";
 const PublicFriend = (props) => {
 
     const friend = props.friend;
+    let background = AWS_URL + friend.img_url;
 
     return (
-        <div>
-            <img src={AWS_URL + friend.img_url} alt="profile picture" style={{width: '100px'}}/>
-            <h4>{friend.first_name} {friend.last_name}</h4>
+        <div className="publicUserFriend">
+            <div className="publicUserFriend_userImage" style={{backgroundImage: `url(${background})`}}/>
+            <h5>{friend.first_name} {friend.last_name}</h5>
         </div>
     )
 };

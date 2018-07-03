@@ -20,7 +20,9 @@ class Public_User_Profile extends Component {
     }
 
     componentDidMount() {
-        let user_id = 11;
+        let url = window.location.href;
+        url = url.split('/');
+        const user_id = url[url.length - 1];
         axios("/publicuserprofile/" + user_id)
             .then(resData => {
                 this.setState({
@@ -63,7 +65,7 @@ class Public_User_Profile extends Component {
                     loading: false,
                 })
             });
-        axios("/userLists/")
+        axios("/userLists/" + user_id)
             .then(resData => {
                 let userLists = Object.keys(resData.data.response).map(key => resData.data.response[key]);
                 this.setState({
@@ -87,9 +89,11 @@ class Public_User_Profile extends Component {
             <div>
                 {loading && <div>Loading...</div>}
                 {error && <div>Some error occured</div>}
-                {userDetail && <UserInfo userData={this.state.userDetail}/>}
-                {userFriends && <PublicUserFriends friendsData={this.state.userFriends}/>}
-                {recentActivity && <RecentUserActivities recentActivity={this.state.recentActivity}/>}
+                <div className="publicUserInfo">
+                    {userDetail && <UserInfo userData={this.state.userDetail}/>}
+                    {userFriends && <PublicUserFriends friendsData={this.state.userFriends}/>}
+                    {recentActivity && <RecentUserActivities recentActivity={this.state.recentActivity}/>}
+                </div>
                 {userLists && <UserPublicLists userLists={userLists} userDetail={userDetail}/>}
             </div>
         )

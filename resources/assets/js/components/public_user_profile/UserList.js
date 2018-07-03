@@ -7,11 +7,13 @@ const UserList = (props) => {
     return (
         <div>
             <h4>{userlist.list_title}</h4>
-            {userLists.map((listItem, index) => {
-                return (
-                    <ListItem key={'listItem-' + index} listItem={listItem}/>
-                )
-            })}
+            <div style={{display: 'flex'}}>
+                {userLists.map((listItem, index) => {
+                    return (
+                        <ListItem key={'listItem-' + index} listItem={listItem}/>
+                    )
+                })}
+            </div>
         </div>
     );
 };

@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('userDetails/{id}', 'UserController@updateUserDetails');
 
     //User list routes
-    Route::get('userLists', 'ListController@getUserLists');
+    Route::get('userLists/{user_id?}', 'ListController@getUserLists');
     Route::post('userLists', 'ListController@storeUserList');
     Route::delete('userLists/{id}', 'ListController@destroyUserList');
     Route::put('userLists/{id}', 'ListController@updateUserList');
@@ -86,7 +86,7 @@ Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
 //User public profile
-Route::get('publicuserprofile', 'PublicUserProfileController@index');
+Route::get('publicprofile/{user_id}', 'PublicUserProfileController@index');
 Route::get('publicuserprofile/{user_id}', 'PublicUserProfileController@userDetails');
 Route::get('recentactivity/{user_id}', 'RelationshipsController@getRecentUserActivity');
 

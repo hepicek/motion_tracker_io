@@ -5,7 +5,7 @@ const PublicUserFriends = (props) => {
     const friends = props.friendsData;
 
     return (
-        <div>
+        <div className="publicUserFriends">
             <h4>{friends.length} Friends</h4>
             {friends.map((friend, index) => {
                 return (

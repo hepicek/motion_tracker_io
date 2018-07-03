@@ -25,6 +25,7 @@ class RelationshipsController extends Controller
             foreach ($listItems as $item) {
                 $movie = $item->movie;
                 $array[] = [
+                    'user_id' => $id,
                     'user_name' => $user_name,
                     'user_img' => $user->img_url,
                     'list_title' => $list_title,
