@@ -20,16 +20,15 @@ class NEWS_FEED extends Component {
     }
     render() {
         let oneDay = 24*60*60*1000; 
-        console.log(this.state.news);
+
         let news = this.state.news.map(item => {
 
             let background = AWS_URL + item.user_img;
             let daysAgo = (new Date() - new Date(item.date.date)) / oneDay;
-
             daysAgo = daysAgo < 1 ? 'Today' : Math.floor(daysAgo) + ' day(s) ago';
             return (
                 <div 
-                    key={"NewsItem" + Math.floor(Math.random() * 100)} className="newsFeed-item"
+                    key={"NewsItem" + item.user_id + "-" + item.movie_title} className="newsFeed-item"
                 >
                     <div className="newsFeed-item_userImage" style={{backgroundImage: `url(${background})`}}></div>
                     <p><a href={"/publicprofile/" + item.user_id} className="newsFeedUserName"><strong>{decodeString(item.user_name)}</strong></a> added <strong>{decodeString(item.movie_title)}</strong> to <strong>{decodeString(item.list_title)}</strong> - {daysAgo} </p>

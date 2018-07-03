@@ -1,6 +1,7 @@
 .userListItem {
     display: flex;
     justify-content: space-between;
+    cursor:default;
     .fa-times {
       font-size: .6rem;
       margin-right: 2px;
