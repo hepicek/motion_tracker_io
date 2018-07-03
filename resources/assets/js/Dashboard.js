@@ -54,7 +54,7 @@ class Dashboard extends Component {
             axios.post("/userLists", {
                 list_title: newListInput.value
             })
-                .then(res => {
+                .then(() => {
                     this.getLists();
                 }).catch(err => {
                 return err;
