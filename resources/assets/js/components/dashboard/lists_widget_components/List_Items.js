@@ -1,24 +1,30 @@
 import React, { Component } from 'react';
-import { decodeString } from '../../../helpers/helper';
-const LIST_ITEMS = (props) => {
+import LIST_ITEM from './List_Item';
 
+class LIST_ITEMS extends Component {
+    constructor(props) {
+        super(props)
+
+    }
+
+    render() {
     //convert to Array of Objects
-    let itemsArray = Object.keys(props.items).map(key => props.items[key]);
+        let props = this.props;
+        let itemsArray = Object.keys(props.items).map(key => props.items[key]);
 
-    let items = itemsArray ? itemsArray.map(item => (
-        <div className="userListItem" key={item.id} id={"listItem-" + item.id}>
-            <p>{decodeString(item.name)} - {item.year}</p>
-            <i 
-                className="fa fa-times"
-                onClick={props.handleDeleteListItem}
-            ></i>
-        </div>
-       )) : undefined;
-   return (
-    <div className="expandedListItems" >
-       {items}
-    </div>
-    )
+        let items = itemsArray ? itemsArray.map(item => (
+            <LIST_ITEM 
+                key={item.id} 
+                item={item} 
+                handleDeleteListItem={props.handleDeleteListItem}
+            />
+        )) : undefined;
+        return (
+            <div className="expandedListItems" >
+                {items}
+            </div>
+        )
+    }
 };
 
 export default LIST_ITEMS;
