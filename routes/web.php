@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function() {
     
 
     //User list routes
-    Route::get('userLists', 'ListController@getUserLists');
+    Route::get('userLists/{user_id?}', 'ListController@getUserLists');
     Route::post('userLists', 'ListController@storeUserList');
     Route::delete('userLists/{id}', 'ListController@destroyUserList');
     Route::put('userLists/{id}', 'ListController@updateUserList');
@@ -60,8 +60,8 @@ Route::group(['middleware' => ['auth']], function() {
     //Relationships routes
     Route::post('relationships', 'RelationshipsController@updateRelationship');
     Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
-    Route::get('relationships', 'RelationshipsController@getRelationships');
     Route::get('relationships/news', 'RelationshipsController@getNewsFeed');
+    Route::get('relationships/{user_id?}', 'RelationshipsController@getRelationships');
 
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
@@ -87,6 +87,10 @@ Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
 
+//User public profile
+Route::get('publicprofile/{user_id}', 'PublicUserProfileController@index');
+Route::get('publicuserprofile/{user_id}', 'PublicUserProfileController@userDetails');
+Route::get('recentactivity/{user_id}', 'RelationshipsController@getRecentUserActivity');
 
 
 

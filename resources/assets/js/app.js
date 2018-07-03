@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Dashboard from './Dashboard';
 import Landingpage from './Landingpage';
 import User_Profile from './User_Profile';
+import Public_User_Profile from './Public_User_Profile';
 
 require('./bootstrap');
 
@@ -22,4 +23,7 @@ if (document.getElementById('landingPage')) {
 } else
 if (document.getElementById('userprofile')) {
     ReactDOM.render(<User_Profile />, document.getElementById('userprofile'));
+}
+if (document.getElementById('userpublicprofile')) {
+    ReactDOM.render(<Public_User_Profile />, document.getElementById('userpublicprofile'));
 }

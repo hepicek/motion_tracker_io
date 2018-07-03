@@ -1,0 +1,11 @@
+.publicUserInfo {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@import "./components/user_info.scss";
+@import "./components/public_user_friends.scss";
+@import "./components/public_user_friend.scss";
+
+@import "./components/recent_user_activities.scss";
+@import "./components/recent_user_activity.scss";

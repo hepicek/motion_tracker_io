@@ -15,8 +15,11 @@ class ListController extends Controller
     public function index(Request $request) {
         return Auth::id();
     }
-    public function getUserLists(Request $request) {
-        $current_user_id = Auth::id();
+    public function getUserLists($current_user_id = null) {
+        if (!$current_user_id) {
+            $current_user_id = Auth::id();
+        }
+
         $user_lists = User_List::where('owner_id', $current_user_id)->get()->getDictionary();
 
 
@@ -24,7 +27,7 @@ class ListController extends Controller
             $list->items = [];
         }
 
-        $list_items = List_Item::selectRaw('user_list_entries.*, imdb_movie.rating, imdb_movie.year, imdb_movie.imdb_id, imdb_movie.name')
+        $list_items = List_Item::selectRaw('user_list_entries.*, imdb_movie.rating, imdb_movie.year, imdb_movie.imdb_id, imdb_movie.name, imdb_movie.imdb_img')
             ->leftJoin('imdb_movie', 'show_id', '=', 'imdb_movie.imdb_id')
             ->whereIn('list_id', array_keys($user_lists))
             ->get()->getDictionary();
@@ -35,7 +38,6 @@ class ListController extends Controller
             $array[$key] = $list_item;
             $user_lists[$list_item->list_id]->items = $array;
         }
-
         return response()->json(['response' => $user_lists], 200);
     }
 
@@ -74,12 +76,11 @@ class ListController extends Controller
             $input['list_id'] = $list_id;
             $input['show_id'] = $id;
             $newItem = List_Item::create($input);
-            // $newItem->save();
 
            return response()->json(['success'=> $newItem], 200);
         }
 
-        return 'List item already in list';
+        return 'UserList item already in list';
     }
 
     public function storeUserRating(Request $request)

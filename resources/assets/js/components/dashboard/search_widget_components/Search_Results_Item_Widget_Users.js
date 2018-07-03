@@ -33,7 +33,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
         }
         return (
             <div>
-                <div className='searchResultsItem'>
+                <a href={"/publicprofile/" + user.id} className='searchResultsItem'>
                 <div 
                     className="searchItemDetails-userImgContainer"
                     style={{
@@ -56,7 +56,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
                             handleFriendBtnClick={this.props.handleFriendBtnClick}
                         />
                     }
-                </div>
+                </a>
                 
                 {this.state.caret === 'up' && <USER_ITEM_SEARCH_DETAILS UserDetails={user}/>}
             </div>
