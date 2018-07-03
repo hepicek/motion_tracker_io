@@ -1,9 +1,15 @@
 .publicUserInfo {
   display: flex;
   justify-content: space-evenly;
+  border-bottom: 2px solid grey;
+  height: 500px;
+
 }
 
 @import "./components/user_info.scss";
+@import "components/user_public_list";
+@import "components/user_public_lists";
+@import "components/user_public_listItem.scss";
 @import "./components/public_user_friends.scss";
 @import "./components/public_user_friend.scss";
 

@@ -1,6 +1,17 @@
 .publicUserInfo-userInfo {
   width: 32%;
-
-  border: 1px solid red;
-
+  h2 {
+    text-align: center;
+  }
+  .publicUserInfo-userImage {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    margin: 0 auto;
+  }
+  p {
+    text-align: justify;
+  }
 }

@@ -172,6 +172,7 @@ class RelationshipsController extends Controller
     {
         $user = User::find($id);
         $user_name = $user->common_name;
+        $counter = 0;
         $lists = $user->lists;
         foreach ($lists as $list) {
             $list_title = $list->list_title;
@@ -189,6 +190,10 @@ class RelationshipsController extends Controller
                     'movie_year' => $movie->year,
                     'date' => $item->created_at
                 ];
+                if ($counter == 3) {
+                   // dd($array);
+                }
+                $counter++;
             }
         }
         return $array;

@@ -9,11 +9,13 @@ const UserPublicLists = (props) => {
     return (
         <div>
             <h4>{userDetail.common_name}'s lists</h4>
-            {userLists.map((userlist, index) => {
-                return (
-                    <UserList key={'userLists-' + index} userlist={userlist}/>
-                )
-            })}
+            <div className="userPublicLists">
+                {userLists.map((userlist, index) => {
+                    return (
+                        <UserList key={'userLists-' + index} userlist={userlist}/>
+                    )
+                })}
+            </div>
         </div>
     );
 };

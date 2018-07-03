@@ -5,6 +5,13 @@
   border: 2px solid grey;
   background-color: white;
   margin: 4px 0;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
   .publicUserFriend_userImage {
     height: 60px;
     width: 60px;

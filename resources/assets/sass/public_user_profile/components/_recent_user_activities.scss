@@ -1,6 +1,14 @@
 .recentUserActivities {
+  display: flex;
+  flex-direction: column;
   width: 32%;
+  height: 490px;
+
   h4 {
     text-align: center;
   }
+}
+
+.recentUserActivities-activitiesList {
+  overflow-y: auto;
 }

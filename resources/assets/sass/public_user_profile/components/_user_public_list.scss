@@ -1,0 +1,24 @@
+.publicUserList {
+  border: 2px solid grey;
+  margin: 5px;
+  background-color: white;
+
+  h4 {
+    margin-top: 3px;
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+.publicUserList-Items {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 280px;
+  overflow-x: scroll;
+
+}
+::-webkit-scrollbar {
+  height: 5px;
+}
