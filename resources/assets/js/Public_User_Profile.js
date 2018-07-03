@@ -4,6 +4,7 @@ import axios from "axios/index";
 import PublicUserFriends from "./components/public_user_profile/PublicUserFriends";
 import RecentUserActivities from "./components/public_user_profile/RecentUserActivities";
 import UserPublicLists from "./components/public_user_profile/UserPublicLists";
+import Spinner from './helpers/Spinner';
 
 
 class Public_User_Profile extends Component {
@@ -88,6 +89,7 @@ class Public_User_Profile extends Component {
         return (
             <div>
                 {loading && <div>Loading...</div>}
+                {loading && <Spinner/>}
                 {error && <div>Some error occured</div>}
                 <div className="publicUserInfo">
                     {userDetail && <UserInfo userData={this.state.userDetail}/>}

@@ -1,0 +1,17 @@
+.spinner {
+    margin: 4.5% auto;
+    border: 6px solid #bdc3c7;
+    height: 40px;
+    width: 40px;
+    border-left-color: #3498db;
+    border-radius: 50%;
+    animation: rotateLoader;
+    animation-duration: 0.4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes rotateLoader {
+    100% {
+        transform: rotate(1turn);
+    }
+}
