@@ -12,7 +12,6 @@ class MOVIE_DETAILS_WIDGET extends Component {
             color: "black",
             boxShadow: "3px 3px 8px 0 black",
             borderRadius: "10px",
-            right: "300px",
             width: "450px",
             zIndex: "1"
         }
@@ -23,7 +22,7 @@ class MOVIE_DETAILS_WIDGET extends Component {
     }
 
     componentDidMount() {
-        let movieItemImdbId =this.props.item.imdb_id
+        let movieItemImdbId = this.props.imdb_id
         axios.get(`/searchMovieDetails/${movieItemImdbId}`)
             .then((res) => {
                 let searchResults = Object.keys(res).map(key => res[key]);
@@ -42,7 +41,7 @@ class MOVIE_DETAILS_WIDGET extends Component {
                 })        
             })
             .then(() => {
-                console.log(this.state.movieDetails);
+
                 this.setState({ loading: false })
             })
     }

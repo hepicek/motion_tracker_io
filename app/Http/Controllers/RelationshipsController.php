@@ -144,6 +144,7 @@ class RelationshipsController extends Controller
                     'list_title' => $list_title,
                     'movie_title' => $movie->name,
                     'movie_year' => $movie->year,
+                    'movie_id' => $movie->imdb_id,
                     'date' => $item->created_at
                 ];
             }

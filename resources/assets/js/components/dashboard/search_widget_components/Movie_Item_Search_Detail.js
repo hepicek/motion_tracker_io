@@ -53,7 +53,6 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
         return (
             <div className="searchItemDetails">
                 <div className="searchItemDetails-main">
-                    {/*this.state.movieDetail.imdb_img && poster*/}
                     <div className="searchItemDetails-posterContainer"
                          style={{
                              backgroundImage: `url(${poster})`

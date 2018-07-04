@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import MOVIE_TITLE from './news_feed_widget_components/movie_title';
 import {decodeString} from '../../helpers/helper';
 import { AWS_URL } from '../../../../../config/js/config';
 
@@ -22,7 +23,6 @@ class NEWS_FEED extends Component {
         let oneDay = 24*60*60*1000; 
 
         let news = this.state.news.map(item => {
-
             let background = AWS_URL + item.user_img;
             let daysAgo = (new Date() - new Date(item.date.date)) / oneDay;
             daysAgo = daysAgo < 1 ? 'Today' : Math.floor(daysAgo) + ' day(s) ago';
@@ -30,8 +30,20 @@ class NEWS_FEED extends Component {
                 <div 
                     key={"NewsItem" + item.user_id + "-" + item.movie_title} className="newsFeed-item"
                 >
-                    <div className="newsFeed-item_userImage" style={{backgroundImage: `url(${background})`}}/>
-                    <p><a href={"/publicprofile/" + item.user_id} className="newsFeedUserName"><strong>{decodeString(item.user_name)}</strong></a> added <strong>{decodeString(item.movie_title)}</strong> to <strong>{decodeString(item.list_title)}</strong> - {daysAgo} </p>
+                    <div 
+                        className="newsFeed-item_userImage" 
+                        style={{
+                            backgroundImage: `url(${background})`
+                        }}/>
+                        <p>
+                            <a 
+                                href={"/publicprofile/" + item.user_id} className="newsFeedUserName">
+                                <strong>{decodeString(item.user_name)}</strong>
+                            </a> 
+                                added
+                        </p>
+                        <MOVIE_TITLE movie_title={item.movie_title} imdb_id={item.movie_id} />
+                        <p>to <strong>{decodeString(item.list_title)}</strong> - {daysAgo} </p>
                 </div>
             )
         })

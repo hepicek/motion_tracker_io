@@ -26,12 +26,12 @@ class LIST_ITEM extends Component {
                 })
             }, 300);
         }
-
     }
     render() {
         let {item} = this.props;
         return (
             <div 
+                key={"MovieDetails-" + item.id}
                 className="userListItem" 
                 key={item.id} id={"listItem-" + item.id}
                 onMouseEnter={(e) => this.handleHover(e, item)}
@@ -44,7 +44,7 @@ class LIST_ITEM extends Component {
                 ></i>
                 {this.state.hovering && <MOVIE_DETAILS_WIDGET 
                     hovering={this.state.hovering} 
-                    item={item}   
+                    imdb_id={item.imdb_id}   
                 />}
             </div>
         )
