@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {AWS_URL} from '../../../../config/js/config';
 import Rating from "react-rating";
+import axios from "axios/index";
 
 class MOVIE_DETAILS_WIDGET extends Component {
     constructor(props) {
@@ -18,8 +19,11 @@ class MOVIE_DETAILS_WIDGET extends Component {
         };
         this.state = {
             loading: true
-        }
-
+        };
+        this.goldStar = {
+            color: '#E4BB24'
+        };
+        this.handleRatingChange = this.handleRatingChange.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +50,12 @@ class MOVIE_DETAILS_WIDGET extends Component {
                 this.setState({ loading: false })
             })
     }
+    handleRatingChange (value) {
+        axios.post('movieRating', [this.props.imdb_id, value])
+            .then((res) => {
+              //  this.setState({rating: res.data[0].mt_user_rating});
+            });
+    };
 
     render() {
         let poster = !this.state.loading ? AWS_URL + this.state.movieDetails.image : undefined;
@@ -106,11 +116,12 @@ class MOVIE_DETAILS_WIDGET extends Component {
                             <p>{this.state.movieDetails.year}</p>
                             <Rating
                                 emptySymbol="fa fa-star-o fa-2x"
-                                fullSymbol={"fa fa-star fa-2x "}
+                                fullSymbol={"fa fa-star fa-2x"}
                                 initialRating={this.state.movieDetails.mt_rating}
                                 fractions={2}
-                                readonly={true}
+                                onChange={this.handleRatingChange}
                                 value={this.state.movieDetails.mt_rating}
+                                style={this.goldStar}
                             />
                             <p>{this.state.movieDetails.tagline}</p>
                         </div>
