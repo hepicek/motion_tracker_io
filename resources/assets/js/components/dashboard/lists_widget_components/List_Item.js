@@ -41,7 +41,7 @@ class LIST_ITEM extends Component {
                 <i 
                     className="fa fa-times"
                     onClick={this.props.handleDeleteListItem}
-                ></i>
+                />
                 {this.state.hovering && <MOVIE_DETAILS_WIDGET 
                     hovering={this.state.hovering} 
                     imdb_id={item.imdb_id}   
