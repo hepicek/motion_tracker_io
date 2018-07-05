@@ -39,7 +39,7 @@ class MoviesController extends Controller
 
     public function searchMovies($movie)
     {
-        StoreDataFromExternalSource::dispatch($movie)->delay(2);
+        //StoreDataFromExternalSource::dispatch($movie)->delay(2);
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
@@ -429,10 +429,10 @@ class MoviesController extends Controller
         return $datapath . $file_name . '.' . $file_ext;
     }
 
-    public function tmdb($id)
-    {
-        return Tmdb::getMoviesApi()->getMovie($id);
-    }
+    // public function tmdb($id)
+    // {
+    //     return Tmdb::getMoviesApi()->getMovie($id);
+    // }
     /*    public function delete(Movie $movie)
         {
             $movie->delete();

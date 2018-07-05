@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {AWS_URL} from '../../../../config/js/config';
 
+
 class MOVIE_DETAILS_WIDGET extends Component {
     constructor(props) {
         super(props)
@@ -13,7 +14,8 @@ class MOVIE_DETAILS_WIDGET extends Component {
             boxShadow: "3px 3px 8px 0 black",
             borderRadius: "10px",
             width: "450px",
-            zIndex: "1"
+            top: "0",
+            zIndex: "5"
         }
         this.state = {
             loading: true

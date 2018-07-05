@@ -12,10 +12,18 @@ use App\List_Item;
 class ListController extends Controller
 {
     use AuthenticatesUsers;
-    public function index(Request $request) {
+    public function index(Request $request) 
+    {
         return Auth::id();
     }
-    public function getUserLists($current_user_id = null) {
+
+    /**
+     * Retrieve the user lists from the List Model and then iterate through to retrieve the 
+     * items for each list.
+     * Return the array of lists
+     */
+    public function getUserLists($current_user_id = null) 
+    {
         if (!$current_user_id) {
             $current_user_id = Auth::id();
         }
@@ -41,6 +49,9 @@ class ListController extends Controller
         return response()->json(['response' => $user_lists], 200);
     }
 
+    /**
+     * Create new user list in table
+     */
     public function storeUserList(Request $request)
     {
         $current_user_id = Auth::id();
@@ -57,6 +68,10 @@ class ListController extends Controller
 
         return response()->json(['success'=>$success], 200);
     }
+
+    /**
+     * Update the name of the user list or the collapsed value
+     */
     public function updateUserList(Request $request, $id)
     {
         if($request->has('collapsed')) {
@@ -69,15 +84,18 @@ class ListController extends Controller
         return $request;
     }
 
+    /**
+     * Create a new list item entry in user_list_entries table
+     */
     public function storeUserListItem($list_id, $id)
     {
         $listItemInDb = List_Item::where('show_id', $id)->where('list_id', $list_id)->get();
-       if (count($listItemInDb) == 0) {
-            $input['list_id'] = $list_id;
-            $input['show_id'] = $id;
-            $newItem = List_Item::create($input);
+        if (count($listItemInDb) == 0) {
+                $input['list_id'] = $list_id;
+                $input['show_id'] = $id;
+                $newItem = List_Item::create($input);
 
-           return response()->json(['success'=> $newItem], 200);
+            return response()->json(['success'=> $newItem], 200);
         }
 
         return 'UserList item already in list';
@@ -91,7 +109,7 @@ class ListController extends Controller
             List_Item::where('show_id', $request[0])->update(['user_rating' => $request[1]]);
             return $request[1];
         }
-    return 'not in list';
+        return 'not in list';
     }
 
     public function destroyUserList(Request $request, $id)

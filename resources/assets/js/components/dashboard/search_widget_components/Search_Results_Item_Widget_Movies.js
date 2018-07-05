@@ -4,6 +4,7 @@ import {decodeString} from '../../../helpers/helper';
 import MOVIE_ITEM_SEARCH_DETAILS from './Movie_Item_Search_Detail.js';
 import Rating from "react-rating";
 import axios from "axios/index";
+import {Grid, Row, Col} from 'react-bootstrap';
 
 const spec = {
     isDragging(props, monitor) {
@@ -69,23 +70,61 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
     render() {
         let movieItem = this.props.searchResultsItem;
         const {isDragging, connectDragSource, canDrag} = this.props;
-
+        let vertAlign = {
+            display: "flex",
+            alignItems: "center"
+        }
         return connectDragSource(
             <div>
-                <div className='searchResultsItem'
-                     style={{border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging}}
+                <Grid
+                style={{
+                    backgroundColor: "white",
+                    margin: "5px 0",
+                    padding: "5px 0"
+                }}
                 >
-                    <div
-                        className="movieItemInfo"
+                <Row className='show-grid'
+                     style={{
+                         border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging,
+                         display: "flex",
+                         alignItems: "center",
+                         margin: "0"
+                    }}
+                >
+                    <Col
+                        xs={1} md={1}
                         onClick={this.handleCaretClick}
+                        style={vertAlign}
                     >
                         <i className={"fa fa-caret-" + this.state.caret}/>
-                        <p>{decodeString(movieItem.name)}</p>
-                        <p>Year: {movieItem.year}</p>
-                        <p>IMDB Rating: {movieItem.rating}</p>
-                    </div>
-                    <div className="movieItemRating">
-                        <p>My Rating: </p>
+                    </Col>
+                    <Col
+                        xs={3} md={3}
+                        onClick={this.handleCaretClick}
+                        style={vertAlign}
+                    >
+                        <p style={{margin: "0"}}>{decodeString(movieItem.name)}</p>
+                    </Col>
+                    <Col
+                        xs={1} md={1}
+                        onClick={this.handleCaretClick}
+                        style={vertAlign}
+                    >
+                        <p style={{margin: "0"}}>{movieItem.year}</p>
+                    </Col>
+                    <Col
+                        xs={3} md={3}
+                        onClick={this.handleCaretClick}
+                        style={vertAlign}
+                    >
+                        <p style={{margin: "0"}}>IMDB Rating: {movieItem.rating}</p>
+                    </Col>
+                    <Col 
+                        xs={4} md={4}
+                        className="movieItemRating"
+                        style={vertAlign}
+                    >
+                        <p style={{margin: "0 5px 0 0"}}>My Rating:</p>
                         <Rating
                             emptySymbol="fa fa-star-o fa-2x"
                             fullSymbol={"fa fa-star fa-2x " + this.state.starColor}
@@ -93,10 +132,11 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                             fractions={2}
                             onChange={this.handleRatingChange}
                             value={this.state.rating}
+                            style={{fontSize: ".8rem"}}
                         />
-                    </div>
-                </div>
-
+                    </Col>
+                </Row>
+                </Grid>
                 {this.state.caret === 'up' && <MOVIE_ITEM_SEARCH_DETAILS MovieItemDetails={movieItem}/>}
             </div>
         )

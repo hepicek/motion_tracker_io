@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 
-import jsonp from 'jsonp'; //used for API call to grab top movies
-import {TMDB_KEY} from '../../../config/js/config'; //file holding TMDB key (in .gitignore)
+//import jsonp from 'jsonp'; //used for API call to grab top movies
+//import {TMDB_KEY} from '../../../config/js/config'; //file holding TMDB key (in .gitignore)
 import axios from 'axios'; //For API calls
 
 //react components
@@ -69,21 +69,18 @@ class Dashboard extends Component {
     //Gets User's Lists
     getLists() {
         axios('/userLists')
-            .then(response => {
-                if (response.data.response) {
-                    let userLists = Object.keys(response.data.response).map(key => response.data.response[key]);
-                    this.setState({
-                        userLists,
-                        newList: false,
-                        renameList: undefined
-                    });
-                }
-            }).catch(err => {
-            console.log(err);
-        });
+        .then(response => {
+            if (response.data.response) {
+                let userLists = Object.keys(response.data.response).map(key => response.data.response[key]);
+                this.setState({
+                    userLists,
+                    newList: false,
+                    renameList: undefined
+                });
+            }
+        })
     }
     handleFriendBtnClick(status, id) {
-        console.log("Friends", status, id);
         axios.post('/relationships',
             {
                 id,
@@ -121,7 +118,7 @@ class Dashboard extends Component {
     //send delete API call
     handleListDeleteClick(e) {
         axios.delete('userLists/' + e.target.parentNode.id.split("-")[1])
-            .then(response => {
+            .then(() => {
                 this.getLists();
             });
     }
@@ -166,20 +163,12 @@ class Dashboard extends Component {
 
     //search db for movie
     handleSearch(e) {
-        let urlPath;
         let searchText = e.target.value;
         this.setState({searchText});
 
         clearTimeout(inputTimer);
 
         inputTimer = setTimeout(() => {
-            // if(this.state.searchType == 'movies') {
-            //     urlPath = 'search'
-            // } else if(this.state.searchType == 'actors') {
-            //     urlPath = 'searchActors'
-            // } else {
-            //     urlPath = 'searchUsers'
-            // }
             if(this.state.searchText.length > 1) {
                 axios.get(`/search/${this.state.searchText}`)
                     .then((res) => {
@@ -256,23 +245,10 @@ class Dashboard extends Component {
         axios.delete("userListItem/" + listItemId)
             .then(() => this.getLists());
     }
-
-    componentWillMount() {
-        // external API call for Top 20 movies
-        jsonp(`https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`, null, (err, data) => {
-            if (err) {
-                return undefined;
-            } else {
-                this.setState({
-                    topMovies: data.results
-                });
-            }
-        });
+    componentDidMount() {
         this.getLists();
     }
-
     render() {
-        // console.log(this.state.searchResults.movies.length);
         return (
             <div className='dashboard'>
                 <div className='searchSection'>
