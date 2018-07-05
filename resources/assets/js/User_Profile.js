@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import FRIENDS_LIST from './components/user_profile/friends_list';
 import axios from 'axios'; //For API calls
+import {Row, Col, Button} from 'reactstrap';
 
 import USER_DETAILS_FORM from './components/user_profile/user_details_form';
 // import USER_PHOTO from './components/user_profile/user_photo';
@@ -167,43 +168,59 @@ class User_Profile extends Component {
         const loading = this.state.loading;
         return (
 
-            <div className="userProfileMain">
+            <div 
+                className="userProfile-container"
+                style={{paddingBottom: "20px"}}
+            >
                 {loading && <div>Loading...</div>}
                 {loading && <Spinner/>}
-                {userDetails.id && <div className="userProfileMain-header">
-                    <h1>{userDetails.common_name}'s Profile</h1>
-                    <div
-                        className="userProfileMain-changePwBtn"
-                        onClick={this.handleChangePasswordBtnClick}
-                    >Change Password
-                    </div>
-                </div>}
-                {userDetails.id && <div className="userProfile-detailsSection">
-                    <USER_DETAILS_FORM
-                        userDetails={userDetails}
-                        handleChange={this.handleChange}
-                        handleSubmit={this.handleSubmit}
-                        handleFileSelected={this.handleFileSelected}
-                        handleFileSubmit={this.handleFileSubmit}
-                        handleDeletePhoto={this.handleDeletePhoto}
-                        img_url={userDetails.img_url}
-                        file={this.state.file}
-                    />
-                    <FRIENDS_LIST/>
-                </div>}
+                {userDetails.id && 
+                    <Row className="my-3">
+                        <Col xs="6" md="6" lg="6" className="d-flex align-items-center">
+                            <h1 className="m-0">{userDetails.common_name}'s Profile</h1>
+                        </Col>
+                        <Col xs="6" md="6" lg="6" className="changePassword">
+                        <Button
+                            onClick={this.handleChangePasswordBtnClick}
+                        >Change Password
+                        </Button>
+                        </Col>
+                     </Row>
+                }
+                
+                {userDetails.id && 
+                    <Row className="d-flex justify-content-center">
+                        <Col md="4" className="p-2 bg-white" style={{boxShadow: "0 0 12px 4px rgba(200, 200, 200, .5)"}}>
+                            <USER_DETAILS_FORM
+                                userDetails={userDetails}
+                                handleChange={this.handleChange}
+                                handleSubmit={this.handleSubmit}
+                                handleFileSelected={this.handleFileSelected}
+                                handleFileSubmit={this.handleFileSubmit}
+                                handleDeletePhoto={this.handleDeletePhoto}
+                                img_url={userDetails.img_url}
+                                file={this.state.file}
+                            />
+                        </Col>
+                        <Col md="2" style={{height: "20px"}}></Col>
+                        <Col md="4" className="p-2 bg-white mb-5" style={{boxShadow: "0 0 12px 4px rgba(200, 200, 200, .5)"}}>
+                            <FRIENDS_LIST/>
+                        </Col>
+                    </Row>}
                 {this.state.showChangePwModal &&
                     <CHANGE_PASSWORD
                     handlePwSubmit={this.handlePwSubmit}
                     updateInputValue={this.handleChange}
                     pwReturnMessage={this.state.pwReturnMessage}
                     handleChangePwCloseBtnClick={this.handleChangePwCloseBtnClick}
-                    />}
-                    </div>
-                    )
+                    />
                 }
-                }
+            </div>
+        )
+    }
+}
 
-                export default User_Profile;
+export default User_Profile;
 
 
-                //<CHANGE_PASSWORD/>
+//<CHANGE_PASSWORD/>

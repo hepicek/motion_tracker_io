@@ -47,7 +47,9 @@ class RelationshipsController extends Controller
 
     public function getRelationships($id = null)
     {
+        $other = false;
         if (!$id) {
+            $other = true;
             $id = Auth::id();
         }
         $friends = [];
@@ -74,7 +76,7 @@ class RelationshipsController extends Controller
                 'img_url' => $otherUser->img_url
             ];
         };
-
+        if($other) return array_slice($friends, 0, 6);
         return $friends;
     }
 
@@ -173,7 +175,6 @@ class RelationshipsController extends Controller
     {
         $user = User::find($id);
         $user_name = $user->common_name;
-        $counter = 0;
         $lists = $user->lists;
         foreach ($lists as $list) {
             $list_title = $list->list_title;
@@ -191,12 +192,8 @@ class RelationshipsController extends Controller
                     'movie_year' => $movie->year,
                     'date' => $item->created_at
                 ];
-                if ($counter == 3) {
-                   // dd($array);
-                }
-                $counter++;
             }
         }
-        return $array;
+        return array_slice($array, 0, 7);
     }
 }

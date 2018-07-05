@@ -5,6 +5,7 @@ import PublicUserFriends from "./components/public_user_profile/PublicUserFriend
 import RecentUserActivities from "./components/public_user_profile/RecentUserActivities";
 import UserPublicLists from "./components/public_user_profile/UserPublicLists";
 import Spinner from './helpers/Spinner';
+import {Row} from 'reactstrap';
 
 
 class Public_User_Profile extends Component {
@@ -87,15 +88,16 @@ class Public_User_Profile extends Component {
         const {userDetail, userFriends, recentActivity, userLists, error, loading} = this.state;
 
         return (
-            <div>
+            <div className="py-3">
                 {loading && <div>Loading...</div>}
                 {loading && <Spinner/>}
                 {error && <div>Some error occured</div>}
-                <div className="publicUserInfo">
+                <Row className="px-2 bg-white">
                     {userDetail && <UserInfo userData={this.state.userDetail}/>}
                     {userFriends && <PublicUserFriends friendsData={this.state.userFriends}/>}
                     {recentActivity && <RecentUserActivities recentActivity={this.state.recentActivity}/>}
-                </div>
+                </Row>
+                <hr></hr>
                 {userLists && <UserPublicLists userLists={userLists} userDetail={userDetail}/>}
             </div>
         )

@@ -1,25 +1,16 @@
 .publicUserFriend {
-  display: flex;
-  padding: 4px 4rem;
-  align-items: center;
-  border: 2px solid grey;
-  background-color: white;
-  margin: 4px 0;
-  text-decoration: none;
-  color: inherit;
-
+  text-decoration: none !important;
+  color: inherit !important;
+  background-color: #F8F9FA;
+  transition: box-shadow .1s;
   &:hover {
-    text-decoration: none;
-    color: inherit;
+      box-shadow: 0 0 8px 2px rgba(200, 200, 200, .5);
   }
-  .publicUserFriend_userImage {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-  }
-  h5 {
-    padding: 0 10px;
-  }
+}
+.publicUserFriend_userImage {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
 }

@@ -35,7 +35,7 @@ class FREINDS_LIST extends Component {
             );
         });
         return (
-            <div className="userProfile-friendsList">
+            <div>
             <h4>Friends:</h4>
               {friends}  
             </div>

@@ -1,16 +1,10 @@
-.userProfile-friendsList-friend {
-    border: 2px solid slategray;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 10px;
-    border-radius: 10px;
-    margin: 10px;
-    strong {
-        margin: 0 20px;
+.friend {
+    transition: box-shadow .1s;
+    &:hover {
+        box-shadow: 0 0 8px 2px rgba(200, 200, 200, .5);
     }
 }
-.userProfile-friendsList-friend-img {
+.friend-img {
     height: 70px;
     width: 70px;
     border-radius: 50%;

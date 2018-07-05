@@ -1,37 +1,26 @@
-.userProfile {
-    width: 350px;
-    border: 2px solid slategray;
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px 0 slategray;
-}
-.userProfile-detailsSection {
+.changePassword {
     display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
-.userProfileForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-}
-.userProfileMain-header {
-    display: flex;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: space-between;
+    padding: 2px 5px;
 }
-.userProfileMain-changePwBtn {
-    font-size: .8rem;
-    font-weight: bold;
-    background-color: goldenrod;
-    border-radius: 10px;
-    padding: 5px 10px;
-    color: white;
-    cursor: pointer;
+
+@media only screen and (max-width: 576px) {
+    .userProfile-container {
+        padding: 10px;
+        margin: 5px;
+    }
+    h1 {
+        font-size: 1.2rem !important;
+    }
+    .changePassword {
+        Button {
+            font-size: .7rem;
+        }
+    }
 }
-@import './components/_user_details_form.scss';
-@import './components/_user_photo.scss';
+// @import './components/_user_details_form.scss';
+// @import './components/_user_photo.scss';
 @import './components/_friends_list.scss';
-@import './components/_friend_options.scss';
+// @import './components/_friend_options.scss';
 @import './components/_change_password.scss';

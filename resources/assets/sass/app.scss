@@ -1,6 +1,7 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:400,700|Lato:400,700,900|Merriweather+Sans:400,700,800|Roboto|Shrikhand');
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 
 
@@ -16,6 +17,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+* {
+  font-weight: bold;
+}
 
 .container {
   width: 100%;

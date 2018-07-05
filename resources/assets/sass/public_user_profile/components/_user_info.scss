@@ -1,17 +1,15 @@
-.publicUserInfo-userInfo {
-  width: 32%;
-  h2 {
-    text-align: center;
-  }
+.publicUserInfo-userImage {
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 576px) {
   .publicUserInfo-userImage {
-    height: 300px;
-    width: 300px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    margin: 0 auto;
-  }
-  p {
-    text-align: justify;
+    height: 220px;
+    width: 220px;
   }
 }

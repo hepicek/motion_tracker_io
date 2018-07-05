@@ -1,10 +1,11 @@
 import React from 'react';
 import USER_PHOTO from './user_photo';
-//enctype="multipart/form-data"
+import { Form, Button, Label, Input, Col, Row } from 'reactstrap';
+
 const USER_DETAILS_FORM = (props) => {
     let userDetails = props.userDetails;
     return (    
-        <div className="userProfile">
+        <div>
             <USER_PHOTO 
                 handleFileSelected={props.handleFileSelected} 
                 handleFileSubmit={props.handleFileSubmit}
@@ -12,72 +13,84 @@ const USER_DETAILS_FORM = (props) => {
                 img_url={props.userDetails.img_url}
                 file={props.file}
             />
-            <form className="userProfileForm" name="userProfileForm" method="post" action={"/userDetails/" + userDetails.id} encType="multipart/form-data">
-                <div className="userProfile_formRow" >
-                    <p>First Name:</p>
-                    <span>
-                        <input 
-                            className="userProfileForm-input" 
-                            name="first_name"
-                            value={userDetails.first_name} 
-                            onChange={props.handleChange}
-                        />
-                    </span>
-                </div>
-                <div className="userProfile_formRow" >
-                    <p>Last Name:</p>
-                    <span>
-                        <input 
-                            className="userProfileForm-input" 
+            <Form name="userProfileForm" method="post" action={"/userDetails/" + userDetails.id} encType="multipart/form-data">
+                <Row className="d-flex justify-content-between my-2" >
+                        <Col sm="4">
+                            <Label for="first_name" >First Name:</Label>
+                        </Col>
+                        <Col sm="8">
+                            <Input 
+                                name="first_name"
+                                id="first_name"
+                                value={userDetails.first_name} 
+                                onChange={props.handleChange}
+                            />
+                        </Col>
+                </Row>
+                <Row className="d-flex justify-content-between my-2" >
+                        <Col sm="4">
+                            <Label for="last_name" >Last Name:</Label>
+                        </Col>
+                        <Col sm="8">
+                        <Input 
+                            id="last_name" 
                             name="last_name" 
                             value={userDetails.last_name} 
                             onChange={props.handleChange}
                         />
-                    </span>
-                </div>
-                <div className="userProfile_formRow" >
-                    <p>Common Name:</p>
-                    <span>
-                        <input 
-                            className="userProfileForm-input" 
+                    </Col>
+                </Row>
+                <Row className="d-flex justify-content-between my-2" >
+                        <Col sm="4">
+                            <Label for="common_name" >Common Name:</Label>
+                        </Col>
+                        <Col sm="8">
+                        <Input 
+                            id="common_name" 
                             name="common_name" 
                             value={userDetails.common_name} 
                             onChange={props.handleChange}
                         />
-                    </span>
-                </div>
-                <div className="userProfile_formRow" >
-                    <p>Email:</p>
-                    <span>
-                        <input 
-                            className="userProfileForm-input" 
+                    </Col>
+                </Row>
+                <Row className="d-flex justify-content-between my-2" >
+                        <Col sm="4">
+                            <Label for="email" >Email:</Label>
+                        </Col>
+                        <Col sm="8">
+                        <Input 
+                            id="email" 
                             name="email" 
                             value={userDetails.email} 
                             onChange={props.handleChange}
                             disabled
                         />
 
-                    </span>
-                </div>
-                <div className="userProfile_formRow" >
-                    <p>Date of Birth:</p>
-                    <span>
-                        <input 
-                            className="userProfileForm-input" 
+                    </Col>
+                </Row>
+                <Row className="d-flex justify-content-between my-2" >
+                        <Col sm="4">
+                            <Label for="dob" >Date of Birth:</Label>
+                        </Col>
+                        <Col sm="8">
+                        <Input 
+                            id="dob" 
                             name="dob" 
                             type="date"
                             value={userDetails.dob} 
                             onChange={props.handleChange}
                         />
 
-                    </span>
-                </div>
-                <input 
+                    </Col>
+                </Row>
+                <Row className="d-flex justify-content-center my-2">
+                <Button 
                     type="submit" 
-                    value="Save Changes" 
                     onClick={props.handleSubmit}
-                />
-            </form>
+                >Save Changes
+                </Button>
+                </Row>
+            </Form>
         </div>
     )
 }

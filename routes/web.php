@@ -62,6 +62,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('relationships/pending', 'RelationshipsController@pendingRelationships');
     Route::get('relationships/news', 'RelationshipsController@getNewsFeed');
     Route::get('relationships/{user_id?}', 'RelationshipsController@getRelationships');
+    
+    //User public profile
+    Route::get('publicprofile/{user_id}', 'PublicUserProfileController@index');
+    Route::get('publicuserprofile/{user_id}', 'PublicUserProfileController@userDetails');
+    Route::get('recentactivity/{user_id}', 'RelationshipsController@getRecentUserActivity');
 
     //User Routes
     Route::get('searchUsers/{user}', 'UserController@searchUsers');
@@ -86,13 +91,6 @@ Route::get('searchexternal/{searchString}', 'MoviesController@exSearch');
 
 //Route::get('tmdb/{id}', 'MoviesController@tmdb');
 //Route::post('moviesImage','MoviesController@resizeAndStoreImage');
-
-//User public profile
-Route::get('publicprofile/{user_id}', 'PublicUserProfileController@index');
-Route::get('publicuserprofile/{user_id}', 'PublicUserProfileController@userDetails');
-Route::get('recentactivity/{user_id}', 'RelationshipsController@getRecentUserActivity');
-
-
 
 Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback', 'Auth\LoginController@handleProviderCallback');

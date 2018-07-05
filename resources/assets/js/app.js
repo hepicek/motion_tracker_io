@@ -1,3 +1,4 @@
+// import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Dashboard from './Dashboard';
@@ -6,6 +7,7 @@ import User_Profile from './User_Profile';
 import Public_User_Profile from './Public_User_Profile';
 
 require('./bootstrap');
+
 
 /**
  * Next, we will create a fresh React component instance and attach it to

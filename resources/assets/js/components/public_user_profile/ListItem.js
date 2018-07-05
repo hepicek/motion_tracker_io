@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {AWS_URL} from "../../../../../config/js/config";
 import MOVIE_DETAILS_WIDGET from '../movie_details_widget';
+import {decodeString} from '../../helpers/helper';
+import {Card, CardBody, CardImg} from 'reactstrap';
 let hoverTimeout;
 class ListItem extends Component {
     constructor(props) {
@@ -29,26 +31,27 @@ class ListItem extends Component {
     render(){
 
         const listItem = this.props.listItem;
-        const background = AWS_URL + listItem.imdb_img;
+        const background = listItem.imdb_img ? AWS_URL + listItem.imdb_img : AWS_URL + "img/movie_img/list_placeholder.jpg";
         return (
-            <div 
-                className="userPublicProfileListItem"
+            <Card 
+                className="p-1 col-md-2 col-sm-6 col-xs-6"
                 onMouseEnter={this.handleHover} 
                 onMouseLeave={this.handleHover}  
+                style={{maxWidth: "200px", minWidth: "150px"}}
             >
-                <div 
-                    className="ListItem_movieImage"
-                    style={{
-                        backgroundImage: `url(${background})`
-                    }}
+                <CardImg
+                    className="mx-auto"
+                    src={background}
                 />
-                <p className="publicUserListItemName">{listItem.name}</p>
-                <p className="publicUserListItemRating">Rating: {listItem.user_rating && listItem.user_rating}</p>
-                <div style={{position: "relative"}}>
-                    {this.state.hovering && 
-                        <MOVIE_DETAILS_WIDGET imdb_id={listItem.show_id}/>}
-                </div>
-            </div>
+                <CardBody>
+                    <p className="">{decodeString(listItem.name)}</p>
+                    <p className="">Rating: {listItem.user_rating && listItem.user_rating}</p>
+                    <div style={{position: "relative"}}>
+                        {this.state.hovering && 
+                            <MOVIE_DETAILS_WIDGET imdb_id={listItem.show_id}/>}
+                    </div>
+                </CardBody>
+            </Card>
         );        
     }
 };

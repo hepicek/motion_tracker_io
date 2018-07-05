@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import FRIEND_OPTIONS from './friend_options';
+// import FRIEND_OPTIONS from './friend_options';
+import {Popover, PopoverBody} from 'reactstrap';
 class FRIEND extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
+            popoverOpen: false,
         }
+        this.toggle = this.toggle.bind(this);
         this.handleFriendOptionsBtnClick = this.handleFriendOptionsBtnClick.bind(this);
         this.deleteFriend = this.deleteFriend.bind(this);
         this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -31,32 +33,53 @@ class FRIEND extends Component {
         )
         .then(() => {
             this.props.getFriends();
+            this.toggle();
         })
+    }
+    toggle() {
+        this.setState(prevState => ({
+            popoverOpen: !prevState.popoverOpen
+        }))
     }
     render() {
         let {friend, user_image} = this.props;
+
         return (
-            <div className="userProfile-friendsList-friend">
+            <div className="friend d-flex justify-content-between align-items-center p-2 bg-light my-2">
                 <div 
-                    className="userProfile-friendsList-friend-img"
+                    className="friend-img"
                     style={{backgroundImage: `url(${user_image})`}}
-                >
-                </div>
+                ></div>
                 <strong>{friend.first_name} {friend.last_name} ({friend.common_name})</strong>
                 <i 
-                className="fa fa-cog friendOptionsBtn"
-                onClick={this.handleFriendOptionsBtnClick}
+                    style={{cursor: "pointer"}}
+                    id={"optionBtn-" + friend.id}
+                    className="fa fa-cog friendOptionsBtn"
+                    onClick={this.toggle}
                 >
-                {this.state.open &&
-                    <FRIEND_OPTIONS 
-                        deleteFriend={this.deleteFriend}
-                        handleClickOutside={this.handleClickOutside}
-                    />
-                }
                 </i>
+                <Popover 
+                style={{cursor: "pointer"}}
+                placement="left"
+                isOpen={this.state.popoverOpen}
+                toggle={this.toggle}
+                target={"optionBtn-" + friend.id}
+                className="friendOptions"
+                onClick={this.deleteFriend}
+            >
+                <PopoverBody>Delete</PopoverBody>
+            </Popover>
             </div>
         )
     }
 }
 
 export default FRIEND;
+
+
+// {this.state.open &&
+//     <FRIEND_OPTIONS 
+//         deleteFriend={this.deleteFriend}
+//         handleClickOutside={this.handleClickOutside}
+//     />
+// }
