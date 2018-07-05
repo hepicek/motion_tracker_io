@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {AWS_URL} from '../../../../config/js/config';
+import Rating from "react-rating";
+import axios from "axios/index";
 
 
 class MOVIE_DETAILS_WIDGET extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.style = {
             position: "absolute",
             backgroundColor: "white",
@@ -15,16 +17,20 @@ class MOVIE_DETAILS_WIDGET extends Component {
             borderRadius: "10px",
             width: "450px",
             top: "0",
-            zIndex: "5"
-        }
+            zIndex: "1"
+        };
+
         this.state = {
             loading: true
-        }
-
+        };
+        this.goldStar = {
+            color: '#E4BB24'
+        };
+        this.handleRatingChange = this.handleRatingChange.bind(this);
     }
 
     componentDidMount() {
-        let movieItemImdbId = this.props.imdb_id
+        let movieItemImdbId = this.props.imdb_id;
         axios.get(`/searchMovieDetails/${movieItemImdbId}`)
             .then((res) => {
                 let searchResults = Object.keys(res).map(key => res[key]);
@@ -47,6 +53,12 @@ class MOVIE_DETAILS_WIDGET extends Component {
                 this.setState({ loading: false })
             })
     }
+    handleRatingChange (value) {
+        axios.post('movieRating', [this.props.imdb_id, value])
+            .then((res) => {
+              //  this.setState({rating: res.data[0].mt_user_rating});
+            });
+    };
 
     render() {
         let poster = !this.state.loading ? AWS_URL + this.state.movieDetails.image : undefined;
@@ -69,7 +81,7 @@ class MOVIE_DETAILS_WIDGET extends Component {
                             marginRight: "10px",
                             backgroundColor: "gray"
                         }}
-                    ></div>
+                    />
                     <p>{actor.fullname}</p>
                 </div>
             )
@@ -97,7 +109,7 @@ class MOVIE_DETAILS_WIDGET extends Component {
                                 marginRight: "10px",
                                 backgroundColor: "gray",
                             }}
-                        ></div> 
+                        />
                         <div
                             style={{
                                 width: "60%"                            
@@ -105,6 +117,15 @@ class MOVIE_DETAILS_WIDGET extends Component {
                         >
                             <h3>{this.state.movieDetails.title}</h3>
                             <p>{this.state.movieDetails.year}</p>
+                            <Rating
+                                emptySymbol="fa fa-star-o fa-2x"
+                                fullSymbol={"fa fa-star fa-2x"}
+                                initialRating={this.state.movieDetails.mt_rating}
+                                fractions={2}
+                                onChange={this.handleRatingChange}
+                                value={this.state.movieDetails.mt_rating}
+                                style={this.goldStar}
+                            />
                             <p>{this.state.movieDetails.tagline}</p>
                         </div>
                     </div>
