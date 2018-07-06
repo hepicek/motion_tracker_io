@@ -13,12 +13,21 @@
   background-position: center;
 }
 .searchItemDetails-userImgContainer {
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
   background-color: #D0D0D0;
   background-size: cover;
   background-position: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .movieItem-p {
+    font-size: .6rem;
+  }
+  .fa-star, .fa-star-o {
+    font-size: .8rem;
+  }
 }
 
 // @import './search_widget_components/_actor_item_search_detail.scss';

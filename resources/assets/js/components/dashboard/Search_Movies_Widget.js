@@ -28,7 +28,6 @@ class SEARCH_MOVIES_WIDGET extends Component {
     }
     render() {
         let {props} = this;
-        console.log(props);
         return (
             <div className="searchMoviesContainer w-100">
                 <Nav tabs
@@ -61,7 +60,10 @@ class SEARCH_MOVIES_WIDGET extends Component {
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
-                        <SEARCH_RESULTS_MOVIES results={props.searchResults.movies}/>
+                        <SEARCH_RESULTS_MOVIES 
+                            lists={props.lists}
+                            results={props.searchResults.movies}
+                        />
                     </TabPane>
                     <TabPane tabId="2">
                         <SEARCH_RESULTS_ACTORS results={props.searchResults.actors}/>

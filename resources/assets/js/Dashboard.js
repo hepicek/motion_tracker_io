@@ -262,7 +262,8 @@ class Dashboard extends Component {
                             {/*this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>*/}
                             {(this.state.searchResults.movies.length === 0 && this.state.searchResults.actors.length === 0 && this.state.searchResults.users.length === 0) && <NEWS_FEED topMovies={this.state.topMovies}/>}
                             {(this.state.searchResults.movies.length > 0 || this.state.searchResults.actors.length > 0 || this.state.searchResults.users.length > 0) &&
-                                <SEARCH_MOVIES_WIDGET 
+                                <SEARCH_MOVIES_WIDGET
+                                    lists={this.state.userLists} 
                                     searchType={this.state.searchType}
                                     searchResults={this.state.searchResults}
                                     handleCategoryClick={this.handleCategoryClick}
@@ -270,7 +271,7 @@ class Dashboard extends Component {
                                 />
                             }
                         </Row>
-                        <Row className="mx-0">
+                        <Row className="mx-0 p-0">
                             <FRIENDS_WIDGET
                                 handleFriendBtnClick={this.handleFriendBtnClick}    
                                 getPendingRequests={this.getPendingRequests}

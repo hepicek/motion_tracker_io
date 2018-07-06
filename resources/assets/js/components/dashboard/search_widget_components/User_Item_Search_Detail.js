@@ -8,15 +8,11 @@ class USER_ITEM_SEARCH_DETAILS extends Component {
 
     }
 
-    render() {
-        console.log(this.props);
-        
-        
+    render() {       
         return (
             <div className="searchItemDetails">
                
             </div>
-
         )
     }
 }

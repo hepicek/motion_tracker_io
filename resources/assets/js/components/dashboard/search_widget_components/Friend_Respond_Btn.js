@@ -1,40 +1,55 @@
 import React, {Component} from 'react';
-
+import {Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from 'reactstrap';
 
 class FRIEND_RESPOND_BTN extends Component {
     constructor(props) {
         super(props)
         this.state ={
-            caret: "up"
+            dropdownOpen: false
         }
         this.handleFriendBtnClick = this.handleFriendBtnClick.bind(this);
         
     }
     handleFriendBtnClick() {
-        this.setState({
-            caret: this.state.caret === 'down' ? 'up' : 'down'
-        });
+        this.setState(prevState =>({
+            dropdownOpen: !prevState.dropdownOpen
+        }));
     }
     render() {
 
         return (
-            <div 
-                className="addFriendButton select"
-                onClick={this.handleFriendBtnClick}
+            
+            <Dropdown 
+                isOpen={this.state.dropdownOpen}
+                toggle={this.handleFriendBtnClick}
+                
             >
+                <DropdownToggle caret>
                 Respond
-                <i className={"fa fa-caret-" + this.state.caret} />
-                {this.state.caret == 'down' && 
-                    <div className="select-selectBtn">
-                        <p onClick={() => {
-                            this.props.handleFriendBtnClick(3, this.props.id);
-                        }}>Accept</p>   
-                        <p onClick={() => {
-                            this.props.handleFriendBtnClick(4, this.props.id);
-                        }}>Reject</p>
-                    </div>
-                }    
-            </div>
+                </DropdownToggle>
+                    <DropdownMenu
+                    className="p-0"
+                    style={{
+                        minWidth: "unset",
+                        cursor: "pointer"                    
+                    }}
+                    >
+                        <DropdownItem 
+                            style={{cursor: "pointer"}}
+                            onClick={() => {
+                                this.props.handleFriendBtnClick(3, this.props.id);
+                            }}
+                        >
+                            Accept
+                        </DropdownItem>
+                        <DropdownItem divider className="m-0"/> 
+                        <DropdownItem 
+                            style={{cursor: "pointer"}}
+                            onClick={() => {
+                                this.props.handleFriendBtnClick(4, this.props.id);
+                            }}>Reject</DropdownItem>
+                    </DropdownMenu>
+            </Dropdown>  
         )
     }
 }

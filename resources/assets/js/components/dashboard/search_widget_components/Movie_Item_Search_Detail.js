@@ -35,8 +35,8 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
 
             let imageBackground = AWS_URL + image;
             return (
-                <Col className="d-flex flex-column align-items-center">
-                    <div key={'actor-image-' + id}
+                <Col key={'actor-image-' + id} className="d-flex flex-column align-items-center">
+                    <div 
                          style={{
                              backgroundImage: `url(${imageBackground})`,
                              height: '100px',

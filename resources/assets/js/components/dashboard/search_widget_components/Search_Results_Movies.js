@@ -11,7 +11,10 @@ class SEARCH_RESULTS_MOVIES extends Component {
             <div
                 key={'search-' + id}
             >
-                <SEARCH_RESULTS_ITEM_WIDGET_MOVIES searchResultsItem={result} />
+                <SEARCH_RESULTS_ITEM_WIDGET_MOVIES 
+                    searchResultsItem={result} 
+                    lists={props.lists}
+                />
             </div>
             ))
         return (

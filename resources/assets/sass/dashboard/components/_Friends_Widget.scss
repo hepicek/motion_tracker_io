@@ -1,20 +1,5 @@
-.friendsWidget-pendingRequests {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 2px solid slategray;
-    border-radius: 15px;
-    margin: 5px;
-    padding: 5px;
-    width: 60%;
-    p {
-        margin: 0;
+@media only screen and (max-width: 576px) {
+    .pendingRequest {
+        flex-direction: column;
     }
-}
-.friendsWidget-imgContainer {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
 }

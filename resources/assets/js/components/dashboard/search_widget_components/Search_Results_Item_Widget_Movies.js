@@ -4,7 +4,7 @@ import {decodeString} from '../../../helpers/helper';
 import MOVIE_ITEM_SEARCH_DETAILS from './Movie_Item_Search_Detail.js';
 import Rating from "react-rating";
 import axios from "axios/index";
-import {Row, Col, Collapse} from 'reactstrap';
+import {Row, Col, Collapse, Dropdown, DropdownToggle, DropdownItem, DropdownMenu} from 'reactstrap';
 
 const spec = {
     isDragging(props, monitor) {
@@ -37,16 +37,22 @@ function collect(connect, monitor) {
 class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
     constructor(props) {
         super(props);
-        this.handleCaretClick = this.handleCaretClick.bind(this);
-        this.handleRatingChange = this.handleRatingChange.bind(this);
         this.state = {
             caret: 'down',
             collapse: false,
             rating: 0,
-            starColor: 'blackStar'
+            starColor: 'blackStar',
+            addListToggle: false,
         }
+        this.handleCaretClick = this.handleCaretClick.bind(this);
+        this.handleRatingChange = this.handleRatingChange.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
-
+    toggle() {
+        this.setState(prevState => ({
+            addListToggle: !prevState.addListToggle
+        }))
+    }
     handleCaretClick() {
         this.setState(prevState => ({
             caret: this.state.caret === 'down' ? 'up' : 'down',
@@ -71,13 +77,20 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
 
     render() {
         let movieItem = this.props.searchResultsItem;
+        let lists = this.props.lists.map(list => {
+            return (
+                <DropdownItem>
+                    {list.list_title}
+                </DropdownItem>
+            )
+        })
         const {isDragging, connectDragSource, canDrag} = this.props;
         let vertAlign = {
             display: "flex",
             alignItems: "center"
         }
         return connectDragSource(
-            <div>
+            <div key={"searchResultItem-" + movieItem.imdb_id}>
                 <Row className='bg-white mx-0 my-2 py-1'
                      style={{
                          border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging,
@@ -96,7 +109,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                         <i className={"fa fa-caret-" + this.state.caret}/>
                     </Col>
                     <Col
-                        xs="3" md="3"
+                        xs="11" md="3"
                         onClick={this.handleCaretClick}
                         style={vertAlign}
                         className="p-0"
@@ -104,25 +117,25 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                         <p style={{margin: "0"}}>{decodeString(movieItem.name)}</p>
                     </Col>
                     <Col
-                        xs="1" md="1"
+                        xs="2" md="1"
                         onClick={this.handleCaretClick}
                         style={vertAlign}
                     >
-                        <p style={{margin: "0"}}>{movieItem.year}</p>
+                        <p className="movieItem-p" style={{margin: "0"}}>{movieItem.year}</p>
                     </Col>
                     <Col
                         xs="3" md="3"
                         onClick={this.handleCaretClick}
                         style={vertAlign}
                     >
-                        <p style={{margin: "0"}}>IMDB Rating: {movieItem.rating}</p>
+                        <p className="movieItem-p" style={{margin: "0"}}>IMDB: {movieItem.rating}</p>
                     </Col>
                     <Col 
-                        xs="4" md="4"
+                        xs="5" md="3"
                         className="movieItemRating"
                         style={vertAlign}
                     >
-                        <p style={{margin: "0 5px 0 0"}}>My Rating:</p>
+                        <p className="movieItem-p" style={{margin: "0 5px 0 0"}}>MT: </p>
                         <Rating
                             emptySymbol="fa fa-star-o fa-2x"
                             fullSymbol={"fa fa-star fa-2x " + this.state.starColor}
@@ -132,6 +145,25 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                             value={this.state.rating}
                             style={{fontSize: ".6rem"}}
                         />
+                    </Col>
+                    <Col xs="1" className="m-0 d-flex justify-content-center align-items-center">
+                    <Dropdown
+                        direction="left"
+                        isOpen={this.state.addListToggle}
+                        toggle={this.toggle}
+                    >
+                        <DropdownToggle 
+                            color="white"
+                            style={{
+                                backgroundColor: "rgba(0,0,0,0)"
+                            }}
+                        >
+                            <i className="fa fa-cog" />
+                        </DropdownToggle>
+                        <DropdownMenu>
+                            {lists}
+                        </DropdownMenu>
+                    </Dropdown>
                     </Col>
                 </Row>
                 <Collapse isOpen={this.state.collapse}> 
