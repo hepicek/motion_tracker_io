@@ -83,7 +83,7 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
                             </Col>
                         </Row>
                         <p 
-                        style={{fontWeight: "normal"}}
+                            style={{fontWeight: "normal"}}
                             className="my-1 text-justify">
                             {this.state.movieDetail.storyline && decodeString(this.state.movieDetail.storyline)}
                         </p>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import USER_ITEM_SEARCH_DETAILS from './User_Item_Search_Detail';
 import FRIEND_RESPOND_BTN from './Friend_Respond_Btn';
 import { AWS_URL } from '../../../../../../config/js/config';
+import {Button} from 'reactstrap';
 
 class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
     constructor(props) {
@@ -32,31 +33,34 @@ class SEARCH_RESULTS_ITEM_WIDGET_USERS extends Component {
             friendBtnText = 'Approve/Deny'
         }
         return (
-            <div>
-                <a href={"/publicprofile/" + user.id} className='searchResultsItem'>
-                <div 
-                    className="searchItemDetails-userImgContainer"
-                    style={{
-                        backgroundImage: `url(${userImage})`
-                    }}
-                >
-                </div>
-                    <p>{user.first_name} {user.last_name} - ({user.common_name})</p>
-                    {user.relStatus != 3 && <div 
+            <div className="p-2 d-flex justify-content-between align-items-center">
+                <a href={"/publicprofile/" + user.id} className='d-flex align-items-center'>
+                    <div 
+                        className="searchItemDetails-userImgContainer mr-2"
+                        style={{
+                            backgroundImage: `url(${userImage})`
+                        }}
+                    >
+                    </div>
+                        <p className="my-0">
+                            {user.first_name} {user.last_name} - ({user.common_name})
+                        </p>
+                </a>
+                    {user.relStatus != 3 && <Button
                         className="addFriendButton"
                         onClick={() => {
                             this.props.handleFriendBtnClick(user.relStatus, user.id);
                         }}
                     >
                     {friendBtnText}
-                    </div>}
+                    </Button>}
                     {user.relStatus == 3 && 
                         <FRIEND_RESPOND_BTN 
                             id={user.id} 
                             handleFriendBtnClick={this.props.handleFriendBtnClick}
                         />
                     }
-                </a>
+                
                 
                 {this.state.caret === 'up' && <USER_ITEM_SEARCH_DETAILS UserDetails={user}/>}
             </div>

@@ -28,6 +28,7 @@ class SEARCH_MOVIES_WIDGET extends Component {
     }
     render() {
         let {props} = this;
+        console.log(props);
         return (
             <div className="searchMoviesContainer w-100">
                 <Nav tabs
@@ -66,7 +67,9 @@ class SEARCH_MOVIES_WIDGET extends Component {
                         <SEARCH_RESULTS_ACTORS results={props.searchResults.actors}/>
                     </TabPane>
                     <TabPane tabId="3">
-                        <SEARCH_RESULTS_USERS results={props.searchResults.users}/>
+                        <SEARCH_RESULTS_USERS 
+                            handleFriendBtnClick={props.handleFriendBtnClick}
+                            results={props.searchResults.users}/>
                     </TabPane>
                 </TabContent>
             </div>

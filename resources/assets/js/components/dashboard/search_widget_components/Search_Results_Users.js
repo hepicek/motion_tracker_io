@@ -10,12 +10,18 @@ class SEARCH_RESULTS_USERS extends Component {
         let searchResults = props.results.map((result, id) => (
             <div
                 key={'search-' + id}
+                className="bg-white mb-2"
             >
-                <SEARCH_RESULTS_ITEM_WIDGET_USERS searchResultsItem={result} />
+                <SEARCH_RESULTS_ITEM_WIDGET_USERS 
+                    searchResultsItem={result} 
+                    handleFriendBtnClick={props.handleFriendBtnClick}
+                />
             </div>
             ))
         return (
-            <div>
+            <div
+                className="p-2"
+            >
                 {searchResults}
             </div>
         )
