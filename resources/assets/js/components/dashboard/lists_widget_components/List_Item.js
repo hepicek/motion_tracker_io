@@ -32,9 +32,8 @@ class LIST_ITEM extends Component {
         let {item} = this.props;
         return (
             <div 
-                key={"MovieDetails-" + item.id}
                 className="bg-white d-flex justify-content-between align-items-center my-1 p-1 userListItemInList"
-                key={item.id} id={"listItem-" + item.id}
+                id={"listItem-" + item.id}
                 style={{cursor: "default"}}
             >
                 <div

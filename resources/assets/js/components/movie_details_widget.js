@@ -61,11 +61,12 @@ class MOVIE_DETAILS_WIDGET extends Component {
     };
 
     render() {
-        let poster = !this.state.loading ? AWS_URL + this.state.movieDetails.image : undefined;
+        let poster = !this.state.loading && this.state.movieDetails.image ? AWS_URL + this.state.movieDetails.image : "";
         let cast = !this.state.loading && this.state.movieDetails.cast.map(actor => {
-            let actorImage = AWS_URL + actor.person_img;
+            let actorImage = actor.person_img ? AWS_URL + actor.person_img : "";
             return (
                 <div 
+                    key={"movieDetails-" + actor.imdb_id}
                     style={{
                         display: "flex",
                         flexDirection: "column",

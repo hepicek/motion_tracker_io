@@ -46,7 +46,7 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
                              backgroundColor: '#D0D0D0'
                          }}
                     />
-                    <p key={'actor-' + id}>{decodeString(actor.fullname)}</p>
+                    <p>{decodeString(actor.fullname)}</p>
                 </Col>
             )
 

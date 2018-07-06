@@ -79,7 +79,13 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
         let movieItem = this.props.searchResultsItem;
         let lists = this.props.lists.map(list => {
             return (
-                <DropdownItem>
+                <DropdownItem 
+                    key={"addToList-" + list.id}
+                    id={"addToList-" + list.id}
+                    onClick={(e) => {
+                        this.props.saveToList(movieItem.imdb_id, list.id);
+                    }}    
+                >
                     {list.list_title}
                 </DropdownItem>
             )
@@ -155,12 +161,16 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                         <DropdownToggle 
                             color="white"
                             style={{
-                                backgroundColor: "rgba(0,0,0,0)"
+                                backgroundColor: "rgba(0,0,0,0)",
                             }}
                         >
                             <i className="fa fa-cog" />
                         </DropdownToggle>
-                        <DropdownMenu>
+                        <DropdownMenu className="p-0">
+                            <DropdownItem header className="m-0 py-1 px-2">
+                            Add to list:
+                            </DropdownItem>
+                            <DropdownItem divider className="p-0 my-0"/>
                             {lists}
                         </DropdownMenu>
                     </Dropdown>

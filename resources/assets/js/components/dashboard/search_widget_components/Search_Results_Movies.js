@@ -14,6 +14,7 @@ class SEARCH_RESULTS_MOVIES extends Component {
                 <SEARCH_RESULTS_ITEM_WIDGET_MOVIES 
                     searchResultsItem={result} 
                     lists={props.lists}
+                    saveToList={props.saveToList}
                 />
             </div>
             ))

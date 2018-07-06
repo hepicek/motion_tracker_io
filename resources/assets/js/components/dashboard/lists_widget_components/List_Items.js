@@ -14,7 +14,7 @@ class LIST_ITEMS extends Component {
 
         let items = itemsArray ? itemsArray.map(item => (
             <LIST_ITEM 
-                key={item.id} 
+                key={"listItem-" + item.id} 
                 item={item} 
                 handleDeleteListItem={props.handleDeleteListItem}
             />

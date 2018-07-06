@@ -268,6 +268,7 @@ class Dashboard extends Component {
                                     searchResults={this.state.searchResults}
                                     handleCategoryClick={this.handleCategoryClick}
                                     handleFriendBtnClick={this.handleFriendBtnClick}
+                                    saveToList={this.handleDragItemDrop}
                                 />
                             }
                         </Row>

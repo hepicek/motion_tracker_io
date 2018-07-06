@@ -62,6 +62,7 @@ class SEARCH_MOVIES_WIDGET extends Component {
                     <TabPane tabId="1">
                         <SEARCH_RESULTS_MOVIES 
                             lists={props.lists}
+                            saveToList={props.saveToList}
                             results={props.searchResults.movies}
                         />
                     </TabPane>
