@@ -18,7 +18,7 @@ class SEARCH_BAR extends Component {
                 >find a movie...
                     <input
                     name='searchBar-input'
-                    className="ml-2"
+                    className="ml-2 px-2"
                     id='searchBar-input'
                     type='text'
                     value={this.props.searchText}

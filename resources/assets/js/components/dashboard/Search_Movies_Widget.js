@@ -1,53 +1,84 @@
-import React from 'react';
-import SEARCH_CATEGORIES from './search_widget_components/Search_Categories';
-import SEARCH_RESULTS_ITEM_WIDGET_MOVIES from './search_widget_components/Search_Results_Item_Widget_Movies';
-import SEARCH_RESULTS_ITEM_WIDGET_ACTORS from './search_widget_components/Search_Results_Item_Widget_Actors';
-import SEARCH_RESULTS_ITEM_WIDGET_USERS from './search_widget_components/Search_Results_Item_Widget_Users';
+import React, {Component} from 'react';
+// import SEARCH_CATEGORIES from './search_widget_components/Search_Categories';
+import SEARCH_RESULTS_MOVIES from './search_widget_components/Search_Results_Movies';
+import SEARCH_RESULTS_ACTORS from './search_widget_components/Search_Results_Actors';
+import SEARCH_RESULTS_USERS from './search_widget_components/Search_Results_Users';
+// import SEARCH_RESULTS_ITEM_WIDGET_MOVIES from './search_widget_components/Search_Results_Item_Widget_Movies';
+// import SEARCH_RESULTS_ITEM_WIDGET_ACTORS from './search_widget_components/Search_Results_Item_Widget_Actors';
+// import SEARCH_RESULTS_ITEM_WIDGET_USERS from './search_widget_components/Search_Results_Item_Widget_Users';
+import classnames from 'classnames';
+import {TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
 
 
-const SEARCH_MOVIES_WIDGET = (props) => {
-    let results;
-    if(props.searchType == 'movies') {
-        results = props.searchResults.movies;
-    } else if(props.searchType == 'actors') {
-        results = props.searchResults.actors;
-    } else {
-        results = props.searchResults.users;
+class SEARCH_MOVIES_WIDGET extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            activeTab: '1'
+        }
+        this.toggle = this.toggle.bind(this);
     }
-    let searchResults = results.map((result, id) => (
-        <div
-            key={'search-' + id}
-        >
-            {props.searchType == 'movies' && <SEARCH_RESULTS_ITEM_WIDGET_MOVIES searchResultsItem={result}/> } 
-            {props.searchType == "actors" && <SEARCH_RESULTS_ITEM_WIDGET_ACTORS searchResultsItem={result} />}
-            {props.searchType == "users" && 
-                <SEARCH_RESULTS_ITEM_WIDGET_USERS 
-                        searchResultsItem={result} 
-                        handleFriendBtnClick={props.handleFriendBtnClick}
-                />
-            }
-        </div>
-    ));
-    let bgColor;
-    if(props.searchType == 'movies') {
-        bgColor = '#68878b';
-    } else if(props.searchType == 'actors') {
-        bgColor = '#b8b069';
-    } else {
-        bgColor = '#c29d84';
+
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
     }
-    return (
-        <div className="searchMoviesContainer">
-            <SEARCH_CATEGORIES 
-                handleCategoryClick={props.handleCategoryClick}
-                searchType={props.searchType}
-            />
-            <div className="searchResultsContainer" style={{backgroundColor: bgColor}}>
-            {searchResults}
+    render() {
+        let {props} = this;
+        return (
+            <div className="searchMoviesContainer">
+                <Nav tabs
+                    style={{cursor: "default"}}    
+                >
+                    <NavItem>
+                    <NavLink
+                        className={classnames({ active: this.state.activeTab === '1' })}
+                        onClick={() => { this.toggle('1'); }}
+                    >
+                        Movies
+                    </NavLink>
+                    </NavItem>
+                    <NavItem>
+                    <NavLink
+                        className={classnames({ active: this.state.activeTab === '2' })}
+                        onClick={() => { this.toggle('2'); }}
+                    >
+                        Actors
+                    </NavLink>
+                    </NavItem>
+                    <NavItem>
+                    <NavLink
+                        className={classnames({ active: this.state.activeTab === '3' })}
+                        onClick={() => { this.toggle('3'); }}
+                    >
+                        Users
+                    </NavLink>
+                    </NavItem>
+                </Nav>
+                <TabContent activeTab={this.state.activeTab}>
+                    <TabPane tabId="1">
+                        <SEARCH_RESULTS_MOVIES results={props.searchResults.movies}/>
+                    </TabPane>
+                    <TabPane tabId="2">
+                        <SEARCH_RESULTS_ACTORS results={props.searchResults.actors}/>
+                    </TabPane>
+                    <TabPane tabId="3">
+                        <SEARCH_RESULTS_USERS results={props.searchResults.users}/>
+                    </TabPane>
+                </TabContent>
             </div>
-        </div>
-    )
+        )
+    }
 };
 
 
 export default SEARCH_MOVIES_WIDGET;
+
+
+// <SEARCH_CATEGORIES 
+// handleCategoryClick={props.handleCategoryClick}
+// searchType={props.searchType}
+// />
