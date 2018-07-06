@@ -35,7 +35,7 @@ class ACTOR_ITEM_SEARCH_DETAILS extends Component {
                     style={{
                         backgroundImage: `url(${backgroundImage})`
                     }}
-                ></div>
+                />
                 <div>
                     <p>{decodeString(movie.name)} - {movie.year}</p>
                 </div>

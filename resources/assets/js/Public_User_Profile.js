@@ -92,7 +92,7 @@ class Public_User_Profile extends Component {
                 {loading && <div>Loading...</div>}
                 {loading && <Spinner/>}
                 {error && <div>Some error occured</div>}
-                <Row className="px-2 bg-white">
+                <Row className="mx-0 px-2 bg-white">
                     {userDetail && <UserInfo userData={this.state.userDetail}/>}
                     {userFriends && <PublicUserFriends friendsData={this.state.userFriends}/>}
                     {recentActivity && <RecentUserActivities recentActivity={this.state.recentActivity}/>}

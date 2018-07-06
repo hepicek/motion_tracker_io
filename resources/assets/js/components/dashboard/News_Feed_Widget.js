@@ -48,9 +48,9 @@ class NEWS_FEED extends Component {
             )
         });
         return (
-            <div className="newsFeed w-100">
+            <div className="newsFeed w-100 bg-white p-2 mb-3">
                 <div className="newsFeed-header"><h5>News Feed</h5></div>
-                <div className="newsFeed-feed px-2 w-100">
+                <div className="newsFeed-feed w-100 mx-0">
                     {loading && loading}
                     {loading && <Spinner />}
                     {news && news}

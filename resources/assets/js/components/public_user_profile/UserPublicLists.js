@@ -9,7 +9,7 @@ const UserPublicLists = (props) => {
 
     return (
         <Row
-            className="bg-white p-2"    
+            className="bg-white p-2 mx-0"
         >
             <h4 className="col-xs-12 col-md-12">{userDetail.common_name}'s lists</h4>
             <div className="col-xs-12 col-md-12">

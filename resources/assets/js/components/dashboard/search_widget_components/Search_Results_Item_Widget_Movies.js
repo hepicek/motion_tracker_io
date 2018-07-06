@@ -83,7 +83,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
                     padding: "5px 0"
                 }}
                 >
-                <Row className='show-grid'
+                <Row className='show-grid mx-0'
                      style={{
                          border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging,
                          display: "flex",

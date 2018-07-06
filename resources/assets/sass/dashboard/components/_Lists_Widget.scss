@@ -1,23 +1,16 @@
-@import './lists_widget_components/_list_items.scss';
-@import './lists_widget_components/_list_menu_btn_options.scss';
-@import './lists_widget_components/_list_menu_btn.scss';
-@import './lists_widget_components/_list.scss';
-@import './lists_widget_components/_lists_widget_header.scss';
-@import './lists_widget_components/_new_lists.scss';
-
-
-#listsWidget {
-    height: 600px;
-   }
-
-  #listsWidget-lists {
-    width: 100%;
-    flex-grow: 1;
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    overflow: auto;
+.userListItemInList {
+  transition: box-shadow .1s;
+  &:hover {
+    box-shadow: 0 0 6px 2px rgba(200, 200, 200, .4);
   }
+}
+
+@media only screen and (min-width: 767.99px) {
+  #listsWidget {
+    width: 99%;
+    margin-left: 15px;
+  }
+}
 
 
   

@@ -22,9 +22,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel px-3">
             <div class="container">
-                @guest 
+                @guest
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
@@ -54,9 +54,9 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            <div 
+                            <div
                                 style="
-                                    height: 40px; 
+                                    height: 40px;
                                     width: 40px;
                                     border-radius: 50%;
                                     background-image: url('{{ env('AWS_STORAGE') }}{{Auth::user()->img_url}}');

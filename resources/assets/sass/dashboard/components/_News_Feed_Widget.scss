@@ -1,35 +1,3 @@
-// .newsFeed {
-//   padding: 10px;
-//   margin-top: 10px;
-// }
-
-// .newsFeed-feed {
-//   max-height: 540px;
-//   overflow: auto;
-// }
-
-// .newsFeed-item {
-//   font-size: .8rem;
-//   display: flex;
-//   align-items: center;
-//   margin: 10px;
-//   border: 2px solid slategray;
-//   padding: 5px;
-//   border-radius: 15px;
-//   p {
-//     margin: 0 5px;
-//   }
-// }
-
-// .newsFeedUserName {
-//   text-decoration: none;
-//   color: inherit;
-//   &:hover {
-//     text-decoration: none;
-//     color: inherit;
-//   }
-// }
-
 .newsFeed-item_userImage {
   height: 60px;
   width: 60px;
@@ -37,4 +5,11 @@
   background-size: cover;
   background-position: center;
   margin-right: 10px;
+}
+
+.newsFeed-item {
+  transition: box-shadow .1s;
+  &:hover {
+    box-shadow: 0 0 6px 2px rgba(200, 200, 200, .4);
+  }
 }

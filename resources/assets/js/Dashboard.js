@@ -249,16 +249,16 @@ class Dashboard extends Component {
     }
     render() {
         return (
-            <Row className='dashboard'>
-                <Row className='searchSection w-100'>
+            <Row className='dashboard mx-0'>
+                <Row className='searchSection w-100 mx-0'>
                     <SEARCH_BAR
                         handleSearch={this.handleSearch}
                         searchText={this.state.searchText}
                     />
                 </Row>
-                <Row className="w-100">
-                    <Col md="8" lg="8">
-                        <Row>
+                <Row className="w-100 mx-0 d-flex justify-content-between">
+                    <Col md="8" lg="8" className="px-0">
+                        <Row className="mx-0">
                             {/*this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>*/}
                             {(this.state.searchResults.movies.length === 0 && this.state.searchResults.actors.length === 0 && this.state.searchResults.users.length === 0) && <NEWS_FEED topMovies={this.state.topMovies}/>}
                             {(this.state.searchResults.movies.length > 0 || this.state.searchResults.actors.length > 0 || this.state.searchResults.users.length > 0) &&
@@ -270,7 +270,7 @@ class Dashboard extends Component {
                                 />
                             }
                         </Row>
-                        <Row>
+                        <Row className="mx-0">
                             <FRIENDS_WIDGET
                                 handleFriendBtnClick={this.handleFriendBtnClick}    
                                 getPendingRequests={this.getPendingRequests}
@@ -278,7 +278,7 @@ class Dashboard extends Component {
                             />
                         </Row>
                     </Col>
-                    <Col md="4" lg="4">
+                    <Col md="4" lg="4" className="px-0">
                         <LISTS_WIDGET
                             lists={this.state.userLists}
                             renameList={this.state.renameList}

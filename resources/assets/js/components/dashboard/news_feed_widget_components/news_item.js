@@ -12,7 +12,7 @@ class NEWS_ITEM extends Component {
         let {item, background, daysAgo} = this.props;
         return (
             <Row 
-                className="newsFeed-item bg-white my-2 p-2 d-flex align-items-center"
+                className="newsFeed-item bg-light my-2 p-2 d-flex align-items-center mx-0"
                 style={{fontSize: ".7rem"}}    
             >
                     <div 
