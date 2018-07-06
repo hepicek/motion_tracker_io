@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MOVIE_DETAILS_WIDGET from '../../movie_details_widget';
 import { decodeString } from '../../../helpers/helper';
+
 let hoverTimeout;
 
 class LIST_ITEM extends Component {
@@ -32,20 +33,24 @@ class LIST_ITEM extends Component {
         return (
             <div 
                 key={"MovieDetails-" + item.id}
-                className="userListItem" 
+                className="bg-white d-flex justify-content-between align-items-center my-1 p-1" 
                 key={item.id} id={"listItem-" + item.id}
-                onMouseEnter={(e) => this.handleHover(e, item)}
-                onMouseLeave={this.handleHover}
+                style={{cursor: "default"}}
             >
-                <p>{decodeString(item.name)} - {item.year}</p>
+                <div
+                    onMouseEnter={(e) => this.handleHover(e, item)}
+                    onMouseLeave={this.handleHover}
+                >
+                    <p className="my-0">{decodeString(item.name)} - {item.year}</p>
+                    {this.state.hovering && <MOVIE_DETAILS_WIDGET 
+                        hovering={this.state.hovering} 
+                        imdb_id={item.imdb_id}   
+                    />}
+                </div>
                 <i 
                     className="fa fa-times"
                     onClick={this.props.handleDeleteListItem}
                 />
-                {this.state.hovering && <MOVIE_DETAILS_WIDGET 
-                    hovering={this.state.hovering} 
-                    imdb_id={item.imdb_id}   
-                />}
             </div>
         )
 

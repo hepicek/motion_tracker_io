@@ -36,6 +36,7 @@ class MOVIE_TITLE extends Component {
                     margin: "0",
                     cursor: "default",
                     position: "relative",
+                    marginRight: "2px"
                 }}
                 onMouseEnter={this.handleHover} 
                 onMouseLeave={this.handleHover}    

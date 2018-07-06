@@ -16,7 +16,10 @@ class New_List extends Component {
             <input 
                 type="text"  
                 placeholder="new list title" 
-                className="newListInput" 
+                className="newListInput m-1 p-1" 
+                style={{
+                    outline: "none",
+                }}
                 id="newListInput"
                 autoFocus
                 onKeyUp={this.props.saveNewList}

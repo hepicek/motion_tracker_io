@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ListItem from "./ListItem";
-import {Collapse, CardBody, Card} from 'reactstrap';
+import {Collapse} from 'reactstrap';
 
 class UserList extends Component {
     constructor(props) {

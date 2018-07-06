@@ -20,7 +20,7 @@ class LIST_ITEMS extends Component {
             />
         )) : undefined;
         return (
-            <div className="expandedListItems" >
+            <div className="p-2 bg-light" >
                 {items}
             </div>
         )

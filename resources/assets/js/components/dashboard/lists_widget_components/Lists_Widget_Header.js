@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 
 const LISTS_HEADER = (props) => {
     return (
-        <div id="listsWidget-topButtons">
+        <div 
+            id="listsWidget-topButtons"
+            style={{userSelect: "none"}}
+        >
         <p
+            className="m-0"
             onClick={props.handleNewListBtnClick}
-        ><i className="fa fa-plus-square"/>Create a new list</p>
-       
+            style={{cursor: "pointer"}}
+        ><i className="fa fa-plus-square mr-1"/>New list</p>
+       <hr className="m-1" />
     </div> 
     )
 }

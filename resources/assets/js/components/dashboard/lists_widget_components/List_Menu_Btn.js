@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
 import LIST_BTN_OPTIONS from './List_Menu_Btn_Options';
+import {Popover} from 'reactstrap';
 
 class LIST_MENU_BTN extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            open: false
+            popoverOpen: false
         }
-        this.handleListMenuBtnClick = this.handleListMenuBtnClick.bind(this);
-        this.handleClickOutside = this.handleClickOutside.bind(this);
-       
+        this.toggle = this.toggle.bind(this);       
     }
-    handleListMenuBtnClick(e) {
-        let open = this.state.open ? false : true;
-        this.setState({
-            open
-        });
+    toggle() {
+        this.setState(prevState => ({
+            popoverOpen: !prevState.popoverOpen
+        }))
     }
-    handleClickOutside(e) {
-        if (!e.target.classList.contains("listMenuBtnArea")) {
-          this.setState({
-              open: false
-          })
-        }
-    }
+
     render() {
-        let props = this.props
+        let props = this.props;
         return (
             <div className="listMenuBtn">
                 <i 
                     className="fa fa-cog"
-                    onClick={this.handleListMenuBtnClick}
+                    onClick={this.toggle}
+                    id={"listMenuBtn-" + props.listId}
                 />
-                {this.state.open &&
+                <Popover 
+                    style={{cursor: "pointer"}}
+                    placement="left"
+                    isOpen={this.state.popoverOpen}
+                    toggle={this.toggle}
+                    target={"listMenuBtn-" + props.listId}
+                    className="friendOptions"
+                >
                     <LIST_BTN_OPTIONS 
                         listId = {props.listId}
                         handleRenameListClick={props.handleRenameListClick}
@@ -40,12 +40,11 @@ class LIST_MENU_BTN extends Component {
                         handleClickOutside={this.handleClickOutside}
                         open={this.state.open}
                     />
-                }
+                </Popover>
             </div>
 
         )
-
-}
+    }
 }
 
 

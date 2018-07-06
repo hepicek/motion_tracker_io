@@ -7,15 +7,6 @@
 
 
 #listsWidget {
-    width: 28%;
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px 0 black;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
     height: 600px;
    }
 
@@ -27,10 +18,6 @@
     border-radius: 10px;
     overflow: auto;
   }
-
-  // .listDeleteBtn {
-  //   cursor: pointer; 
-  // }
 
 
   

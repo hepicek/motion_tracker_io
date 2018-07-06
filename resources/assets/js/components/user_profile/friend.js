@@ -59,16 +59,16 @@ class FRIEND extends Component {
                 >
                 </i>
                 <Popover 
-                style={{cursor: "pointer"}}
-                placement="left"
-                isOpen={this.state.popoverOpen}
-                toggle={this.toggle}
-                target={"optionBtn-" + friend.id}
-                className="friendOptions"
-                onClick={this.deleteFriend}
-            >
-                <PopoverBody>Delete</PopoverBody>
-            </Popover>
+                    style={{cursor: "pointer"}}
+                    placement="left"
+                    isOpen={this.state.popoverOpen}
+                    toggle={this.toggle}
+                    target={"optionBtn-" + friend.id}
+                    className="friendOptions"
+                    onClick={this.deleteFriend}
+                >
+                    <PopoverBody>Delete</PopoverBody>
+                </Popover>
             </div>
         )
     }

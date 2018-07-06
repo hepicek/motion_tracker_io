@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
+import {Row, Col} from 'reactstrap';
 
-//import jsonp from 'jsonp'; //used for API call to grab top movies
-//import {TMDB_KEY} from '../../../config/js/config'; //file holding TMDB key (in .gitignore)
 import axios from 'axios'; //For API calls
 
 //react components
@@ -250,44 +249,53 @@ class Dashboard extends Component {
     }
     render() {
         return (
-            <div className='dashboard'>
-                <div className='searchSection'>
+            <Row className='dashboard'>
+                <Row className='searchSection w-100'>
                     <SEARCH_BAR
                         handleSearch={this.handleSearch}
                         searchText={this.state.searchText}
                     />
-                    {/*this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>*/}
-                    {(this.state.searchResults.movies.length === 0 && this.state.searchResults.actors.length === 0 && this.state.searchResults.users.length === 0) && <NEWS_FEED topMovies={this.state.topMovies}/>}
-                    {(this.state.searchResults.movies.length > 0 || this.state.searchResults.actors.length > 0 || this.state.searchResults.users.length > 0) &&
-                        <SEARCH_MOVIES_WIDGET 
-                            searchType={this.state.searchType}
-                            searchResults={this.state.searchResults}
-                            handleCategoryClick={this.handleCategoryClick}
-                            handleFriendBtnClick={this.handleFriendBtnClick}
+                </Row>
+                <Row className="w-100">
+                    <Col md="8" lg="8">
+                        <Row>
+                            {/*this.state.searchResults.movies.length === 0 && <TOP_MOVIES_WIDGET topMovies={this.state.topMovies}/>*/}
+                            {(this.state.searchResults.movies.length === 0 && this.state.searchResults.actors.length === 0 && this.state.searchResults.users.length === 0) && <NEWS_FEED topMovies={this.state.topMovies}/>}
+                            {(this.state.searchResults.movies.length > 0 || this.state.searchResults.actors.length > 0 || this.state.searchResults.users.length > 0) &&
+                                <SEARCH_MOVIES_WIDGET 
+                                    searchType={this.state.searchType}
+                                    searchResults={this.state.searchResults}
+                                    handleCategoryClick={this.handleCategoryClick}
+                                    handleFriendBtnClick={this.handleFriendBtnClick}
+                                />
+                            }
+                        </Row>
+                        <Row>
+                            <FRIENDS_WIDGET
+                                handleFriendBtnClick={this.handleFriendBtnClick}    
+                                getPendingRequests={this.getPendingRequests}
+                                pendingRequests={this.state.pendingRequests}
+                            />
+                        </Row>
+                    </Col>
+                    <Col md="4" lg="4">
+                        <LISTS_WIDGET
+                            lists={this.state.userLists}
+                            renameList={this.state.renameList}
+                            newList={this.state.newList ? this.state.newList : null}
+                            handleListDeleteClick={this.handleListDeleteClick}
+                            handleNewListBtnClick={this.handleNewListBtnClick}
+                            handleRenameListClick={this.handleRenameListClick}
+                            saveNewList={this.saveNewList}
+                            handleRenameListInputChange={this.handleRenameListInputChange}
+                            handleRenameListInputKeyUp={this.handleRenameListInputKeyUp}
+                            renameListInputValue={this.state.renameListInputValue ? this.state.renameListInputValue : ""}
+                            handleDragItemDrop={this.handleDragItemDrop}
+                            handleDeleteListItem={this.handleDeleteListItem}
                         />
-                    }
-
-                </div>
-                <LISTS_WIDGET
-                    lists={this.state.userLists}
-                    renameList={this.state.renameList}
-                    newList={this.state.newList ? this.state.newList : null}
-                    handleListDeleteClick={this.handleListDeleteClick}
-                    handleNewListBtnClick={this.handleNewListBtnClick}
-                    handleRenameListClick={this.handleRenameListClick}
-                    saveNewList={this.saveNewList}
-                    handleRenameListInputChange={this.handleRenameListInputChange}
-                    handleRenameListInputKeyUp={this.handleRenameListInputKeyUp}
-                    renameListInputValue={this.state.renameListInputValue ? this.state.renameListInputValue : ""}
-                    handleDragItemDrop={this.handleDragItemDrop}
-                    handleDeleteListItem={this.handleDeleteListItem}
-                />
-                <FRIENDS_WIDGET
-                    handleFriendBtnClick={this.handleFriendBtnClick}    
-                    getPendingRequests={this.getPendingRequests}
-                    pendingRequests={this.state.pendingRequests}
-                />
-            </div>
+                    </Col>
+                </Row>
+            </Row>
         );
     }
 }

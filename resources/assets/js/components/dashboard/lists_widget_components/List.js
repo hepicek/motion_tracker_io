@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {DropTarget} from 'react-dnd'
 import LIST_ITEMS from './List_Items';
 import LIST_MENU_BTN from './List_Menu_Btn';
+import {Collapse} from 'reactstrap';
 
 const listTarget = {
     drop(props, monitor, component){
@@ -31,7 +32,7 @@ class LIST extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            collapsed: this.props.list.collapsed
+            collapsed: this.props.list.collapsed,
         }
         this.handleListTitleClick = this.handleListTitleClick.bind(this);
     }
@@ -64,11 +65,12 @@ class LIST extends Component {
                 onClick={props.handleListTitleClick}
                 style={{border: hovered && "2px solid red"}}
             >
-                <div className='listHeader'>
+                <div className='listHeader d-flex w-100 align-items-center justify-content-between bg-light my-2 p-1'>
                 
                     {(list.id && props.renameList != list.id) && 
                         <h5 
-                            className="listTitle"
+                            className="m-0"
+                            style={{cursor: "pointer"}}
                             id={"title-" + (list.id ? list.id : "new")} 
                             onClick={this.handleListTitleClick}
                         >
@@ -77,7 +79,7 @@ class LIST extends Component {
                     }
                     {(list.id && props.renameList == list.id) && 
                         <input
-                            className="listTitleInput"
+                            className=""
                             id={"renameInput-" + (list.id ? list.id : "new")} 
                             onChange={props.handleRenameListInputChange}
                             onKeyUp={props.handleRenameListInputKeyUp}
@@ -92,11 +94,12 @@ class LIST extends Component {
                         handleRenameListClick = {props.handleRenameListClick}
                     />}
                 </div>
-                {this.state.collapsed == 0 && 
+                <Collapse isOpen={!!this.state.collapsed}>
                     <LIST_ITEMS 
                         items={list.items}
                         handleDeleteListItem={props.handleDeleteListItem}
-                    />}
+                    />
+                </Collapse>
             </div>
             
         )
@@ -104,5 +107,5 @@ class LIST extends Component {
 }
 
 export default DropTarget('list', listTarget, collect)(LIST);
-// export default LIST;
+
 

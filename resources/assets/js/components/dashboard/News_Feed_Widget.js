@@ -11,6 +11,7 @@ class NEWS_FEED extends Component {
         this.state = {
             news: [],
             loading: true,
+            newsFeedOffset: 0,
         }
     }
 
@@ -33,7 +34,7 @@ class NEWS_FEED extends Component {
     render() {
         let oneDay = 24*60*60*1000; 
         const {loading} = this.state;
-        let news = this.state.news.map(item => {
+        let news = this.state.news.slice(this.state.newsFeedOffset, 5 + this.state.newsFeedOffset).map(item => {
             let background = AWS_URL + item.user_img;
             let daysAgo = (new Date() - new Date(item.date.date)) / oneDay;
             daysAgo = daysAgo < 1 ? 'Today' : Math.floor(daysAgo) + ' day(s) ago';
@@ -47,9 +48,9 @@ class NEWS_FEED extends Component {
             )
         });
         return (
-            <div className="newsFeed">
+            <div className="newsFeed w-100">
                 <div className="newsFeed-header"><h5>News Feed</h5></div>
-                <div className="newsFeed-feed">
+                <div className="newsFeed-feed px-2 w-100">
                     {loading && loading}
                     {loading && <Spinner />}
                     {news && news}

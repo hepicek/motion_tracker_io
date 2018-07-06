@@ -36,7 +36,7 @@ class LISTS_WIDGET extends Component  {
         });
         }
         return (
-            <div className="dashboardWidget" id="listsWidget">
+            <div className="dashboardWidget bg-white p-2" id="listsWidget">
                 <LISTS_HEADER handleNewListBtnClick={props.handleNewListBtnClick}/>
                 <div id="listsWidget-lists">
                     {props.newList && <New_List saveNewList={props.saveNewList}/>}
