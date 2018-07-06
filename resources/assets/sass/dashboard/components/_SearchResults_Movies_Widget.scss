@@ -1,86 +1,23 @@
-.searchResultsContainer {
-  padding: 10px;
-  margin: 0;
-  height: 600px;
-  overflow: auto;
+.actorSearchImage {
+  height: 100px; 
+  width: 70px;
+  background-size: cover;
+  background-position: center;
+  background-color: #d0d0d0;
 }
-.searchMoviesContainer {
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-}
-.searchResultsItem {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  user-select: none;
-  padding: 10px;
-  background-color: #F0F0F0;
-  border: 2px solid white;
-  border-radius: 5px;
-  margin: 5px 0;
-  cursor: pointer;
-  p {
-    width: 33%;
-    margin: 0;
-    font-weight: bold;
-  }
-}
-.fa-caret-up, .fa-caret-down {
-  font-size: 1.2rem;
-  margin: 2px 10px 2px 5px;
-}
-.searchItemDetails {
-  padding: 5px;
-  border: 2px solid slategray;
-  background-color: #F0F0F0;
-  border-radius: 5px;
-  animation: searchSlideItem .35s ease-out forwards;
-  overflow-y: scroll;
-}
-.searchItemDetails-main {
-  display: flex;
-  margin: 5px;
-  p {
-    padding: 1px 10px;
-  }
-}
-.searchItemDetails-main-text {
-  width: 70%;
-}
-
-
-.searchItemDetails-userImgContainer {
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
+.searchItemDetails-actorMovieImg {
+  height: 100px;
+  width: 70px;
   background-color: #D0D0D0;
   background-size: cover;
   background-position: center;
 }
 
-
-.actorImage  {
-  height: 100px;
-}
-
-
-@keyframes searchSlideItem {
-  from {
-    height: 0px;
-    opacity: 0;
-  }
-  to {
-    height: 400px;
-    opacity: 1;
-  }
-}
-
-@import './search_widget_components/_actor_item_search_detail.scss';
-@import './search_widget_components/_movie_item_search_detail.scss';
-@import './search_widget_components/_search_categories.scss';
-@import './search_widget_components/_search_results_item_widget_actors.scss';
-@import './search_widget_components/_search_results_item_widget_movies.scss';
-@import './search_widget_components/_search_results_item_widget_users.scss';
-@import './search_widget_components/_user_item_search_detail.scss';
-@import './search_widget_components/_friend_respond_btn.scss';
+// @import './search_widget_components/_actor_item_search_detail.scss';
+// @import './search_widget_components/_movie_item_search_detail.scss';
+// @import './search_widget_components/_search_categories.scss';
+// @import './search_widget_components/_search_results_item_widget_actors.scss';
+// @import './search_widget_components/_search_results_item_widget_movies.scss';
+// @import './search_widget_components/_search_results_item_widget_users.scss';
+// @import './search_widget_components/_user_item_search_detail.scss';
+// @import './search_widget_components/_friend_respond_btn.scss';

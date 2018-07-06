@@ -29,7 +29,7 @@ class SEARCH_MOVIES_WIDGET extends Component {
     render() {
         let {props} = this;
         return (
-            <div className="searchMoviesContainer">
+            <div className="searchMoviesContainer w-100">
                 <Nav tabs
                     style={{cursor: "default"}}    
                 >

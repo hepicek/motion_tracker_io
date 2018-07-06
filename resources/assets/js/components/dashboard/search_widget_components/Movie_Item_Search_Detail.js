@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios/index";
 import {decodeString} from '../../../helpers/helper';
 import {AWS_URL} from '../../../../../../config/js/config';
-import {Card, CardBody, CardImg, Row, Col} from 'reactstrap';
+import {CardBody, CardImg, Row, Col} from 'reactstrap';
 
 
 class MOVIE_ITEM_SEARCH_DETAILS extends Component {
@@ -57,28 +57,34 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
             >{decodeString(director.fullname)}</p>
         ));
         return (
-            <Card className="">
+            <div className="bg-white">
                 <Row className="mx-0">
-                    <Col md="3">
+                    <Col sm="12" md="3">
                         <CardImg className="p-2" top src={background} alt="poster"
-                                 style={{minWidth: '150px', maxWidth: '200px'}}/>
+                                 style={{minWidth: '120px', maxWidth: '200px'}}/>
                     </Col>
-                    <Col md="9">
+                    <Col sm="12" md="9">
                         <Row className="mx-0">
-                            <Col>
+                            <Col sm="12" md="4">
                                 <p><strong>Director(s):</strong></p>
                                 {this.state.directors && directors}
                             </Col>
-                            <Col>
-                                <p><strong>Release Date:</strong></p>
-                                {this.state.movieDetail && this.state.movieDetail.releaseInfo}
+                            <Col sm="12" md="4">
+                                <p 
+                                    style={{fontWeight: "normal"}}
+                                    className="mb-0"><strong>Release Date: </strong>{this.state.movieDetail && this.state.movieDetail.releaseInfo}</p>
+                                
                             </Col>
-                            <Col>
-                                <p><strong>Runtime:</strong></p>
-                                {this.state.movieDetail && this.state.movieDetail.runTime + " min"}
+                            <Col sm="12" md="4">
+                                <p 
+                                    style={{fontWeight: "normal"}}
+                                    className="mb-0"><strong>Runtime: </strong>{this.state.movieDetail && this.state.movieDetail.runTime + " min"}</p>
+                                
                             </Col>
                         </Row>
-                        <p className="">
+                        <p 
+                        style={{fontWeight: "normal"}}
+                            className="my-1 text-justify">
                             {this.state.movieDetail.storyline && decodeString(this.state.movieDetail.storyline)}
                         </p>
                     </Col>
@@ -89,7 +95,7 @@ class MOVIE_ITEM_SEARCH_DETAILS extends Component {
                         {actor}
                     </Row>
                 </CardBody>
-            </Card>
+            </div>
         )
     }
 }
