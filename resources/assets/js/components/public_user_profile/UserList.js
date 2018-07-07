@@ -20,11 +20,10 @@ class UserList extends Component {
         const userLists = Object.keys(userlist.items).map(key => userlist.items[key]);
         return (
             <div 
-                onClick={this.toggle}
                 className="bg-light p-2 m-1"
                 style={{cursor: "pointer"}}
             >
-                <h5>{userlist.list_title}</h5>
+                <h5 onClick={this.toggle}>{userlist.list_title}</h5>
                 <Collapse isOpen={this.state.collapse}>
                     <div className="d-flex flex-wrap">
                     {userLists.map((listItem, index) => {
