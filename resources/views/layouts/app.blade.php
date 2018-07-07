@@ -19,10 +19,18 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+       @media only screen and (max-width: 576px) {
+            .navUserName {
+                display: none;
+            }
+        }
+        
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel px-3">
+        <nav class="navbar navbar-expand-md navbar-light bg-white px-3">
             <div class="container">
                 @guest
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -33,11 +41,8 @@
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 @endguest
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
@@ -51,26 +56,26 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign-up') }}</a>
                             </li>
                         @else
-                            <div
-                                style="
-                                    height: 40px;
-                                    width: 40px;
-                                    border-radius: 50%;
-                                    background-image: url('{{ env('AWS_STORAGE') }}{{Auth::user()->img_url}}');
-                                    background-size: cover;
-                                    background-postion: center;
-                                "
-                            >
-                            </div>
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->first_name . ' ' . Auth::user()->last_name}} <span class="caret"></span>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex justify-content-between align-items-center justify-content-sm-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <div
+                                    style="
+                                        height: 40px;
+                                        width: 40px;
+                                        border-radius: 50%;
+                                        background-image: url('{{ env('AWS_STORAGE') }}{{Auth::user()->img_url}}');
+                                        background-size: cover;
+                                        background-postion: center;
+                                    "
+                                    class="mx-1"
+                                    ></div>
+                                    <p class="navUserName m-0">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name}}</p> <span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-right position-absolute">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
