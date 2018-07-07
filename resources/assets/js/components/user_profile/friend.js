@@ -43,21 +43,23 @@ class FRIEND extends Component {
     }
     render() {
         let {friend, user_image} = this.props;
-
         return (
             <div className="friend d-flex justify-content-between align-items-center p-2 bg-light my-2">
-                <div 
-                    className="friend-img"
-                    style={{backgroundImage: `url(${user_image})`}}
-                ></div>
-                <strong>{friend.first_name} {friend.last_name} ({friend.common_name})</strong>
-                <i 
-                    style={{cursor: "pointer"}}
-                    id={"optionBtn-" + friend.id}
-                    className="fa fa-cog friendOptionsBtn"
-                    onClick={this.toggle}
-                >
-                </i>
+                <a href={"/publicprofile/" + friend.id} className="d-flex align-items-center justify-content-between w-75">
+                    <div 
+                        className="friend-img"
+                        style={{backgroundImage: `url(${user_image})`}}
+                    ></div>
+                    <strong>{friend.first_name} {friend.last_name} ({friend.common_name})</strong>
+                </a>
+                    <i 
+                        style={{cursor: "pointer"}}
+                        id={"optionBtn-" + friend.id}
+                        className="fa fa-cog friendOptionsBtn"
+                        onClick={this.toggle}
+                    >
+                    </i>
+
                 <Popover 
                     style={{cursor: "pointer"}}
                     placement="left"

@@ -272,13 +272,15 @@ class Dashboard extends Component {
                                 />
                             }
                         </Row>
-                        <Row className="mx-0 p-0">
-                            <FRIENDS_WIDGET
-                                handleFriendBtnClick={this.handleFriendBtnClick}    
-                                getPendingRequests={this.getPendingRequests}
-                                pendingRequests={this.state.pendingRequests}
-                            />
-                        </Row>
+                        {!!this.state.pendingRequests.length &&
+                            <Row className="mx-0 p-0">
+                                <FRIENDS_WIDGET
+                                    handleFriendBtnClick={this.handleFriendBtnClick}    
+                                    getPendingRequests={this.getPendingRequests}
+                                    pendingRequests={this.state.pendingRequests}
+                                />
+                            </Row>
+                        }
                     </Col>
                     <Col md="4" lg="4" className="px-0">
                         <LISTS_WIDGET

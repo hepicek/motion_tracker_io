@@ -42,7 +42,8 @@ class LIST_ITEM extends Component {
                 >
                     <p className="my-0">{decodeString(item.name)} - {item.year}</p>
                     {this.state.hovering && <MOVIE_DETAILS_WIDGET 
-                        hovering={this.state.hovering} 
+                        top=""
+                        left="-5px"
                         imdb_id={item.imdb_id}   
                     />}
                 </div>

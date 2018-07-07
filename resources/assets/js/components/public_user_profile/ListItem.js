@@ -48,7 +48,11 @@ class ListItem extends Component {
                     <p className="">Rating: {listItem.user_rating && listItem.user_rating}</p>
                     <div style={{position: "relative"}}>
                         {this.state.hovering && 
-                            <MOVIE_DETAILS_WIDGET imdb_id={listItem.show_id}/>}
+                            <MOVIE_DETAILS_WIDGET 
+                                imdb_id={listItem.show_id}
+                                top="-250px"
+                                left="-5px"
+                            />}
                     </div>
                 </CardBody>
             </Card>

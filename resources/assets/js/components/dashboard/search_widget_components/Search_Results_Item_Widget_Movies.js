@@ -97,9 +97,12 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
         }
         return connectDragSource(
             <div key={"searchResultItem-" + movieItem.imdb_id}>
-                <Row className='bg-white mx-0 my-2 py-1'
-                     style={{
-                         border: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && isDragging.dragging,
+                <Row className='mx-0 my-2 py-1'
+                     
+                    style={{
+                        background: (isDragging.dragging && isDragging.id == movieItem.imdb_id) ? "#343A40" : "white",
+                        color: (isDragging.dragging && isDragging.id == movieItem.imdb_id) && "white",
+                        transition: "background-color .15s, color .15s"
                     }}
                 >
                     <Col

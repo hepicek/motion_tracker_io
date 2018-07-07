@@ -8,14 +8,14 @@ const listTarget = {
     drop(props, monitor, component){
        let movie_id = monitor.getItem().id;
        let list_id = props.list.id;
-       component.state.collapsed && component.handleListTitleClick();
+       !component.state.collapsed && component.handleListTitleClick();
        props.handleDragItemDrop(movie_id, list_id);
 
     },
     hover(props, monitor, component) {
         
         return {
-            hover: "border: 2px solid red"
+            hover: true
         }
     }
 }
@@ -36,8 +36,8 @@ class LIST extends Component {
         }
         this.handleListTitleClick = this.handleListTitleClick.bind(this);
     }
-    handleListTitleClick(e) {
-        
+    handleListTitleClick() {
+       
         let items = Object.keys(this.props.list.items).map(key => this.props.list.items[key]);
         
         if(items.length > 0) {
@@ -63,10 +63,15 @@ class LIST extends Component {
                 id={list.id ? list.id : "new-" + index} 
                 className='listItem'
                 onClick={props.handleListTitleClick}
-                style={{border: hovered && "2px solid red"}}
             >
-                <div className='listHeader d-flex w-100 align-items-center justify-content-between bg-light my-2 p-1'>
-                
+                <div 
+                    className='listHeader d-flex w-100 align-items-center justify-content-between my-2 p-1'
+                    style={{
+                        background: hovered ? "#343A40" : "#F8F9FA",
+                        color: hovered && "white",
+                        transition: "background-color .35s, color .35s"
+                    }}
+                >
                     {(list.id && props.renameList != list.id) && 
                         <h5 
                             className="m-0"

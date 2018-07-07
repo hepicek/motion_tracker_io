@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MOVIE_TITLE from './movie_title';
 import {decodeString} from '../../../helpers/helper';
-import {Row, Col} from 'reactstrap';
+import {Row} from 'reactstrap';
 
 class NEWS_ITEM extends Component {
     constructor(props) {

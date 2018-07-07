@@ -36,7 +36,13 @@ class LISTS_WIDGET extends Component  {
         });
         }
         return (
-            <div className="dashboardWidget bg-white p-2" id="listsWidget">
+            <div className="dashboardWidget bg-white p-2" id="listsWidget"
+                style={{
+                    position: "-webkit-sticky",
+                    position: "sticky",
+                    top: "117px"
+                }}
+            >
                 <LISTS_HEADER handleNewListBtnClick={props.handleNewListBtnClick}/>
                 <div id="listsWidget-lists">
                     {props.newList && <New_List saveNewList={props.saveNewList}/>}

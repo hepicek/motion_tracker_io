@@ -30,7 +30,6 @@ const spec = {
         // When dropped on a compatible target, do something.
         // Read the original dragged item from getItem():
         const item = monitor.getItem();
-        console.log("item", item);
         // You may also read the drop result from the drop target
         // that handled the drop, if it returned an object from
         // its drop() method.

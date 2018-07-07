@@ -11,13 +11,13 @@ class MOVIE_DETAILS_WIDGET extends Component {
             position: "absolute",
             backgroundColor: "white",
             padding: "10px",
-            border: "1px solid black",
             color: "black",
-            boxShadow: "3px 3px 8px 0 black",
-            borderRadius: "10px",
+            boxShadow: "1px 1px 8px 0 #d0d0d0",
+            borderRadius: "1px",
             width: "450px",
-            top: "0",
-            zIndex: "1"
+            zIndex: "10",
+            left: this.props.left,
+            top: this.props.top
         };
 
         this.state = {
