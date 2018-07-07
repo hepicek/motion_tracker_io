@@ -196,6 +196,7 @@ class RelationshipsController extends Controller
                 ];
             }
         }
-        return [1, array_slice($array, 0, 7)];
+        return [1, $array];
+        // return [1, array_slice($array, 0, 7)];
     }
 }

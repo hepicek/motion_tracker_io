@@ -1,21 +1,4 @@
-// .dashboard {
-//     display: flex;
-//     flex-wrap: wrap;
-//     width: 100%;
-//   }
-//   .searchSection {
-//     width: 70%;
-//   }
-//   .dashboardWidget {
-//     padding: 10px;
-//     margin: 10px;
-//     flex-grow: 1;
-//   }
-  
-
-// @import './components/_Search_Bar.scss';
 @import './components/_Lists_Widget.scss';
 @import '/components/_Friends_Widget.scss';
-// @import '/components/_Top_Movies_Widget.scss';
 @import '/components/_SearchResults_Movies_Widget.scss';
 @import '/components/_News_Feed_Widget.scss';

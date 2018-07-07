@@ -44,7 +44,8 @@ class ACTOR_ITEM_SEARCH_DETAIL_MOVIE_CARD extends Component {
                     width: "10rem",
                     background: (isDragging.dragging && isDragging.id == movie.imdb_id) ? "#343A40" : "#F8F9FA",
                     color: (isDragging.dragging && isDragging.id == movie.imdb_id) && "white",
-                    transition: "background-color .15s, color .15s"
+                    transition: "background-color .15s, color .15s",
+                    cursor: "grab"
                 }}
             >
             <div  
