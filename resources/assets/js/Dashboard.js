@@ -3,11 +3,10 @@ import HTML5Backend from 'react-dnd-html5-backend'
 import {DragDropContext} from 'react-dnd'
 import {Row, Col} from 'reactstrap';
 
-import axios from 'axios'; //For API calls
+import axios from 'axios';
 
 //react components
 import SEARCH_BAR from './components/dashboard/Search_Bar';
-// import TOP_MOVIES_WIDGET from './components/dashboard/Top_Movies_Widget';
 import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
 import SEARCH_MOVIES_WIDGET from './components/dashboard/Search_Movies_Widget';
@@ -24,7 +23,6 @@ class Dashboard extends Component {
             friends: [],
             newList: false,
             renameList: undefined,
-            searchType: 'movies',
             searchText: '',
             searchResults: {
                 movies: [],
@@ -42,7 +40,6 @@ class Dashboard extends Component {
         this.handleSearch = this.handleSearch.bind(this);
         this.handleDragItemDrop = this.handleDragItemDrop.bind(this);
         this.handleDeleteListItem = this.handleDeleteListItem.bind(this);
-        this.handleCategoryClick = this.handleCategoryClick.bind(this);
         this.handleFriendBtnClick = this.handleFriendBtnClick.bind(this);
         this.getPendingRequests = this.getPendingRequests.bind(this);
     }
@@ -102,18 +99,6 @@ class Dashboard extends Component {
             })
         });
     }
-    handleCategoryClick(e) {
-        this.setState({
-            searchType: e.target.id.split("-")[1],
-        })
-        setTimeout(() => {
-            this.handleSearch({
-                target: {
-                    value: this.state.searchText
-                }
-            })
-        }, 0);
-    }
     //send delete API call
     handleListDeleteClick(e) {
         axios.delete('userLists/' + e.target.parentNode.id.split("-")[1])
@@ -168,6 +153,7 @@ class Dashboard extends Component {
         clearTimeout(inputTimer);
 
         inputTimer = setTimeout(() => {
+            
             if(this.state.searchText.length > 1) {
                 axios.get(`/search/${this.state.searchText}`)
                     .then((res) => {
@@ -224,8 +210,7 @@ class Dashboard extends Component {
                         movies: [],
                         actors: [],
                         users: []
-                    },
-                    searchType: 'movies'
+                    }
                 });
             }
             
@@ -264,9 +249,7 @@ class Dashboard extends Component {
                             {(this.state.searchResults.movies.length > 0 || this.state.searchResults.actors.length > 0 || this.state.searchResults.users.length > 0) &&
                                 <SEARCH_MOVIES_WIDGET
                                     lists={this.state.userLists} 
-                                    searchType={this.state.searchType}
                                     searchResults={this.state.searchResults}
-                                    handleCategoryClick={this.handleCategoryClick}
                                     handleFriendBtnClick={this.handleFriendBtnClick}
                                     saveToList={this.handleDragItemDrop}
                                 />

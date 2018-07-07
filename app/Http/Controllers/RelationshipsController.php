@@ -182,18 +182,20 @@ class RelationshipsController extends Controller
             $listItems = $list->list_items()
                 ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
                 ->get();
+            if(count($listItems) == 0) return [0, "No Recent Activity from this user"];
             foreach ($listItems as $item) {
                 $movie = $item->movie;
                 $array[] = [
                     'user_name' => $user_name,
                     'user_img' => $user->img_url,
                     'list_title' => $list_title,
+                    'movie_id' => $movie->imdb_id,
                     'movie_title' => $movie->name,
                     'movie_year' => $movie->year,
                     'date' => $item->created_at
                 ];
             }
         }
-        return array_slice($array, 0, 7);
+        return [1, array_slice($array, 0, 7)];
     }
 }

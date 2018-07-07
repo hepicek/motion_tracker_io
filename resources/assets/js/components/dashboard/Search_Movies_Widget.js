@@ -82,9 +82,3 @@ class SEARCH_MOVIES_WIDGET extends Component {
 
 
 export default SEARCH_MOVIES_WIDGET;
-
-
-// <SEARCH_CATEGORIES 
-// handleCategoryClick={props.handleCategoryClick}
-// searchType={props.searchType}
-// />

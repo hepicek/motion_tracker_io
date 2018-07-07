@@ -27,7 +27,7 @@ class MOVIE_TITLE extends Component {
                     <strong>{decodeString(this.props.movie_title)}</strong>
                 </REACTHOVER.Trigger>
                 <REACTHOVER.Hover type='hover'>
-                    <MOVIE_DETAILS_WIDGET imdb_id={this.props.imdb_id} top="" left=""/>
+                    <MOVIE_DETAILS_WIDGET imdb_id={this.props.imdb_id} top="" left={this.props.left}/>
                 </REACTHOVER.Hover>
             </REACTHOVER>
             </div>

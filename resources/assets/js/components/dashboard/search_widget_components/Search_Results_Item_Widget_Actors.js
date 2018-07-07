@@ -10,15 +10,32 @@ class SEARCH_RESULTS_ITEM_WIDGET_ACTORS extends Component {
         this.handleCaretClick = this.handleCaretClick.bind(this);
         this.state = {
             caret: 'down',
-            collapse: false
+            collapse: false,
+            actorMovies: [],
+            loading: true
         }
     }
 
+    getActorDetails() {
+        let actor_id = this.props.searchResultsItem.imdb_id;
+        axios.get(`/searchActorDetails/${actor_id}`)
+        .then((res) => {    
+            let searchResults = Object.keys(res).map(key => res[key]);
+            let actorMovies = searchResults[0][1];
+            this.setState({
+                actorMovies,
+                loading: false
+            })
+        });
+    }
     handleCaretClick() {
         this.setState(prevState => ({
             caret: this.state.caret === 'down' ? 'up' : 'down',
             collapse: !prevState.collapse
         }));
+    }
+    componentDidMount() {
+        this.getActorDetails();
     }
 
     render() {
@@ -35,7 +52,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_ACTORS extends Component {
                     <p className="m-0">{decodeString(this.props.searchResultsItem.fullname)}</p>
                 </div>
                 <Collapse isOpen={this.state.collapse}> 
-                    <ACTOR_ITEM_SEARCH_DETAILS actor={this.props.searchResultsItem} />
+                    <ACTOR_ITEM_SEARCH_DETAILS actorMovies={this.state.actorMovies} loading={this.state.loading} />
                 </Collapse>
             </div>
         )

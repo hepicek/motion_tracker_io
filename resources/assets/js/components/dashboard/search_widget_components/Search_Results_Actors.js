@@ -7,13 +7,10 @@ class SEARCH_RESULTS_ACTORS extends Component {
     }
     render() {
         let {props} = this;
-        let searchResults = props.results.map((result, id) => (
-            <div
-                key={'search-' + id}
-            >
-                <SEARCH_RESULTS_ITEM_WIDGET_ACTORS searchResultsItem={result} />
-            </div>
-            ))
+        let searchResults = props.results.map((result) => {
+            return (
+                <SEARCH_RESULTS_ITEM_WIDGET_ACTORS key={'searchActors-' + result.imdb_id} searchResultsItem={result} />
+            )})
         return (
             <div>
                 {searchResults}

@@ -5,29 +5,11 @@ import axios from "axios/index";
 class ACTOR_ITEM_SEARCH_DETAILS extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            actorMovies: [],
-            loading: true
-        }
-
     }
-    componentDidMount() {
-        let actor_id = this.props.actor.imdb_id;
-        axios.get(`/searchActorDetails/${actor_id}`)
-        .then((res) => {    
-            let searchResults = Object.keys(res).map(key => res[key]);
-            let actorMovies = searchResults[0][1];
-            this.setState({
-                actorMovies,
-                loading: false
-            })
-        });
 
-
-    }
     render() {
         
-        let movies = this.state.actorMovies.map(movie => {
+        let movies = this.props.actorMovies.map(movie => {
             return (
                 <ACTOR_ITEM_SEARCH_DETAIL_MOVIE_CARD 
                     key={"actorSearchMovieCard-" + movie.imdb_id}
@@ -37,8 +19,8 @@ class ACTOR_ITEM_SEARCH_DETAILS extends Component {
         })
         return (
             <div className="bg-white p-2 d-flex flex-wrap">
-                {this.state.loading && <p>loading...</p>}
-                {this.state.loading || movies}
+                {this.props.loading && <p>loading...</p>}
+                {this.props.loading || movies}
             </div>
 
         )

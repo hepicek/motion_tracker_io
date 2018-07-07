@@ -18,8 +18,8 @@ const spec = {
             return;
         }
 
-        const item = monitor.getItem();
-        const dropResult = monitor.getDropResult();
+        // const item = monitor.getItem();
+        // const dropResult = monitor.getDropResult();
     }
 }
 
@@ -32,20 +32,20 @@ function collect(connect, monitor) {
 }
 
 class ACTOR_ITEM_SEARCH_DETAIL_MOVIE_CARD extends Component {
-    constructor(props) {
-        super(props)
-
-    }
-
     render() {
-        const {isDragging, connectDragSource, canDrag, movie} = this.props;
+        const {isDragging, connectDragSource, movie} = this.props;
         let backgroundImage = AWS_URL + movie.imdb_img;
         return connectDragSource(
             <div>
             <Card 
-                className="bg-light m-1 p-1 d-flex flex-column align-items-center" 
+                className="m-1 p-1 d-flex flex-column align-items-center" 
                 key={"actorSearchDetail-"+ movie.imdb_id}
-                style={{width: "10rem"}}
+                style={{
+                    width: "10rem",
+                    background: (isDragging.dragging && isDragging.id == movie.imdb_id) ? "#343A40" : "#F8F9FA",
+                    color: (isDragging.dragging && isDragging.id == movie.imdb_id) && "white",
+                    transition: "background-color .15s, color .15s"
+                }}
             >
             <div  
                 className="searchItemDetails-actorMovieImg"
