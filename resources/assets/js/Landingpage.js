@@ -1,7 +1,6 @@
 import React, { Component } from 'react'; 
 import {AWS_URL} from '../../../config/js/config';
-import CSSTransitionGroup from 'react-transition-group';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 
 class Landingpage extends Component {
