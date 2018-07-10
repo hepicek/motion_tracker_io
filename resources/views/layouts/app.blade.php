@@ -30,15 +30,21 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white px-3">
+        <nav class="navbar navbar-expand-md navbar-light bg-white px-0 py-0">
             <div class="container">
                 @guest
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a class="navbar-brand d-flex" href="{{ url('/') }}">
+                        <div class="logoLetter logoLetter-nav letter-1 d-flex justify-content-center align-items-center bg-dark mx-1">M</div>
+                        <div class="logoLetter logoLetter-nav letter-2 d-flex justify-content-center align-items-center bg-dark mx-1">T</div>
+                        <div class="logoLetter logoLetter-nav letter-3 d-flex justify-content-center align-items-center bg-dark mx-1">I</div>
+                        <div class="logoLetter logoLetter-nav letter-4 d-flex justify-content-center align-items-center bg-dark mx-1">O</div> 
                     </a>
                 @else
-                    <a class="navbar-brand" href="{{ url('/dashboard') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a class="navbar-brand d-flex" href="{{ url('/dashboard') }}">
+                        <div class="logoLetter logoLetter-nav letter-1 d-flex justify-content-center align-items-center bg-dark mx-1">M</div>
+                        <div class="logoLetter logoLetter-nav letter-2 d-flex justify-content-center align-items-center bg-dark mx-1">T</div>
+                        <div class="logoLetter logoLetter-nav letter-3 d-flex justify-content-center align-items-center bg-dark mx-1">I</div>
+                        <div class="logoLetter logoLetter-nav letter-4 d-flex justify-content-center align-items-center bg-dark mx-1">O</div>
                     </a>
                 @endguest
 
@@ -49,14 +55,14 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto d-flex flex-row">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
+                            <li class="nav-item pr-2">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Sign-up') }}</a>
+                            <li class="nav-item pr-2">
+                                <a class="btn btn-warning" href="{{ route('register') }}">{{ __('Sign-up') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">

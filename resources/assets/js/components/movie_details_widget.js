@@ -54,7 +54,7 @@ class MOVIE_DETAILS_WIDGET extends Component {
             })
     }
     handleRatingChange (value) {
-        axios.post('movieRating', [this.props.imdb_id, value])
+        axios.post('/movieRating', [this.props.imdb_id, value])
             .then((res) => {
               //  this.setState({rating: res.data[0].mt_user_rating});
             });

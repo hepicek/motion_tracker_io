@@ -31,6 +31,9 @@ class User extends Authenticatable
     public function lists() {
         return $this->hasMany('App\User_List', 'owner_id');
     }
+    public function ratings() {
+        return $this->hasMany('App\Rating', 'user_id');
+    }
 
     // public function friends() {
     //     return $this->belongsToMany(User::class, 'relationships', );

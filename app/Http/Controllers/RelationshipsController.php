@@ -140,6 +140,7 @@ class RelationshipsController extends Controller
             foreach ($listItems as $item) {
                 $movie = $item->movie;
                 $array[] = [
+                    'news_type' => 0,
                     'user_id' => $id,
                     'user_name' => $user_name,
                     'user_img' => $user->img_url,
@@ -153,6 +154,28 @@ class RelationshipsController extends Controller
         }
         return $array;
     }
+    protected function getRecentRatings($id, & $array)
+    {
+        $user = User::find($id);
+        $user_name = $user->first_name . ' ' . $user->last_name . ' (' . $user->common_name . ')';
+        $ratings = $user->ratings()->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
+        ->get();
+
+        foreach ($ratings as $rating) {
+            $movie = $rating->movie;
+            $array[] = [
+                'news_type' => 1,
+                'user_id' => $id,
+                'user_name' => $user_name,
+                'user_img' => $user->img_url,
+                'rating' => $rating->mt_user_rating,
+                'movie_title' => $movie->name,
+                'movie_year' => $movie->year,
+                'movie_id' => $movie->imdb_id,
+                'date' => $rating->created_at
+            ];
+        }
+    }
     public function getNewsFeed()
     {
 
@@ -160,6 +183,7 @@ class RelationshipsController extends Controller
         $newAdditions = [];
         foreach ($friends as $friend) {
             $this->getRecentActivity($friend['id'], $newAdditions);
+            $this->getRecentRatings($friend['id'], $newAdditions);
         }
 
         usort($newAdditions, function ($a, $b) {
@@ -180,22 +204,31 @@ class RelationshipsController extends Controller
             $list_title = $list->list_title;
 
             $listItems = $list->list_items()
-                ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
+                ->where('updated_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
                 ->get();
             if(count($listItems) == 0) return [0, "No Recent Activity from this user"];
             foreach ($listItems as $item) {
                 $movie = $item->movie;
                 $array[] = [
+                    'news_type' => 0,
                     'user_name' => $user_name,
                     'user_img' => $user->img_url,
                     'list_title' => $list_title,
                     'movie_id' => $movie->imdb_id,
                     'movie_title' => $movie->name,
                     'movie_year' => $movie->year,
-                    'date' => $item->created_at
+                    'date' => $item->updated_at
                 ];
             }
         }
+        $this->getRecentRatings($id, $array);
+
+        usort($array, function ($a, $b) {
+            $t1 = strtotime($a['date']);
+            $t2 = strtotime($b['date']);
+            return $t2 - $t1;
+        });
+        
         return [1, $array];
         // return [1, array_slice($array, 0, 7)];
     }

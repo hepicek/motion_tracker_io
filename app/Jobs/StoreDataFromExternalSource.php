@@ -26,6 +26,7 @@ class StoreDataFromExternalSource implements ShouldQueue
 
     public function handle()
     {
+        $start = microtime(true);
         ini_set('memory_limit', '256M');
         set_time_limit(240);
         $search = new \Imdb\TitleSearch(); // Optional $config parameter
@@ -68,7 +69,8 @@ class StoreDataFromExternalSource implements ShouldQueue
                 // 'producer' => $results[$i]->producer(),
             ];
         }
-
+        $time = microtime(true) - $start;
+        dd($time);
         foreach ($fetchedExternalData as $item) {
 
             $movie = Movie::find($item['imdb_id']);

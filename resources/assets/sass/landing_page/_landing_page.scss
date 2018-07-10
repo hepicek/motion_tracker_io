@@ -1,7 +1,81 @@
-
-  .topMovies {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
+.logoLetter {
+  border-radius: 50%;
+  opacity: 0;
+  font-family: 'Raleway';
+  font-weight: 100;
+  color: white;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 1.25s;
+  animation-timing-function: ease-in-out;
+}
+.logoLetter-large {
+  height: 220px;
+  width: 220px;
+  font-size: 11rem;
+}
+.logoLetter-nav {
+  height: 40px;
+  width: 40px;
+  font-size: 1rem;
+}
+.landingPage-infoBlock {
+  opacity: 0;
+  animation: fadeIn 1s, slideIn 1s;
+  animation-fill-mode: forwards;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-delay: 1.25s;
+}
+.letter-1 {
+  animation-delay: .25s;
+}
+.letter-2 {
+  animation-delay: .5s;
+}
+.letter-3 {
+  animation-delay: .75s;
+}
+.letter-4 {
+  animation-delay: 1s;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+  }
+  to {
+    transform: translateX("0");
+  }
+}
+
+.landingPage-btn {
+  margin-top: 20px;
+}
+@media only screen and (max-width: 992px) {
+  .landingPage-logo {
+    display: none !important;
+  }
+  .landingPage-btn {
+    margin-top: 100px;
+  }
+  .landingPage-infoBlock {
+    animation-delay: .5s;
+  }
+}
+
+@media only screen and (max-width: 578px) {
+  .landingPage h4{
+    font-size: 1rem;
+  }
+  .landingPage h2{
+    font-size: 1.3rem;
+  }
+}

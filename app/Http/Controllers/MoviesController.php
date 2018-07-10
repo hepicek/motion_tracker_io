@@ -39,7 +39,7 @@ class MoviesController extends Controller
 
     public function searchMovies($movie)
     {
-        //StoreDataFromExternalSource::dispatch($movie)->delay(2);
+        StoreDataFromExternalSource::dispatch($movie)->delay(2);
 
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')

@@ -21,6 +21,12 @@
   background-position: center;
 }
 
+.blackStar {
+  color: black;
+}
+.goldStar {
+  color: #FFC107;
+}
 @media only screen and (max-width: 768px) {
   .movieItem-p {
     font-size: .6rem;

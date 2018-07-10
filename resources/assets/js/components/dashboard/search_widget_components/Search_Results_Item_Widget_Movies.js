@@ -61,7 +61,7 @@ class SEARCH_RESULTS_ITEM_WIDGET_MOVIES extends Component {
     }
 
     handleRatingChange(value) {
-        axios.post('movieRating', [this.props.searchResultsItem.imdb_id, value])
+        axios.post('/movieRating', [this.props.searchResultsItem.imdb_id, value])
             .then((res) => {
                 this.setState({rating: res.data[0].mt_user_rating});
             });

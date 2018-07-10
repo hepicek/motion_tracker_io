@@ -8,5 +8,8 @@ class Rating extends Model
 {
     protected $table = 'mt_ratings';
     protected $guarded = [];
-    public $timestamps = false;
+
+    public function movie() {
+        return $this->hasOne('App\Movie', 'imdb_id', 'imdb_id');
+    }
 }
