@@ -29,13 +29,10 @@ class ScrapeMovie implements ShouldQueue
         $result_imdb_id = $this->result->imdbID() + 0;
         $history = DB::table('search_history')->where('imdb_id', '=', $result_imdb_id)->where('type', '=', 0)->get()->toArray();
         $date = Carbon::now()->subDays(180)->toDateTimeString();
-        if (count($history) > 0 && !isset($history[0])) {
-            dd($history);
-        }
         if (count($history) > 0 && $history[0]->updated_at > $date) {
             return;
 
-        } else {
+        }
             $item = [
                 'imdb_id' => $this->result->imdbID() + 0,
                 'name' => $this->result->title(),
@@ -90,7 +87,7 @@ class ScrapeMovie implements ShouldQueue
                 $this->saveMovie($name, $img_path, $type, $item, $movie, $releaseDate);
             }
 
-        }
+        
         if (!count($history)) {
             DB::table('search_history')->insert(['imdb_id' => $result_imdb_id, 'type' => 0,'created_at' => date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
         } else {
@@ -100,8 +97,10 @@ class ScrapeMovie implements ShouldQueue
                 ->update(['updated_at' => date('Y-m-d H:i:s')]);
 
         }
-
-        //   $this->storeCast($item);
+        foreach($item['cast'] as $actor) {
+            ScrapeActor::dispatch($actor, $result_imdb_id);
+        }
+        
 
     }
 
@@ -118,7 +117,7 @@ class ScrapeMovie implements ShouldQueue
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/movie_img/";
         $file = "./storage/app/public/" . $datapath . $file_name_ext;
-        Storage::disk('s3')->put($file_name_ext, $contents, 'public');
+        Storage::disk('s3')->put("public/img/movie_img/" . $file_name_ext, $contents, 'public');
        // file_put_contents($file, $contents);
 
         return $datapath . $file_name . '.' . $file_ext;
