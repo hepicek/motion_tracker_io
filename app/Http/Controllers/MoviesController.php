@@ -83,12 +83,12 @@ class MoviesController extends Controller
         // $result['writing'] = $movie->writing();
         // $result['producer'] = $movie->producer();
 
-        $releaseLength =  count($result['releaseInfo']);
+        $releaseLength = count($result['releaseInfo']);
         for ($i = 0; $i < $releaseLength; $i++) {
-                if ($result['releaseInfo'][$i]['country'] == 'USA') {
-                    $releaseDate = $result['releaseInfo'][$i]['day'] . ". " . $result['releaseInfo'][$i]['mon'] . ". " . $result['releaseInfo'][$i]['year'];
-                    break;
-                }
+            if ($result['releaseInfo'][$i]['country'] == 'USA') {
+                $releaseDate = $result['releaseInfo'][$i]['day'] . ". " . $result['releaseInfo'][$i]['mon'] . ". " . $result['releaseInfo'][$i]['year'];
+                break;
+            }
         }
 
         $movie2 = Movie::find($movie_id);
@@ -166,121 +166,126 @@ class MoviesController extends Controller
         $count = count($results) < 20 ? count($results) : 20;
         $fetchedExternalData = [];
 
-        for ($i = 0; $i < $count; $i++) {
-            $fetchedExternalData[] = [
-                'imdb_id' => $results[$i]->imdbID() + 0,
-                'name' => $results[$i]->title(),
-                'orig_name' => $results[$i]->orig_title(),
-                'year' => $results[$i]->year(),
-                'tagline' => $results[$i]->tagline(),
-                'rating' => $results[$i]->rating(),
-                'votes_nr' => $results[$i]->votes(),
-                'genre' => $results[$i]->genre(),
-                'type' => $results[$i]->movietype(),
-                'runTime' => $results[$i]->runtime(),
-                'releaseInfo' => $results[$i]->releaseInfo(),
-                // 'types' => $results[$i]->movietypes(),
-                'seasons' => $results[$i]->seasons(),
-                'is_serial' => $results[$i]->is_serial(),
-                // 'episodes' => $results[$i]->episodes(),
-                // 'is_episode' => $results[$i]->episodeTitle(),
-                // 'episodeSeason' => $results[$i]->episodeSeason(),
-                // 'episodeAirDate' => $results[$i]->episodeAirDate(),
-                // 'episodeDetails' => $results[$i]->get_episode_details(),
-                // 'plotoutline' => $results[$i]->plotoutline(),
-                'storyline' => $results[$i]->storyline(),
-                'photoSmall' => $results[$i]->photo(),
-                'photoLarge' => $results[$i]->photo(false),
-                // 'mainPictures' => $results[$i]->mainPictures(),
-                // 'mpaa' => $results[$i]->mpaa(),
-                // 'plot' => $results[$i]->plot(),
-                // 'sysopsis' => $results[$i]->synopsis(),
-                'director' => $results[$i]->director(),
-                'cast' => $results[$i]->cast(),
-                // 'writing' => $results[$i]->writing(),
-                // 'producer' => $results[$i]->producer(),
-            ];
-        }
-
-        foreach ($fetchedExternalData as $item) {
-
-            $movie = Movie::find($item['imdb_id']);
-            $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
-            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
-
-
-            $releaseLength =  count($item['releaseInfo']);
-            for ($i = 0; $i < $releaseLength; $i++) {
-
-                if ($item['releaseInfo'][$i]['country'] == 'USA') {
-                    $releaseDate = $item['releaseInfo'][$i]['day'] . " " . $item['releaseInfo'][$i]['mon'] . " " . $item['releaseInfo'][$i]['year'];
-                    break;
-                }
-            }
-            if ($item['type'] == 'Movie') {
-                if ($item['genre'] == "Documentary") {
-                    $type = 6;
-                } else {
-                    $type = 1;
-                }
-            } elseif ($item['type'] == 'TV Movie') {
-                $type = 2;
-            } elseif ($item['type'] == 'TV Series') {
-                $type = 3;
-            } elseif ($item['type'] == 'TV Special') {
-                $type = 4;
-            } elseif ($item['type'] == 'TV Mini-Series') {
-                $type = 5;
-            } elseif ($item['type'] == 'Video Game') {
-                $type = 7;
-            } elseif ($item['type'] == 'Video') {
-                $type = 8;
-            } elseif ($item['type'] == 'TV Mini-Series') {
-                $type = 8;
-            } else {
-                $type = 1;
-            }
-
-            if ($movie['imdb_id'] == NULL) {
-
-
-                $fill = [
-                    'imdb_id' => $item['imdb_id'] + 0,
-                    'name' => $name,
-                    'year' => $item['year'],
-                    'rating' => $item['rating'],
-                    'votes_nr' => $item['votes_nr'],
-                    'tagline' => $item['tagline'],
-                    'seasons' => $item['seasons'],
-                    'is_serial' => $item['is_serial'],
-                    'storyline' => $item['storyline'],
-                    'runTime' => $item['runTime'],
-                    'releaseInfo' => $releaseDate,
-                    'imdb_movie_type_id' => $type,
-                    'imdb_img' => $img_path
-
-                ];
-                $newMovie = Movie::create($fill);
-            } else {
-                $movie['name'] = $name;
-                $movie['year'] = $item['year'];
-                $movie['rating'] = $item['rating'];
-                $movie['votes_nr'] = $item['votes_nr'];
-                $movie['tagline'] = $item['tagline'];
-                $movie['seasons'] = $item['seasons'];
-                $movie['is_serial'] = $item['is_serial'];
-                $movie['storyline'] = $item['storyline'];
-                $movie['runTime'] = $item['runTime'];
-                $movie['releaseInfo'] = $releaseDate;
-                $movie['imdb_movie_type_id'] = $type;
-                $movie['imdb_img'] = $img_path;
-                $movie->save();
-            }
-
+        foreach ($results as $result) {
 
         }
-        $this->storeCast($fetchedExternalData);
-        return ($fetchedExternalData);
+
+
+//        for ($i = 0; $i < $count; $i++) {
+//            $fetchedExternalData[] = [
+//                'imdb_id' => $results[$i]->imdbID() + 0,
+//                'name' => $results[$i]->title(),
+//                'orig_name' => $results[$i]->orig_title(),
+//                'year' => $results[$i]->year(),
+//                'tagline' => $results[$i]->tagline(),
+//                'rating' => $results[$i]->rating(),
+//                'votes_nr' => $results[$i]->votes(),
+//                'genre' => $results[$i]->genre(),
+//                'type' => $results[$i]->movietype(),
+//                'runTime' => $results[$i]->runtime(),
+//                'releaseInfo' => $results[$i]->releaseInfo(),
+//                // 'types' => $results[$i]->movietypes(),
+//                'seasons' => $results[$i]->seasons(),
+//                'is_serial' => $results[$i]->is_serial(),
+//                // 'episodes' => $results[$i]->episodes(),
+//                // 'is_episode' => $results[$i]->episodeTitle(),
+//                // 'episodeSeason' => $results[$i]->episodeSeason(),
+//                // 'episodeAirDate' => $results[$i]->episodeAirDate(),
+//                // 'episodeDetails' => $results[$i]->get_episode_details(),
+//                // 'plotoutline' => $results[$i]->plotoutline(),
+//                'storyline' => $results[$i]->storyline(),
+//                'photoSmall' => $results[$i]->photo(),
+//                'photoLarge' => $results[$i]->photo(false),
+//                // 'mainPictures' => $results[$i]->mainPictures(),
+//                // 'mpaa' => $results[$i]->mpaa(),
+//                // 'plot' => $results[$i]->plot(),
+//                // 'sysopsis' => $results[$i]->synopsis(),
+//                'director' => $results[$i]->director(),
+//                'cast' => $results[$i]->cast(),
+//                // 'writing' => $results[$i]->writing(),
+//                // 'producer' => $results[$i]->producer(),
+//            ];
+//        }
+
+//        foreach ($fetchedExternalData as $item) {
+//
+//            $movie = Movie::find($item['imdb_id']);
+//            $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
+//            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
+//
+//
+//            $releaseLength = count($item['releaseInfo']);
+//            for ($i = 0; $i < $releaseLength; $i++) {
+//
+//                if ($item['releaseInfo'][$i]['country'] == 'USA') {
+//                    $releaseDate = $item['releaseInfo'][$i]['day'] . " " . $item['releaseInfo'][$i]['mon'] . " " . $item['releaseInfo'][$i]['year'];
+//                    break;
+//                }
+//            }
+//            if ($item['type'] == 'Movie') {
+//                if ($item['genre'] == "Documentary") {
+//                    $type = 6;
+//                } else {
+//                    $type = 1;
+//                }
+//            } elseif ($item['type'] == 'TV Movie') {
+//                $type = 2;
+//            } elseif ($item['type'] == 'TV Series') {
+//                $type = 3;
+//            } elseif ($item['type'] == 'TV Special') {
+//                $type = 4;
+//            } elseif ($item['type'] == 'TV Mini-Series') {
+//                $type = 5;
+//            } elseif ($item['type'] == 'Video Game') {
+//                $type = 7;
+//            } elseif ($item['type'] == 'Video') {
+//                $type = 8;
+//            } elseif ($item['type'] == 'TV Mini-Series') {
+//                $type = 8;
+//            } else {
+//                $type = 1;
+//            }
+//
+//            if ($movie['imdb_id'] == NULL) {
+//
+//
+//                $fill = [
+//                    'imdb_id' => $item['imdb_id'] + 0,
+//                    'name' => $name,
+//                    'year' => $item['year'],
+//                    'rating' => $item['rating'],
+//                    'votes_nr' => $item['votes_nr'],
+//                    'tagline' => $item['tagline'],
+//                    'seasons' => $item['seasons'],
+//                    'is_serial' => $item['is_serial'],
+//                    'storyline' => $item['storyline'],
+//                    'runTime' => $item['runTime'],
+//                    'releaseInfo' => $releaseDate,
+//                    'imdb_movie_type_id' => $type,
+//                    'imdb_img' => $img_path
+//
+//                ];
+//                $newMovie = Movie::create($fill);
+//            } else {
+//                $movie['name'] = $name;
+//                $movie['year'] = $item['year'];
+//                $movie['rating'] = $item['rating'];
+//                $movie['votes_nr'] = $item['votes_nr'];
+//                $movie['tagline'] = $item['tagline'];
+//                $movie['seasons'] = $item['seasons'];
+//                $movie['is_serial'] = $item['is_serial'];
+//                $movie['storyline'] = $item['storyline'];
+//                $movie['runTime'] = $item['runTime'];
+//                $movie['releaseInfo'] = $releaseDate;
+//                $movie['imdb_movie_type_id'] = $type;
+//                $movie['imdb_img'] = $img_path;
+//                $movie->save();
+//            }
+//
+//
+//        }
+//        $this->storeCast($fetchedExternalData);
+//        return ($fetchedExternalData);
     }
 
     public function searchMovieDetails($imdb_id)

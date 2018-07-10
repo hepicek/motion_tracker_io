@@ -31,73 +31,10 @@ class StoreDataFromExternalSource implements ShouldQueue
         set_time_limit(240);
         $search = new \Imdb\TitleSearch(); // Optional $config parameter
         $results = $search->search($this->searchString, array(\Imdb\TitleSearch::MOVIE));
-        $count = count($results) < 20 ? count($results) : 20;
-        $fetchedExternalData = [];
 
-        for ($i = 0; $i < $count; $i++) {
-            $fetchedExternalData[] = [
-                'imdb_id' => $results[$i]->imdbID() + 0,
-                'name' => $results[$i]->title(),
-                'orig_name' => $results[$i]->orig_title(),
-                'year' => $results[$i]->year(),
-                'tagline' => $results[$i]->tagline(),
-                'rating' => $results[$i]->rating(),
-                'votes_nr' => $results[$i]->votes(),
-                'genre' => $results[$i]->genre(),
-                'type' => $results[$i]->movietype(),
-                'runTime' => $results[$i]->runtime(),
-                'releaseInfo' => $results[$i]->releaseInfo(),
-                // 'types' => $results[$i]->movietypes(),
-                'seasons' => $results[$i]->seasons(),
-                'is_serial' => $results[$i]->is_serial(),
-                // 'episodes' => $results[$i]->episodes(),
-                // 'is_episode' => $results[$i]->episodeTitle(),
-                // 'episodeSeason' => $results[$i]->episodeSeason(),
-                // 'episodeAirDate' => $results[$i]->episodeAirDate(),
-                // 'episodeDetails' => $results[$i]->get_episode_details(),
-                // 'plotoutline' => $results[$i]->plotoutline(),
-                'storyline' => $results[$i]->storyline(),
-                'photoSmall' => $results[$i]->photo(),
-                'photoLarge' => $results[$i]->photo(false),
-                // 'mainPictures' => $results[$i]->mainPictures(),
-                // 'mpaa' => $results[$i]->mpaa(),
-                // 'plot' => $results[$i]->plot(),
-                // 'sysopsis' => $results[$i]->synopsis(),
-                'director' => $results[$i]->director(),
-                'cast' => $results[$i]->cast(),
-                // 'writing' => $results[$i]->writing(),
-                // 'producer' => $results[$i]->producer(),
-            ];
+        foreach ($results as $result) {
+            ScrapeMovie::dispatch($result);
         }
-        $time = microtime(true) - $start;
-        dd($time);
-        foreach ($fetchedExternalData as $item) {
-
-            $movie = Movie::find($item['imdb_id']);
-            $name = $item['orig_name'] == "" ? $item['name'] : $item['orig_name'];
-            $img_path = $item['photoLarge'] == "" || $item['photoLarge'] == false ? "" : $this->storeMovieImage($item, $name);
-            $releaseDate = "";
-            $releaseLength = count($item['releaseInfo']);
-            for ($i = 0; $i < $releaseLength; $i++) {
-
-                if ($item['releaseInfo'][$i]['country'] == 'USA') {
-                    $releaseDate = $item['releaseInfo'][$i]['day'] . ". " . $item['releaseInfo'][$i]['mon'] . ". " . $item['releaseInfo'][$i]['year'];
-                    break;
-                }
-            }
-            $type = $this->setType($item['type'], $item);
-
-
-            if ($movie['imdb_id'] == NULL) {
-                $newMovie = $this->newMovie($name, $img_path, $type, $item, $releaseDate);
-            } else {
-                $this->saveMovie($name, $img_path, $type, $item, $movie, $releaseDate);
-            }
-
-        }
-
-        $this->storeCast($fetchedExternalData);
-
     }
 
     protected function storeMovieImage($result, $name)
