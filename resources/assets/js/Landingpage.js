@@ -1,7 +1,4 @@
 import React, { Component } from 'react'; 
-import {AWS_URL} from '../../../config/js/config';
-
-
 
 class Landingpage extends Component {
     constructor(props) {
