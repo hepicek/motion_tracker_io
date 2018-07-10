@@ -12,6 +12,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ScrapeActor implements ShouldQueue
 {
@@ -29,6 +31,11 @@ class ScrapeActor implements ShouldQueue
     public function handle()
     {
         $item = $this->actor;
+        $history = DB::table('search_history')->where('imdb_id', '=', $item['imdb'])->where('type', '=', 1)->get()->toArray();
+        $date = Carbon::now()->subDays(180)->toDateTimeString();
+        if (count($history) > 0 && $history[0]->updated_at > $date) {
+            return;
+        }
         
         $image = $item['photo'] == "" || $item['photo'] == NULL ? "" : $this->storePersonImage($item);
 
@@ -57,6 +64,15 @@ class ScrapeActor implements ShouldQueue
                 $this->addPersonToMovie($item, $dbActor);
             }
         }
+        if (!count($history)) {
+            DB::table('search_history')->insert(['imdb_id' => $item['imdb'], 'type' => 1,'created_at' => date('Y-m-d H:i:s'),'updated_at' => date('Y-m-d H:i:s')]);
+        } else {
+            DB::table('search_history')
+                ->where('imdb_id', '=', $item['imdb'])
+                ->where('type', '=', 1)
+                ->update(['updated_at' => date('Y-m-d H:i:s')]);
+
+        }
         
     }
     protected function addPersonToMovie($item, $dbActor)
@@ -84,7 +100,14 @@ class ScrapeActor implements ShouldQueue
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/person_img/";
         $file = "./storage/app/public/" . $datapath . $file_name_ext;
-        Storage::disk('s3')->put("public/img/person_img/" . $file_name_ext, $contents, 'public');
+        $img = Image::make($url);
+        // dd($img);
+        $img_width_300 = 300;
+        $img->resize($img_width_300, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $img->save('./storage/app/public/img/movie_img/' . $file_name_ext);
+        // Storage::disk('s3')->put("public/img/person_img/" . $file_name_ext, $contents, 'public');
 
         return $datapath . $file_name . '.' . $file_ext;
     }

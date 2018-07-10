@@ -31,7 +31,6 @@ class ScrapeMovie implements ShouldQueue
         $date = Carbon::now()->subDays(180)->toDateTimeString();
         if (count($history) > 0 && $history[0]->updated_at > $date) {
             return;
-
         }
             $item = [
                 'imdb_id' => $this->result->imdbID() + 0,
@@ -116,7 +115,7 @@ class ScrapeMovie implements ShouldQueue
         $file_name = preg_replace("/[^a-z0-9]/i", "_", $name) . "-" . $result['year'];
         $file_name_ext = $file_name . "." . $file_ext;
         $datapath = "img/movie_img/";
-        $file = "./storage/app/public/" . $datapath . $file_name_ext;
+        // $file = "./storage/app/public/" . $datapath . $file_name_ext;
         Storage::disk('s3')->put("public/img/movie_img/" . $file_name_ext, $contents, 'public');
        // file_put_contents($file, $contents);
 
