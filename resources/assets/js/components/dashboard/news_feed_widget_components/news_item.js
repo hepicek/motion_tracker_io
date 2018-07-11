@@ -15,7 +15,7 @@ class NEWS_ITEM extends Component {
             news_item = (
                 <Row 
                 className="newsFeed-item bg-light my-2 p-2 d-flex align-items-center mx-0"
-                style={{fontSize: ".7rem"}}    
+                style={{fontSize: ".8rem"}}    
                 >
                     <div 
                         className="newsFeed-item_userImage mr-2" 

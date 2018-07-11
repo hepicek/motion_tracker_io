@@ -137,8 +137,8 @@ class MoviesController extends Controller
     }
     public function searchMovies($movie)
     {
-        $this->batchSearch();
-        StoreDataFromExternalSource::dispatch($movie)->delay(2);
+        // $this->batchSearch();
+        // StoreDataFromExternalSource::dispatch($movie)->delay(2);
         
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
