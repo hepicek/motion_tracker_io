@@ -80,6 +80,7 @@ class Landingpage extends Component {
                         </div>
                     </div>
                 </div>
+                <h4>Popular movies:</h4>
                 <div className="d-flex flex-wrap justify-content-between p-4">
                     {this.state.loading && <Spinner/>}
                     {this.state.topMovies.map((item, index) => {
