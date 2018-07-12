@@ -216,13 +216,14 @@ class RelationshipsController extends Controller
         $user = User::find($id);
         $user_name = $user->common_name;
         $lists = $user->lists;
+        
         foreach ($lists as $list) {
             $list_title = $list->list_title;
 
             $listItems = $list->list_items()
-                ->where('updated_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
+                ->where('created_at', '>=', Carbon::now()->subDays(5)->toDateTimeString())
                 ->get();
-            if(count($listItems) == 0) return [0, "No Recent Activity from this user"];
+
             foreach ($listItems as $item) {
                 $movie = $item->movie;
                 $array[] = [
@@ -238,6 +239,7 @@ class RelationshipsController extends Controller
             }
         }
         $this->getRecentRatings($id, $array);
+        if(count($array) == 0) return [0, "No Recent Activity from this user"];
 
         usort($array, function ($a, $b) {
             $t1 = strtotime($a['date']);

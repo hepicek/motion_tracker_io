@@ -60,12 +60,15 @@ class Public_User_Profile extends Component {
             });
         axios("/recentactivity/" + user_id)
             .then(resData => {
+                console.log(resData);
                 if(resData.data[0] === 1){
                     this.setState({
                         recentActivity: resData.data[1],
-                        recentActivityLoading: false,
                     });
                 }
+                this.setState({
+                    recentActivityLoading: false,
+                });
             })
             .catch(error => {
                 console.log('error', error);
@@ -116,7 +119,7 @@ class Public_User_Profile extends Component {
                 <Row className="mx-0 px-2 bg-white">
                     {userDetail && <UserInfo userData={this.state.userDetail}/>}
                     {userFriends && <PublicUserFriends friendsData={this.state.userFriends}/>}
-                    {<RecentUserActivities recentActivity={recentActivity} loading={recentActivityLoading}/>}
+                    <RecentUserActivities recentActivity={recentActivity} loading={!recentActivityLoading}/>
                 </Row>
                 <hr></hr>
                 {userLists && <UserPublicLists userLists={userLists} userDetail={userDetail} timeWasted={this.state.timeWasted}/>}
