@@ -18,6 +18,7 @@ class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loadingLists: true,
             topMovies: [],
             userLists: [],
             friends: [],
@@ -71,7 +72,8 @@ class Dashboard extends Component {
                 this.setState({
                     userLists,
                     newList: false,
-                    renameList: undefined
+                    renameList: undefined,
+                    loadingLists: false
                 });
             }
         })
@@ -267,6 +269,7 @@ class Dashboard extends Component {
                     </Col>
                     <Col md="4" lg="4" className="px-0">
                         <LISTS_WIDGET
+                            loadingLists={this.state.loadingLists}
                             lists={this.state.userLists}
                             renameList={this.state.renameList}
                             newList={this.state.newList ? this.state.newList : null}

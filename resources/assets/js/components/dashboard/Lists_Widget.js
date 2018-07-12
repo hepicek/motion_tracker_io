@@ -48,7 +48,7 @@ class LISTS_WIDGET extends Component  {
                 <div id="listsWidget-lists">
                     {props.newList && <New_List saveNewList={props.saveNewList}/>}
                     {this.lists && this.lists}
-                    {!this.lists && <LISTS_WELCOME />}
+                    {(!this.lists && !this.props.loadingLists) && <LISTS_WELCOME />}
                 </div>
             </div>
         )
