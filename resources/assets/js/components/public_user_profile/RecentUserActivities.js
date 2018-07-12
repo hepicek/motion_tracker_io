@@ -10,7 +10,7 @@ class RecentUserActivities extends Component {
         }
     }
     render() {
-        let {props} = this;
+        let {props, loading} = this;
         let recentActivities = !props.recentActivity ? 
             <p className="p-3">No recent activity from this user</p> : 
             props.recentActivity.reverse()
@@ -25,14 +25,14 @@ class RecentUserActivities extends Component {
                 md="12" lg="4"
                 className="d-flex flex-column justify-content-between"
             >
-            <div>
+            {loading && <div>
                 {props.recentActivity && <h4>Recent Activity</h4>}
                 <div className="recentUserActivities-activitiesList w-100">
 
                     {recentActivities}
                     
                 </div>
-            </div>
+            </div>}
                 <div className="w-25 d-flex justify-content-between align-self-center my-1">
                 {(props.recentActivity.length > 5) &&
                     <i 

@@ -10,7 +10,7 @@ const UserPublicLists = (props) => {
         >
             <div className="col-xs-12 col-md-12 d-flex justify-content-between">
                 <h4>{userDetail.common_name}'s lists</h4>
-                <h4>{userDetail.common_name} has wasted {timeWasted}</h4>
+                <h4 style={{fontSize: ".9rem"}} ><strong>{userDetail.common_name}</strong> has wasted {timeWasted}</h4>
             </div>
             <div className="col-xs-12 col-md-12">
                 {userLists.map((userlist, index) => {

@@ -13,7 +13,11 @@ class Public_User_Profile extends Component {
         super(props);
         this.state = {
             userDetail: false,
-            loading: true,
+            userDataLoading: true,
+            relationshipsLoading: true,
+            recentActivityLoading: true,
+            userListsLoading: true,
+            timeWastedLoading: true,
             error: false,
             userFriends: false,
             recentActivity: false,
@@ -30,7 +34,7 @@ class Public_User_Profile extends Component {
             .then(resData => {
                 this.setState({
                     userDetail: resData.data,
-                    loading: false,
+                    userDataLoading: false,
                 });
             })
             .catch(error => {
@@ -44,7 +48,7 @@ class Public_User_Profile extends Component {
             .then(resData => {
                 this.setState({
                     userFriends: resData.data,
-                    loading: false,
+                    relationshipsLoading: false,
                 });
             })
             .catch(error => {
@@ -59,7 +63,7 @@ class Public_User_Profile extends Component {
                 if(resData.data[0] === 1){
                     this.setState({
                         recentActivity: resData.data[1],
-                        loading: false,
+                        recentActivityLoading: false,
                     });
                 }
             })
@@ -75,7 +79,7 @@ class Public_User_Profile extends Component {
                 let userLists = Object.keys(resData.data.response).map(key => resData.data.response[key]);
                 this.setState({
                     userLists: userLists,
-                    loading: false,
+                    userListsLoading: false,
                 });
             })
             .catch(error => {
@@ -89,7 +93,7 @@ class Public_User_Profile extends Component {
             .then(resData => {
                 this.setState({
                     timeWasted: resData.data,
-                    loading: false,
+                    timeWastedLoading: false,
                 });
             })
             .catch(error => {
@@ -102,17 +106,17 @@ class Public_User_Profile extends Component {
     }
 
     render() {
-        const {userDetail, userFriends, recentActivity, userLists, error, loading} = this.state;
+        const {userDetail, userFriends, recentActivity, userLists, error, userDataLoading, recentActivityLoading} = this.state;
 
         return (
             <div className="py-3">
-                {loading && <div>Loading...</div>}
-                {loading && <Spinner/>}
+                {userDataLoading && <div>Loading...</div>}
+                {userDataLoading && <Spinner/>}
                 {error && <div>Some error occured</div>}
                 <Row className="mx-0 px-2 bg-white">
                     {userDetail && <UserInfo userData={this.state.userDetail}/>}
                     {userFriends && <PublicUserFriends friendsData={this.state.userFriends}/>}
-                    {<RecentUserActivities recentActivity={this.state.recentActivity}/>}
+                    {<RecentUserActivities recentActivity={recentActivity} loading={recentActivityLoading}/>}
                 </Row>
                 <hr></hr>
                 {userLists && <UserPublicLists userLists={userLists} userDetail={userDetail} timeWasted={this.state.timeWasted}/>}
