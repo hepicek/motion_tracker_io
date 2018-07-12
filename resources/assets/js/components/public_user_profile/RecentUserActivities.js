@@ -47,7 +47,7 @@ class RecentUserActivities extends Component {
                             !!this.state.newsFeedOffset && this.setState(prevState =>({newsFeedOffset: prevState.newsFeedOffset - 5}))}
                         }
                         
-                    ></i>}
+                    />}
                     {(props.recentActivity.length > 5) &&
                         <i 
                             className="fa fa-angle-right" 
@@ -59,7 +59,7 @@ class RecentUserActivities extends Component {
                             onClick={() => {
                                 this.state.newsFeedOffset + 5 < props.recentActivity.length && this.setState(prevState =>({newsFeedOffset: prevState.newsFeedOffset + 5}))}
                             }
-                        ></i>
+                        />
                     }
                 </div>
             </Col>
