@@ -14,7 +14,7 @@ class RecentUserActivities extends Component {
         let recentActivities = !props.recentActivity ? 
             <p className="p-3">No recent activity from this user</p> : 
             props.recentActivity.reverse()
-                .slice(this.state.newsFeedOffset, 6 + this.state.newsFeedOffset)
+                .slice(this.state.newsFeedOffset, 5 + this.state.newsFeedOffset)
                 .map((activity, index) => {
                 return (
                     <UserActivity key={'act-' + index} activity={activity}/>
@@ -23,9 +23,9 @@ class RecentUserActivities extends Component {
         return (
             <Col 
                 md="12" lg="4"
-                className="d-flex flex-column justify-content-between"
+                
             >
-            {this.props.loading && <div>
+            {this.props.loading && <div className="h-100 d-flex flex-column justify-content-between">
                 <div>
                     {props.recentActivity && <h4>Recent Activity</h4>}
                     <div className="recentUserActivities-activitiesList w-100">
