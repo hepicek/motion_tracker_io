@@ -60,7 +60,6 @@ class Public_User_Profile extends Component {
             });
         axios("/recentactivity/" + user_id)
             .then(resData => {
-                console.log(resData);
                 if(resData.data[0] === 1){
                     this.setState({
                         recentActivity: resData.data[1],

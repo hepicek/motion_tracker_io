@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios/index";
 import TopMovie from "./components/landing_page/TopMovie";
 import Spinner from "./helpers/Spinner";
+import {Collapse} from 'reactstrap';
 
 class Landingpage extends Component {
     constructor(props) {
@@ -9,10 +10,18 @@ class Landingpage extends Component {
         this.state = {
             topMovies: [],
             loading: true,
+            caret: "down",
+            collapse: false
         };
         this.getPopularMovies = this.getPopularMovies.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
-
+    toggle() {
+        this.setState(prevState => ({
+            collapse: !prevState.collapse,
+            caret: prevState.caret == "down" ? "up" : "down"
+        }))
+    }
     componentDidMount() {
         this.getPopularMovies()
     }
@@ -80,14 +89,35 @@ class Landingpage extends Component {
                         </div>
                     </div>
                 </div>
-                <h4>Popular movies:</h4>
-                <div className="d-flex flex-wrap justify-content-between p-4">
-                    {this.state.loading && <Spinner/>}
-                    {this.state.topMovies.map((item, index) => {
-                        return (
-                            <TopMovie key={'topMovie-' + index} data={item}/>
-                        );
-                    })}
+                <div>
+                    <div 
+                        onClick={this.toggle} 
+                        className="w-100 mb-2 d-flex justify-content-center justify-content-sm-between align-items-center"
+                    >
+                        <hr className="my-0 d-none d-sm-block" style={{width: "35%"}} />
+                        <div style={{cursor: "pointer"}} className="d-flex align-items-center">
+                            <h4 className="my-0" >Click Here to Learn More</h4>
+                            <i className={"ml-2 fa fa-caret-" + this.state.caret}/>
+                        </div>
+                        <hr className="my-0 d-none d-sm-block" style={{width: "35%"}} />
+                    </div>
+                    <Collapse isOpen={this.state.collapse}>
+                        <h1>FUCCCCKCKCKKC</h1>
+                    </Collapse>
+                </div>
+                <div>
+                    <h4 className="mx-4 mb-0">Popular movies:</h4>
+                    <div 
+                        className="d-flex flex-wrap justify-content-between px-4 py-2"
+                           
+                    >
+                        {this.state.loading && <Spinner/>}
+                        {this.state.topMovies.map((item, index) => {
+                            return (
+                                <TopMovie key={'topMovie-' + index} data={item}/>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );

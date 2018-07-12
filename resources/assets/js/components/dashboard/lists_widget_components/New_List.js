@@ -3,13 +3,7 @@ import React, { Component } from 'react';
 class New_List extends Component {
     constructor(props) {
         super(props)
-        
-
     }
-    // componenentDidMount() {
-    //     console.log("WTF!");
-    //     this.newListInput.current.focus();
-    // }
     
     render() {
         return (
@@ -32,7 +26,3 @@ class New_List extends Component {
 }
 
 export default New_List;
-
-// ref={this.newListInput} goes in <input
-
-// this.newListInput = React.createRef(); goes in constructor
