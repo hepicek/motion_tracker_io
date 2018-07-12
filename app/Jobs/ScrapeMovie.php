@@ -96,9 +96,9 @@ class ScrapeMovie implements ShouldQueue
                 ->update(['updated_at' => date('Y-m-d H:i:s')]);
 
         }
-        foreach($item['cast'] as $actor) {
-            ScrapeActor::dispatch($actor, $result_imdb_id);
-        }
+        // foreach($item['cast'] as $actor) {
+        //     ScrapeActor::dispatch($actor, $result_imdb_id);
+        // }
         
 
     }

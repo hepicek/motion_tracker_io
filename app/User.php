@@ -34,8 +34,10 @@ class User extends Authenticatable
     public function ratings() {
         return $this->hasMany('App\Rating', 'user_id');
     }
-
-    // public function friends() {
-    //     return $this->belongsToMany(User::class, 'relationships', );
-    // }
+    public function listItems() {
+        return $this->hasManyThrough('App\List_Item', 'App\User_List');
+    }
+    public function movies() {
+        return $this->hasManyThrough('App\Movie', 'App\User_List');
+    }
 }

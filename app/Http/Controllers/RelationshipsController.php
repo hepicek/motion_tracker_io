@@ -11,6 +11,22 @@ use App\Movie;
 
 class RelationshipsController extends Controller
 {
+    public function getFriendsCount() {
+            $user = Auth::id();
+            $friends = DB::table('relationships')->where(
+                function ($query) {
+                    $query->where('user_one_id', '=', Auth::id())
+                        ->where('status_id', '=', 1);
+                })
+                ->orWhere(
+                    function ($query) {
+                        $query->where('user_two_id', '=', Auth::id())
+                            ->where('status_id', '=', 1);
+                    }
+                )->get();
+                
+                return count($friends);
+    }
     public function pendingRelationships()
     {
         $pendingRequests = [];

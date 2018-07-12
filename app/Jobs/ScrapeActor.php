@@ -35,10 +35,8 @@ class ScrapeActor implements ShouldQueue
         $history = DB::table('search_history')->where('imdb_id', '=', $item['imdb'])->where('type', '=', 1)->get()->toArray();
         $date = Carbon::now()->subDays(180)->toDateTimeString(); 
         if (count($history) > 0 && $history[0]->updated_at > $date) {
-            dd("Stop!");
             return;
         }
-        dd("Go");
         $image = $item['photo'] == "" || $item['photo'] == NULL ? "" : $this->storePersonImage($item);
 
         $dbActor = Person::find($item['imdb']);

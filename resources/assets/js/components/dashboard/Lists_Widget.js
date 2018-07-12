@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LIST from './lists_widget_components/List'
 import LISTS_HEADER from './lists_widget_components/Lists_Widget_Header';
 import New_List from './lists_widget_components/New_List';
+import LISTS_WELCOME from './lists_widget_components/Lists_Welcome';
 
 
 class LISTS_WIDGET extends Component  {
@@ -47,6 +48,7 @@ class LISTS_WIDGET extends Component  {
                 <div id="listsWidget-lists">
                     {props.newList && <New_List saveNewList={props.saveNewList}/>}
                     {this.lists && this.lists}
+                    {!this.lists && <LISTS_WELCOME />}
                 </div>
             </div>
         )

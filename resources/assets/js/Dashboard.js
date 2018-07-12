@@ -10,7 +10,7 @@ import SEARCH_BAR from './components/dashboard/Search_Bar';
 import LISTS_WIDGET from './components/dashboard/Lists_Widget';
 import FRIENDS_WIDGET from './components/dashboard/Friends_Widget';
 import SEARCH_MOVIES_WIDGET from './components/dashboard/Search_Movies_Widget';
-import NEWS_FEED from './components/dashboard/News_Feed_Widget'
+import NEWS_FEED from './components/dashboard/News_Feed_Widget';
 
 let inputTimer;
 

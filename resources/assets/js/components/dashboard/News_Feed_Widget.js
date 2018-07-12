@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import NEWS_ITEM from './news_feed_widget_components/news_item';
-// import MOVIE_TITLE from './news_feed_widget_components/movie_title';
-// import {decodeString} from '../../helpers/helper';
 import { AWS_URL } from '../../../../../config/js/config';
+import WELCOME from './Welcome';
 import Spinner from "../../helpers/Spinner";
 
 class NEWS_FEED extends Component {
@@ -12,6 +11,7 @@ class NEWS_FEED extends Component {
             news: [],
             loading: true,
             newsFeedOffset: 0,
+            friendsCount: undefined,
         }
     }
 
@@ -23,12 +23,23 @@ class NEWS_FEED extends Component {
                 loading: false,
             });
         })
-            .catch(error => {
-                console.log('error', error);
-                this.setState({
-                    error: error,
-                    loading: false,
-                })
+        .catch(error => {
+            console.log('error', error);
+            this.setState({
+                error: error,
+                loading: false,
+            })
+        });
+        axios('/relationships/friendscount')
+        .then(res => {
+            this.setState({friendsCount: res.data})
+        })
+        .catch(error => {
+            console.log('error', error);
+            this.setState({
+                error: error,
+                loading: false,
+            });
         });
     }
     render() {
@@ -54,6 +65,7 @@ class NEWS_FEED extends Component {
                     {loading && loading}
                     {loading && <Spinner />}
                     {news && news}
+                    {(!loading && !this.state.friendsCount) && <WELCOME />}
                 </div>
                 <div className="w-25 d-flex justify-content-between">
                     {(this.state.news.length > 5) &&
@@ -69,7 +81,7 @@ class NEWS_FEED extends Component {
                                 !!this.state.newsFeedOffset && this.setState(prevState =>({newsFeedOffset: prevState.newsFeedOffset - 5}))}
                             }
                             
-                        ></i>}
+                        />}
                     {(this.state.news.length > 5) &&
                         <i 
                             className="fa fa-angle-right" 
@@ -81,7 +93,7 @@ class NEWS_FEED extends Component {
                             onClick={() => {
                                 this.state.newsFeedOffset + 5 < this.state.news.length && this.setState(prevState =>({newsFeedOffset: prevState.newsFeedOffset + 5}))}
                             }
-                        ></i>
+                        />
                     }
                 </div>
             </div>

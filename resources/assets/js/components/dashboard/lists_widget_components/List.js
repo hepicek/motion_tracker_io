@@ -57,7 +57,7 @@ class LIST extends Component {
         const {connectDropTarget, hovered} = this.props;
         let {props} = this;
         let {list} = props;
-
+        console.log(list);
         return connectDropTarget(
             <div 
                 id={list.id ? list.id : "new-" + index} 

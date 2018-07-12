@@ -16,4 +16,7 @@ class User_List extends Model
     public function list_items() {
         return $this->hasMany('App\List_Item', 'list_id');
     }
+    public function movies() {
+        return $this->hasManyThrough('App\Movie', 'App\List_item', 'show_id', 'imdb_id', 'id', 'id');
+    }
 }
