@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\StoreDataFromExternalSource;
+use App\Jobs\ScrapeActor;
 use DB;
 use App\Movie;
 use App\Person;
@@ -38,98 +39,17 @@ class MoviesController extends Controller
     }
     protected function batchSearch() {
         $array = [
-            "I",
-            "was",
-            "he",
-            "his",
-            "with",
-            "is",
-            "it",
-            "for",
-            "as",
-            "had",
-            "you",
-            "not",
-            "be",
-            "on",
-            "at",
-            "by",
-            "her",
-            "which",
-            "have",
-            "or",
-            "from",
-            "this",
-            "but",
-            "all",
-            "him",
-            "she",
-            "were",
-            "they",
-            "my",
-            "are",
-            "so",
-            "me",
-            "their",
-            "an",
-            "one",
-            "de",
-            "we",
-            "who",
-            "would",
-            "said",
-            "been",
-            "no",
-            "He",
-            "will",
-            "them",
-            "when",
-            "if",
-            "there",
-            "more",
-            "out",
-            "And",
-            "It",
+            "find",
             "any",
-            "up",
-            "into",
-            "your",
-            "has",
-            "do",
-            "what",
-            "could",
-            "but",
-            "our",
-            "than",
-            "other",
-            "some",
-            "very",
-            "man",
-            "upon",
-            "about",
-            "its",
-            "only",
-            "time",
-            "may",
-            "la",
-            "like",
-            "little",
-            "then",
-            "now",
-            "should",
-            "can",
+            "new",
+            "work",
+            "part",
+            "take",
+            "get",
+            "place",
             "made",
-            "did",
-            "such",
-            "A",
-            "great",
-            "In",
-            "must",
-            "these",
-            "two",
-            "before",
-            "see",
-            "us"
+            "live",
+            "where"
         ];
         foreach($array as $word) {
             StoreDataFromExternalSource::dispatch($word)->delay(.1);
@@ -137,8 +57,21 @@ class MoviesController extends Controller
     }
     public function searchMovies($movie)
     {
-        // $this->batchSearch();
-        // StoreDataFromExternalSource::dispatch($movie)->delay(2);
+        $this->batchSearch();
+        // ScrapeActor::dispatch([
+        //     "imdb" => "664",
+        //     "name" => "Peter Weireter",
+        //     "name_alias" => null,
+        //     "credited" => false,
+        //     "role" => "Ventura County Sheriff Sniper",
+        //     "role_episodes" => null,
+        //     "role_start_year" => null,
+        //     "role_end_year" => null,
+        //     "role_other" => [],
+        //     "thumb" => "",
+        //     "photo" => "",
+        // ], 1342435);
+        StoreDataFromExternalSource::dispatch($movie)->delay(.5);
         
         $result = Movie::where('name', 'LIKE', '%' . $movie . '%')
             ->orderBy('votes_nr', 'desc')
