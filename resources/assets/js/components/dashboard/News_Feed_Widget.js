@@ -69,7 +69,7 @@ class NEWS_FEED extends Component {
                                 !!this.state.newsFeedOffset && this.setState(prevState =>({newsFeedOffset: prevState.newsFeedOffset - 5}))}
                             }
                             
-                        ></i>}
+                        />}
                     {(this.state.news.length > 5) &&
                         <i 
                             className="fa fa-angle-right" 
@@ -81,7 +81,7 @@ class NEWS_FEED extends Component {
                             onClick={() => {
                                 this.state.newsFeedOffset + 5 < this.state.news.length && this.setState(prevState =>({newsFeedOffset: prevState.newsFeedOffset + 5}))}
                             }
-                        ></i>
+                        />
                     }
                 </div>
             </div>

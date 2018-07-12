@@ -18,6 +18,7 @@ class Public_User_Profile extends Component {
             userFriends: false,
             recentActivity: false,
             userLists: false,
+            timeWasted: false,
         }
     }
 
@@ -84,6 +85,20 @@ class Public_User_Profile extends Component {
                     loading: false,
                 })
             });
+        axios("/getUserTimeWasted/" + user_id)
+            .then(resData => {
+                this.setState({
+                    timeWasted: resData.data,
+                    loading: false,
+                });
+            })
+            .catch(error => {
+                console.log('error', error);
+                this.setState({
+                    error: error,
+                    loading: false,
+                })
+            });
     }
 
     render() {
@@ -100,7 +115,7 @@ class Public_User_Profile extends Component {
                     {<RecentUserActivities recentActivity={this.state.recentActivity}/>}
                 </Row>
                 <hr></hr>
-                {userLists && <UserPublicLists userLists={userLists} userDetail={userDetail}/>}
+                {userLists && <UserPublicLists userLists={userLists} userDetail={userDetail} timeWasted={this.state.timeWasted}/>}
             </div>
         )
     }

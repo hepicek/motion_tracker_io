@@ -3,15 +3,15 @@ import UserList from "./UserList";
 import {Row} from 'reactstrap';
 
 const UserPublicLists = (props) => {
-    const userLists = props.userLists;
-    const userDetail = props.userDetail;
-
-
+    const {userLists, userDetail, timeWasted} = props;
     return (
         <Row
             className="bg-white p-2 mx-0"
         >
-            <h4 className="col-xs-12 col-md-12">{userDetail.common_name}'s lists</h4>
+            <div className="col-xs-12 col-md-12 d-flex justify-content-between">
+                <h4>{userDetail.common_name}'s lists</h4>
+                <h4>{userDetail.common_name} has wasted {timeWasted}</h4>
+            </div>
             <div className="col-xs-12 col-md-12">
                 {userLists.map((userlist, index) => {
                     return (

@@ -18,6 +18,7 @@ use App\List_Item;
 Auth::routes();
 
 Route::get('/', 'LandingpageController@index');
+Route::get('/randomPopularMovies', 'LandingpageController@randomPopularMovies');
 Route::group(['middleware' => ['auth']], function() {
     
     //Page View Routes
@@ -32,11 +33,13 @@ Route::group(['middleware' => ['auth']], function() {
     
 
     //User list routes
-    Route::get('userLists/{user_id?}', 'ListController@getUserLists');
     Route::post('userLists', 'ListController@storeUserList');
-    Route::delete('userLists/{id}', 'ListController@destroyUserList');
-    Route::put('userLists/{id}', 'ListController@updateUserList');
     Route::post('userRatings', 'ListController@storeUserRating');
+    Route::get('getUserTimeWasted/{user_id}', 'ListController@getUserTimeWasted');
+    Route::put('userLists/{id}', 'ListController@updateUserList');
+    Route::delete('userLists/{id}', 'ListController@destroyUserList');
+    Route::get('userLists/{user_id?}', 'ListController@getUserLists');
+
 
     Route::delete('userListItem/{id}', 'ListController@destroyUserListItem');
 
